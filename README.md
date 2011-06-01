@@ -1,5 +1,5 @@
-thoughtbot dotfiles
-===================
+thoughtbot Designer dotfiles
+============================
 
 Install
 -------
