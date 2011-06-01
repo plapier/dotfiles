@@ -1,18 +1,31 @@
-alias migrate="rake db:migrate db:test:prepare"
-alias remigrate="rake db:migrate && rake db:migrate:redo && rake db:schema:dump db:test:prepare"
-alias remongrate="rake mongoid:migrate && rake mongoid:migrate:redo"
-alias g="git"
-alias s="bundle exec rspec"
-alias cuc="bundle exec cucumber"
-alias gi="gem install"
-alias giv="gem install -v"
-alias gci="git pull --rebase && rake && git push"
-alias tlf="tail -f"
-alias b="bundle"
-alias be="bundle exec"
-alias ln='ln -v'
-alias mkdir='mkdir -p'
-alias ...='../..'
+# ~/.aliases
+
+alias start_redis='redis-server /usr/local/etc/redis.conf'
+alias start_memcached='memcached -vv'
+alias memcached='/usr/local/bin/memcached -d' # start memcached daemon
+alias cuke='rake cucumber'
+
+alias clearlog='cat /dev/null > log/cucumber.log > log/development.log'
+
+# Git shortcuts
+alias ga='git add -A'
+alias gb='git branch '
+alias gc='git commit'
+alias gac='git commit -am '
+alias gd='git diff'
+alias gf='git fetch'
+alias go='git checkout '
+alias gpull='git pull'
+alias gpr='git pull --rebase'
+alias gpush='git push'
+alias gpu='git push'
+#alias gr='git rebase'
+alias gs='git status '
+alias gx='gitx --all'
+
+alias g='git '
+alias got='git '
+alias get='git '
 
 alias -g G='| grep'
 alias -g M='| less'

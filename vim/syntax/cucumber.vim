@@ -2,7 +2,6 @@
 " Language:     Cucumber
 " Maintainer:   Tim Pope <vimNOSPAM@tpope.org>
 " Filenames:    *.feature
-" Last Change:	2010 May 21
 
 if exists("b:current_syntax")
     finish
