@@ -1,3 +1,6 @@
+thoughtbot dotfiles
+===================
+
 Install
 -------
 
