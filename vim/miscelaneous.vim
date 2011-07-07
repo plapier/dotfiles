@@ -4,6 +4,7 @@ nnoremap <C-y> 3<C-y>
 
 " open ~/.vimrc
 map ,; :tabe ~/.vimrc<CR><C-W>_
+map ,. :tabe ~/.vim/miscelaneous.vim<CR><C-W>_
 
 " open NERDTree
 map ;; :NERDTree ~/Sites/<CR>
@@ -16,9 +17,19 @@ autocmd FileType scss set omnifunc=csscomplete#CompleteCSS
 autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType c set omnifunc=ccomplete#Complete
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
-au BufRead,BufNewFile *.less set ft=scss syntax=scss     " Set LESS filetype and syntax to SCSS
-au BufRead,BufNewFile *.scss set ft=scss syntax=scss     " Set SCSS filetype and syntax to SCSS
-au BufRead,BufNewFile *.css set ft=css syntax=css        " Set CSS filetype and sntax to CSS
+
+au BufRead,BufNewFile *.css set ft=css syntax=css              " Set CSS filetype and sntax to CSS
+au BufRead,BufNewFile *.less set ft=scss syntax=scss           " Set LESS filetype and syntax to SCSS
+au BufRead,BufNewFile *.scss set ft=scss.css syntax=scss       " Set SCSS filetype and syntax to SCSS
+au BufRead,BufNewFile *.jst set ft=jst syntax=jst              " Set CSS filetype and sntax to CSS
+
+" SnippetMate requirement
+set nopaste
+
+" Set ruby syntax for Gemfile
+autocmd BufNewFile,BufRead Gemfile setlocal filetype=ruby
+
+
 let g:rubycomplete_buffer_loading = 1
 let g:rubycomplete_klasses_in_global = 1
 let g:rubycomplete_rails = 1
@@ -27,6 +38,7 @@ let clj_highlight_builtins = 1
 
 let mapleader = " "
 
+" Unset highlighting
 nnoremap <Leader>h :nohls<CR><C-L>
 ""
 nmap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
@@ -46,6 +58,8 @@ autocmd BufEnter *.html.erb setlocal cursorcolumn
 autocmd BufEnter *.haml setlocal cursorcolumn
 autocmd BufEnter *.scss setlocal cursorcolumn
 autocmd BufEnter *.less setlocal cursorcolumn
+autocmd BufEnter *.js setlocal cursorcolumn
+autocmd BufEnter *.jst setlocal cursorcolumn
 
 " go back to normal mode with jk or kj
 imap jk <Esc>
@@ -66,6 +80,7 @@ command! -nargs=0 Lorem :normal iLorem ipsum dolor sit amet, consectetur
       \ proident, sunt in culpa qui officia deserunt mollit anim id est
       \ laborum
 
+map <Leader>g :CommandT<CR>
 " Opens an edit command with the path of the currently edited file filled in
 map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 map <Leader>s :split <C-R>=expand("%:p:h") . "/" <CR>

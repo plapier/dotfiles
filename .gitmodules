@@ -1,0 +1,12 @@
+[submodule "vim/bundle/command-t"]
+	path = vim/bundle/command-t
+	url = git://git.wincent.com/command-t.git
+[submodule "vim/bundle/snipmate"]
+	path = vim/bundle/snipmate
+	url = https://github.com/msanders/snipmate.vim.git
+[submodule "vim/bundle/snipmate-snippets"]
+	path = vim/bundle/snipmate-snippets
+	url = https://github.com/scrooloose/snipmate-snippets.git
+[submodule "vim/bundle/sessionman"]
+	path = vim/bundle/sessionman
+	url = https://github.com/vim-scripts/sessionman.vim.git

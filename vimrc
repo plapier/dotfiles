@@ -3,7 +3,9 @@
 """""""""""""""""""""""""""""""""
 set nocompatible                  " We're on vim, not vi
 filetype plugin indent on         " indent files, ftplugins
+filetype plugin on
 runtime macros/matchit.vim        " Enable matchit
+set autochdir                     " Set working directory to current buffer
 set wildmode=list:longest         " bash like command line tab completion
 set wildignore=*.o,*.obj,*~,*.swp " ignore when tab completing:
 set backspace=indent,eol,start    " Intuitive backspacing in insert mode
@@ -39,6 +41,10 @@ map <Leader>br ^wwveyO@include border-radius(ppp);jk
 
 map <Leader>2 !sortcss<CR>
 map <Leader>3 viB !sortcss<CR>
-map <Leader>4 ?{<CR>jV}k!sortcss<CR>
-map <Leader>5 /{<CR>Ojk?{<CR>jV}k:!sortcss<CR>
-map <Leader>6 /{<CR>a<CR>[/}<CR>i<CR>jk
+map <Leader>4 ?{<CR>jV}k!sortcss<CR>:noh<CR>
+"map <Leader>5 /{<CR>Ojk?{<CR>jV}k:!sortcss<CR>
+"map <Leader>6 /{<CR>a<CR>[/}<CR>i<CR>jk
+
+" Comment Out SassScript with Leader /
+map <Leader>// :s/^/\/\//g<CR>:noh<CR>
+map <Leader>.. :s/^\/\///<CR>:noh<CR>
