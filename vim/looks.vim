@@ -15,7 +15,7 @@ set list                          " show trailing whiteshace and tabs
 "set fuopt=maxvert,maxhorz         " Fullscreen mode takes up entire screen
 
 
-set guifont=Consolas:h16
+set guifont=Consolas:h15
 "set guifont=Anonymous\ Pro:h16
 "set guifont=DejaVu\ Sans\ Mono:h16
 "set guifont=Inconsolata:h16

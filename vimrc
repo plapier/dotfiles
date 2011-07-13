@@ -3,9 +3,7 @@
 """""""""""""""""""""""""""""""""
 set nocompatible                  " We're on vim, not vi
 filetype plugin indent on         " indent files, ftplugins
-filetype plugin on
 runtime macros/matchit.vim        " Enable matchit
-set autochdir                     " Set working directory to current buffer
 set wildmode=list:longest         " bash like command line tab completion
 set wildignore=*.o,*.obj,*~,*.swp " ignore when tab completing:
 set backspace=indent,eol,start    " Intuitive backspacing in insert mode
@@ -14,6 +12,8 @@ set visualbell                    " get rid of the BEEP
 set scrolloff=3                   " Provide three lines of context
 set autowrite                     " Automatically save before commands like :next
 set showcmd                       " display incomplete commands
+
+" Pathogen plugin
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
 
@@ -44,7 +44,3 @@ map <Leader>3 viB !sortcss<CR>
 map <Leader>4 ?{<CR>jV}k!sortcss<CR>:noh<CR>
 "map <Leader>5 /{<CR>Ojk?{<CR>jV}k:!sortcss<CR>
 "map <Leader>6 /{<CR>a<CR>[/}<CR>i<CR>jk
-
-" Comment Out SassScript with Leader /
-map <Leader>// :s/^/\/\//g<CR>:noh<CR>
-map <Leader>.. :s/^\/\///<CR>:noh<CR>

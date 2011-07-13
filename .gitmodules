@@ -10,3 +10,9 @@
 [submodule "vim/bundle/sessionman"]
 	path = vim/bundle/sessionman
 	url = https://github.com/vim-scripts/sessionman.vim.git
+[submodule "vim/bundle/vim-haml"]
+	path = vim/bundle/vim-haml
+	url = https://github.com/tpope/vim-haml.git
+[submodule "vim/bundle/scss-syntax"]
+	path = vim/bundle/scss-syntax
+	url = https://github.com/cakebaker/scss-syntax.vim.git

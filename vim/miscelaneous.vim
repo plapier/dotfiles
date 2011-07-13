@@ -21,10 +21,14 @@ autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
 au BufRead,BufNewFile *.css set ft=css syntax=css              " Set CSS filetype and sntax to CSS
 au BufRead,BufNewFile *.less set ft=scss syntax=scss           " Set LESS filetype and syntax to SCSS
 au BufRead,BufNewFile *.scss set ft=scss.css syntax=scss       " Set SCSS filetype and syntax to SCSS
-au BufRead,BufNewFile *.jst set ft=jst syntax=jst              " Set CSS filetype and sntax to CSS
+au BufRead,BufNewFile *.jst set ft=jst syntax=jst              " Set JST filetype and sntax to JST
 
 " SnippetMate requirement
 set nopaste
+
+" Disable middle button paste
+map <MiddleMouse> <Nop>
+imap <MiddleMouse> <Nop>
 
 " Set ruby syntax for Gemfile
 autocmd BufNewFile,BufRead Gemfile setlocal filetype=ruby
@@ -96,3 +100,14 @@ nnoremap <silent><A-j> :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap <silent><A-k> :set paste<CR>m`O<Esc>``:set nopaste<CR>
 
 vmap <Leader>1 :!sort<CR>
+
+"Toggle Absolute/Relative line numbers with Crtl+l
+function! g:togglenumode()
+  if(&rnu == 1)
+    set nu
+  else
+    set rnu
+  endif
+endfunc
+nnoremap <c-l> :call g:togglenumode()<cr>
+

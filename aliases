@@ -4,6 +4,7 @@ alias start_redis='redis-server /usr/local/etc/redis.conf'
 alias start_memcached='memcached -vv'
 alias memcached='/usr/local/bin/memcached -d' # start memcached daemon
 alias cuke='rake cucumber'
+alias be='bundle exec'
 
 alias clearlog='cat /dev/null > log/cucumber.log > log/development.log'
 

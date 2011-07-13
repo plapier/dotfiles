@@ -66,4 +66,3 @@ if main_syntax == 'jst'
 endif
 
 " vim: nowrap sw=2 sts=2 ts=8:
-
