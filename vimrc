@@ -33,15 +33,3 @@ source $HOME/.vim/privates.vim
 source $HOME/.vim/buffers.vim
 source $HOME/.vim/tabularizing.vim
 source $HOME/.vim/ruby-blocks.vim
-
-
-map <Leader>bs ^wwv$hhyO@include box-shadow(ppp);jk
-map <Leader>lg f(f(yi(kO@include linear-gradient(pppjkjj^f(f(f(f(yi(kkA, ppp);jk
-map <Leader>lgh f(f(yi(kkjO@include linear-gradient(pppjkjj^f(f(f(yi(kkA, ppp);jk
-map <Leader>br ^wwveyO@include border-radius(ppp);jk
-
-map <Leader>2 !sortcss<CR>
-map <Leader>3 viB !sortcss<CR>
-map <Leader>4 ?{<CR>jV}k!sortcss<CR>:noh<CR>
-"map <Leader>5 /{<CR>Ojk?{<CR>jV}k:!sortcss<CR>
-"map <Leader>6 /{<CR>a<CR>[/}<CR>i<CR>jk

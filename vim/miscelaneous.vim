@@ -11,6 +11,7 @@ map ;; :NERDTree ~/Sites/<CR>
 
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType scss set omnifunc=csscomplete#CompleteCSS
@@ -99,4 +100,19 @@ nnoremap <silent><C-k> m`:silent -g/\m^\s*$/d<CR>``:noh<CR>
 nnoremap <silent><A-j> :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap <silent><A-k> :set paste<CR>m`O<Esc>``:set nopaste<CR>
 
+" CSS Sorting
 vmap <Leader>1 :!sort<CR>
+map <Leader>2 !sortcss<CR>
+map <Leader>3 viB !sortcss<CR>
+map <Leader>4 ?{<CR>jV}k!sortcss<CR>:noh<CR>
+
+
+"SessionMan Vim
+nmap <Leader>S :SessionSave<CR>
+nmap <Leader>A :SessionSaveAs<CR>
+nmap <Leader>O :SessionOpen
+
+"NERD Commenter
+map <Leader>\\ ,cc<CR>
+map <Leader>]]  ,cs<CR>
+map <Leader>[[ ,cu<CR>
