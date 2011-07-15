@@ -19,6 +19,7 @@ call pathogen#runtime_append_all_bundles()
 
 
 source $HOME/.vim/miscelaneous.vim
+source $HOME/.vim/number.vim      " Toggle Relative or Abs Line numbers
 source $HOME/.vim/wrapping.vim
 source $HOME/.vim/copypaste.vim
 source $HOME/.vim/backups.vim

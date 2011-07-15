@@ -90,7 +90,7 @@ map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 map <Leader>s :split <C-R>=expand("%:p:h") . "/" <CR>
 map <Leader>v :vsplit <C-R>=expand("%:p:h") . "/" <CR>
 map <Leader>t :tabnew <C-R>=expand("%:p:h") . "/" <CR>
-map <Leader>n :NERDTree <C-R>=expand("%:p:h") . "/" <CR>
+map <Leader>N :NERDTree <C-R>=expand("%:p:h") . "/" <CR>
 autocmd User Rails Rnavcommand step features/step_definitions -glob=**/* -suffix=_steps.rb
 
 " Ctrl-j/k deletes blank line below/above, and Alt-j/k inserts.
@@ -100,14 +100,3 @@ nnoremap <silent><A-j> :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap <silent><A-k> :set paste<CR>m`O<Esc>``:set nopaste<CR>
 
 vmap <Leader>1 :!sort<CR>
-
-"Toggle Absolute/Relative line numbers with Crtl+l
-function! g:togglenumode()
-  if(&rnu == 1)
-    set nu
-  else
-    set rnu
-  endif
-endfunc
-nnoremap <c-l> :call g:togglenumode()<cr>
-
