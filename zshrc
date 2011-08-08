@@ -62,7 +62,7 @@ setopt auto_pushd
 export dirstacksize=5
 
 # Allows me to cd into projects
-cdpath=(. ~/sites/ ~/sites/thoughtbot/ ~/Downloads ~/ )
+cdpath=(. ~/sites/ ~/sites/thoughtbot/ ~/Dev/ ~/Downloads ~/ )
 
 # prediction
 autoload predict-on

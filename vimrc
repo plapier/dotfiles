@@ -28,6 +28,7 @@ source $HOME/.vim/searching.vim
 source $HOME/.vim/abbreviations.vim
 source $HOME/.vim/githelpers.vim
 source $HOME/.vim/autocomplete.vim
+source $HOME/.vim/autocorrect.vim " Mappings to autocorrect common misspelled words
 source $HOME/.vim/session.vim     " Saving & Resuming sessions
 source $HOME/.vim/privates.vim
 source $HOME/.vim/buffers.vim

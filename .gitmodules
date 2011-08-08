@@ -22,3 +22,12 @@
 [submodule "vim-css3-syntax"]
 	path = vim/bundle/vim-css3-syntax
 	url = https://github.com/hokaccha/vim-css3-syntax.git
+[submodule "vim/bundle/vim-surround"]
+	path = vim/bundle/vim-surround
+	url = https://github.com/tpope/vim-surround.git
+[submodule "vim/bundle/vim-colors-solarized"]
+	path = vim/bundle/vim-colors-solarized
+	url = git://github.com/altercation/vim-colors-solarized.git
+[submodule "solarized"]
+	path = solarized
+	url = https://github.com/altercation/solarized.git
