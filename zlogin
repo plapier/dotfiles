@@ -20,7 +20,5 @@ setopt prompt_subst
 export PS1='$(git_prompt_info)[${SSH_CONNECTION+"%{$fg_bold[green]%}%n@%m:"}%{$fg_bold[blue]%}%~%{$reset_color%}] '
 
 
+export PATH=/usr/local/bin:$PATH
 export PATH=~/bin:$PATH
-
-#Android Dev
-#export PATH=$PATH:$HOME/Library/android-sdk-mac_x86/platform-tools:$HOME/Library/android-sdk-mac_x86/tools

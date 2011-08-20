@@ -1,6 +1,9 @@
 # Path to your oh-my-zsh configuration.
 export ZSH=$HOME/.oh-my-zsh
 
+# For Lion, Rubies should be built using gcc rather than llvm-gcc.
+export CC=gcc-4.2
+
 #load oh-my-zsh plugins
 plugins=(git github osx)
 
@@ -74,4 +77,10 @@ zstyle ':predict' verbose true
 
 export PATH=~/bin:$PATH
 
-if [[ -s /Users/phillapier/.rvm/scripts/rvm ]] ; then source /Users/phillapier/.rvm/scripts/rvm ; fi
+if [[ -s /Users/phil/.rvm/scripts/rvm ]] ; then source /Users/phil/.rvm/scripts/rvm ; fi
+
+# RVM
+[[ -s '/Users/phil/.rvm/scripts/rvm' ]] && source '/Users/phil/.rvm/scripts/rvm'
+
+# RVM
+[[ -s '/Users/phil/.rvm/scripts/rvm' ]] && source '/Users/phil/.rvm/scripts/rvm'

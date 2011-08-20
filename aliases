@@ -47,3 +47,6 @@ alias -g G='| grep'
 alias -g M='| less'
 alias -g L='| wc -l'
 alias -g ONE="| awk '{ print \$1}'"
+
+# Quick look at a file from the shell
+alias ql='qlmanage -p'
