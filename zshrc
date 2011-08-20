@@ -54,8 +54,8 @@ setopt prompt_subst
 # ignore duplicate history entries
 setopt histignoredups
 
-# keep more history
-export HISTSIZE=1000
+# keep TONS of history
+export HISTSIZE=4096
 
 # look for ey config in project dirs
 export EYRC=./.eyrc
@@ -82,5 +82,13 @@ if [[ -s /Users/phil/.rvm/scripts/rvm ]] ; then source /Users/phil/.rvm/scripts/
 # RVM
 [[ -s '/Users/phil/.rvm/scripts/rvm' ]] && source '/Users/phil/.rvm/scripts/rvm'
 
-# RVM
-[[ -s '/Users/phil/.rvm/scripts/rvm' ]] && source '/Users/phil/.rvm/scripts/rvm'
+# awesome cd movements from zshkit
+setopt AUTOCD
+setopt AUTOPUSHD PUSHDMINUS PUSHDSILENT PUSHDTOHOME
+setopt cdablevars
+
+# Try to correct command line spelling
+setopt CORRECT CORRECT_ALL
+
+# Enable extended globbing
+setopt EXTENDED_GLOB

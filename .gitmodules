@@ -31,3 +31,6 @@
 [submodule "solarized"]
 	path = solarized
 	url = https://github.com/altercation/solarized.git
+[submodule "vim/bundle/submodule/vim-surround"]
+	path = vim/bundle/submodule/vim-surround
+	url = git://github.com/tpope/vim-surround.git
