@@ -1,64 +1,42 @@
+"""""""""""""""""""""""""""""""""
+" Miscelaneous
+"""""""""""""""""""""""""""""""""
+
 " faster viewport scrolling
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 
-" open ~/.vimrc
-map ,; :tabe ~/.vimrc<CR><C-W>_
-map ,. :tabe ~/.vim/miscelaneous.vim<CR><C-W>_
-
-" open NERDTree
-map ;; :NERDTree ~/Sites/<CR>
-
+" filetypes
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType scss set omnifunc=csscomplete#CompleteCSS
 autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType c set omnifunc=ccomplete#Complete
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
-
-" Set NERD_Commenter comment type
-autocmd FileType jst let &l:commentstring='<!--%s-->'
+autocmd FileType jst let &l:commentstring='<!--%s-->'          " Set NERD_Commenter comment type
+autocmd BufNewFile,BufRead Gemfile setlocal filetype=ruby      " Set ruby syntax for Gemfile
 
 au BufRead,BufNewFile *.css set ft=css syntax=css              " Set CSS filetype and sntax to CSS
 au BufRead,BufNewFile *.less set ft=scss syntax=scss           " Set LESS filetype and syntax to SCSS
 au BufRead,BufNewFile *.scss set ft=scss.css syntax=scss       " Set SCSS filetype and syntax to SCSS
 au BufRead,BufNewFile *.jst set ft=jst syntax=jst              " Set JST filetype and sntax to JST
 
-" SnippetMate requirement
-set nopaste
 
-" Disable middle button paste
-map <MiddleMouse> <Nop>
-imap <MiddleMouse> <Nop>
-
-" Set ruby syntax for Gemfile
-autocmd BufNewFile,BufRead Gemfile setlocal filetype=ruby
-
-
+let g:snippetsEmu_key = "<S-Tab>"                              " Snippets are activated by Shift+Tab
 let g:rubycomplete_buffer_loading = 1
 let g:rubycomplete_klasses_in_global = 1
 let g:rubycomplete_rails = 1
-"clojure.vim
-let clj_highlight_builtins = 1
+let g:html_indent_tags = 'li\|p'                               " Treat <li> and <p> tags like the block tags
+let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"                 " Tags
+let clj_highlight_builtins = 1                                 " clojure.vim
 
-let mapleader = " "
 
-" Unset highlighting
-nnoremap <Leader>h :nohls<CR><C-L>
-""
-nmap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+set ttimeoutlen=50                   " Speed up <esc>
+set nopaste                          " SnippetMate requirement
+set pastetoggle=<F7>                 " toggle past and nopaste
 
-set tabstop=2 shiftwidth=2 expandtab " Set two space tabs:
-
-set splitbelow                    " Split windows at bottom
-set splitright                    " VSplit windows to the right
-set ttimeoutlen=50                " Speed up <esc>
-
-" toggle past and nopaste
-set pastetoggle=<F7>
 
 " set cursorcolumn when editing HAML and others
 autocmd BufEnter *.html setlocal cursorcolumn
@@ -69,15 +47,11 @@ autocmd BufEnter *.less setlocal cursorcolumn
 autocmd BufEnter *.js setlocal cursorcolumn
 autocmd BufEnter *.jst setlocal cursorcolumn
 
-" go back to normal mode with jk or kj
-imap jk <Esc>
-imap kj <Esc>
-imap jj <Esc>
-imap kk <Esc>
 
 """""""""""""""""""""""""""""""""
 " Other
 """""""""""""""""""""""""""""""""
+
 "define :Lorem command to dump in a paragraph of lorem ipsum
 command! -nargs=0 Lorem :normal iLorem ipsum dolor sit amet, consectetur
       \ adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
@@ -88,34 +62,24 @@ command! -nargs=0 Lorem :normal iLorem ipsum dolor sit amet, consectetur
       \ proident, sunt in culpa qui officia deserunt mollit anim id est
       \ laborum
 
-map <Leader>g :CommandT<CR>
-" Opens an edit command with the path of the currently edited file filled in
-map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
-map <Leader>s :split <C-R>=expand("%:p:h") . "/" <CR>
-map <Leader>v :vsplit <C-R>=expand("%:p:h") . "/" <CR>
-map <Leader>t :tabnew <C-R>=expand("%:p:h") . "/" <CR>
-map <Leader>N :NERDTree <C-R>=expand("%:p:h") . "/" <CR>
-autocmd User Rails Rnavcommand step features/step_definitions -glob=**/* -suffix=_steps.rb
 
-" Ctrl-j/k deletes blank line below/above, and Alt-j/k inserts.
-nnoremap <silent><C-j> m`:silent +g/\m^\s*$/d<CR>``:noh<CR>
-nnoremap <silent><C-k> m`:silent -g/\m^\s*$/d<CR>``:noh<CR>
-nnoremap <silent><A-j> :set paste<CR>m`o<Esc>``:set nopaste<CR>
-nnoremap <silent><A-k> :set paste<CR>m`O<Esc>``:set nopaste<CR>
+" From thoughtbot dotfiles
+"""""""""""""""""""""""""""""""""
+augroup vimrcEx
+  au!
+  " For all text files set 'textwidth' to 78 characters.
+  autocmd FileType text setlocal textwidth=78
 
-" CSS Sorting
-vmap <Leader>1 :!sort<CR>
-map <Leader>2 !sortcss<CR>
-map <Leader>3 viB !sortcss<CR>
-map <Leader>4 ?{<CR>jV}k!sortcss<CR>:noh<CR>
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it when the position is invalid or when inside an event handler
+  " (happens when dropping a file on gvim).
+  autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal g`\"" |
+    \ endif
+augroup END
 
-
-"SessionMan Vim
-nmap <Leader>S :SessionSave<CR>
-nmap <Leader>A :SessionSaveAs<CR>
-nmap <Leader>O :SessionOpen
-
-"NERD Commenter
-map <Leader>\\ ,cc<CR>
-map <Leader>]]  ,cs<CR>
-map <Leader>[[ ,cu<CR>
+" Use Ack instead of Grep when available
+if executable("ack")
+  set grepprg=ack\ -H\ --nogroup\ --nocolor
+endif

@@ -1,18 +1,22 @@
 """""""""""""""""""""""""""""""""
 " Looks
 """""""""""""""""""""""""""""""""
-syntax on                         " syntax highlighting, please
-set foldmethod=syntax             " me likes the syntax folding
-set foldnestmax=3                 " deepest fold level
-set nofoldenable                  " don't fold by default
-set ruler                         " always show the cursor position
-set showmatch                     " Show matching brackets.
-set mat=5                         " Bracket blinking.
-set laststatus=2                  " Always show status line (not only for multiple windows)
-set cursorline                    " highlight cursor line
+syntax on                            " syntax highlighting, please
+set foldmethod=syntax                " me likes the syntax folding
+set foldnestmax=3                    " deepest fold level
+set nofoldenable                     " don't fold by default
+set ruler                            " always show the cursor position
+set showmatch                        " Show matching brackets.
+set mat=5                            " Bracket blinking.
+set laststatus=2                     " Always show status line (not only for multiple windows)
+set cursorline                       " Highlight cursor line
 set listchars=tab:>\ ,trail:•,extends:>,precedes:<,nbsp:+
-set list                          " show trailing whiteshace and tabs
-"set fuopt=maxvert,maxhorz         " Fullscreen mode takes up entire screen
+set list                             " Show trailing whiteshace and tabs
+set showcmd                          " Display incomplete commands
+set tabstop=2 shiftwidth=2 expandtab " Set two space tabs:
+set splitbelow                       " Split windows at bottom
+set splitright                       " VSplit windows to the right
+set history=50
 
 
 set guifont=Consolas:h15
@@ -22,6 +26,7 @@ set guifont=Consolas:h15
 
 set t_Co=256
 set background=dark
+:colorscheme solarized
 ":colorscheme vividchalk
 ":colorscheme neon
 ":colorscheme xoria256
@@ -29,7 +34,6 @@ set background=dark
 ":colorscheme zenburn
 ":colorscheme darkspectrum
 ":colorscheme customtwilight2
-:colorscheme solarized
 
 if has('gui_running')
   set guioptions-=T              " Remove toolbar and menus in gvim
@@ -39,5 +43,6 @@ if has('gui_running')
   set mousehide                  " Hide mouse after chars typed, only gvim
 endif
 
+" Numbers
 set number
 set numberwidth=5
