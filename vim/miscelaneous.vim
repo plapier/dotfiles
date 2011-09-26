@@ -46,6 +46,7 @@ autocmd BufEnter *.scss setlocal cursorcolumn
 autocmd BufEnter *.less setlocal cursorcolumn
 autocmd BufEnter *.js setlocal cursorcolumn
 autocmd BufEnter *.jst setlocal cursorcolumn
+autocmd BufEnter *.ejs setlocal cursorcolumn
 
 
 """""""""""""""""""""""""""""""""

@@ -19,7 +19,7 @@ set splitright                       " VSplit windows to the right
 set history=50
 
 
-set guifont=Consolas:h15
+set guifont=Consolas:h14
 "set guifont=Anonymous\ Pro:h16
 "set guifont=DejaVu\ Sans\ Mono:h16
 "set guifont=Inconsolata:h16

@@ -46,3 +46,18 @@
 	path = vim/bundle/submodule/vim-surround
 	url = git://github.com/tpope/vim-surround.git
   ignore = dirty
+[submodule "vim/bundle/delimitmate"]
+	path = vim/bundle/delimitmate
+	url = https://github.com/Raimondi/delimitMate.git
+[submodule "vim/bundle/closetag"]
+	path = vim/bundle/closetag
+	url = git://github.com/vim-scripts/closetag.vim.git
+[submodule "vim/bundle/supertab"]
+	path = vim/bundle/supertab
+	url = git://github.com/ervandew/supertab.git
+[submodule "vim/bundle/ColorV"]
+	path = vim/bundle/ColorV
+	url = https://github.com/Rykka/ColorV.git
+[submodule "vim/bundle/vim-jst"]
+	path = vim/bundle/vim-jst
+	url = https://github.com/briancollins/vim-jst.git
