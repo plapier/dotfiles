@@ -23,10 +23,13 @@ set guifont=Consolas:h14
 "set guifont=Anonymous\ Pro:h16
 "set guifont=DejaVu\ Sans\ Mono:h16
 "set guifont=Inconsolata:h16
+"
+let g:solarized_contrast = "normal"
 
 set t_Co=256
 set background=dark
 :colorscheme solarized
+":colorscheme rubyblue
 ":colorscheme vividchalk
 ":colorscheme neon
 ":colorscheme xoria256

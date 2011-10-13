@@ -12,6 +12,8 @@ set shortmess=atI
 set visualbell                       " get rid of the BEEP
 set scrolloff=3                      " Provide three lines of context
 set autowrite                        " Automatically save before commands like :next
+set rtp+=~/.vim/bundle/vundle/       " Vundle
+call vundle#rc()
 
 " Pathogen plugin
 call pathogen#helptags()
@@ -35,3 +37,4 @@ source $HOME/.vim/privates.vim
 source $HOME/.vim/buffers.vim
 source $HOME/.vim/tabularizing.vim
 source $HOME/.vim/ruby-blocks.vim
+source $HOME/.vim/vundle.vim      " Vundles

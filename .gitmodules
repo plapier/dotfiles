@@ -55,9 +55,6 @@
 [submodule "vim/bundle/supertab"]
 	path = vim/bundle/supertab
 	url = git://github.com/ervandew/supertab.git
-[submodule "vim/bundle/ColorV"]
-	path = vim/bundle/ColorV
-	url = https://github.com/Rykka/ColorV.git
 [submodule "vim/bundle/vim-jst"]
 	path = vim/bundle/vim-jst
 	url = https://github.com/briancollins/vim-jst.git

@@ -7,6 +7,7 @@ let mapleader = " "
 " open ~/.vimrc
 map ,; :tabe ~/.vimrc<CR><C-W>_
 map ,. :tabe ~/.vim/miscelaneous.vim<CR><C-W>_
+map ,/ :tabe ~/.vim/vundle.vim<CR><C-W>_
 
 " Go back to normal mode with jk OR kj OR jj OR kk
 imap jk <Esc>
