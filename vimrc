@@ -1,9 +1,17 @@
 """""""""""""""""""""""""""""""""
 " Basics
 """""""""""""""""""""""""""""""""
-set nocompatible                     " We're on vim, not vi
-filetype plugin indent on            " indent files, ftplugins
 runtime macros/matchit.vim           " Enable matchit
+runtime bundle/vim-pathogen/autoload/pathogen.vim
+set rtp+=~/.vim/bundle/vundle/       " Vundle
+call vundle#rc()
+call pathogen#helptags()
+call pathogen#infect()
+filetype off
+syntax on
+filetype plugin indent on            " indent files, ftplugins
+
+set nocompatible                     " We're on vim, not vi
 set wildmode=list:longest,list:full  " Tab completion options
 set wildignore=*.o,*.obj,*~,*.swp    " ignore when tab completing:
 set complete=.,w,t                   " Tab completion options
@@ -12,13 +20,6 @@ set shortmess=atI
 set visualbell                       " get rid of the BEEP
 set scrolloff=3                      " Provide three lines of context
 set autowrite                        " Automatically save before commands like :next
-set rtp+=~/.vim/bundle/vundle/       " Vundle
-call vundle#rc()
-
-" Pathogen plugin
-call pathogen#helptags()
-call pathogen#runtime_append_all_bundles()
-
 
 source $HOME/.vim/mappings.vim    " Key Mappings
 source $HOME/.vim/miscelaneous.vim
