@@ -7,6 +7,7 @@ let mapleader = " "
 " open ~/.vimrc
 map ,; :tabe ~/.vimrc<CR><C-W>_
 map ,. :tabe ~/.vim/miscelaneous.vim<CR><C-W>_
+map ,' :tabe ~/.vim/mappings.vim<CR><C-W>_
 map ,/ :tabe ~/.vim/vundle.vim<CR><C-W>_
 
 " Go back to normal mode with jk OR kj OR jj OR kk
@@ -46,9 +47,9 @@ nmap <Leader>A :SessionSaveAs<CR>
 nmap <Leader>O :SessionOpen
 
 " NERD Commenter
-map <Leader>\\ ,cc<CR>
-map <Leader>]]  ,cs<CR>
-map <Leader>[[ ,cu<CR>
+map <Leader>\\ <Leader>cc<CR>
+map <Leader>xx <Leader>cs<CR>
+map <Leader>zz <Leader>cu<CR>
 
 " Disable middle button paste
 map <MiddleMouse> <Nop>

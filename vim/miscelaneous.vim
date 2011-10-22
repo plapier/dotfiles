@@ -16,6 +16,7 @@ autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType c set omnifunc=ccomplete#Complete
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
 autocmd FileType jst let &l:commentstring='<!--%s-->'          " Set NERD_Commenter comment type
+autocmd FileType scss let &l:commentstring='//%s'              " Set NERD_Commenter comment type
 autocmd BufNewFile,BufRead Gemfile setlocal filetype=ruby      " Set ruby syntax for Gemfile
 
 au BufRead,BufNewFile *.css set ft=css syntax=css              " Set CSS filetype and sntax to CSS
@@ -31,6 +32,8 @@ let g:rubycomplete_rails = 1
 let g:html_indent_tags = 'li\|p'                               " Treat <li> and <p> tags like the block tags
 let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"                 " Tags
 let clj_highlight_builtins = 1                                 " clojure.vim
+let NERDSpaceDelims = 1                                        " Add a space around comments
+let g:NERDCustomDelimiters = { 'scss': { 'left': '//', 'right': '', 'leftAlt': '/*', 'rightAlt': '*/' } }
 
 
 set ttimeoutlen=50                   " Speed up <esc>
