@@ -22,6 +22,17 @@ map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 map <Leader>s :split <C-R>=expand("%:p:h") . "/" <CR>
 map <Leader>v :vsplit <C-R>=expand("%:p:h") . "/" <CR>
 map <Leader>t :tabnew <C-R>=expand("%:p:h") . "/" <CR>
+
+" Quick shortcuts to views and stysheets
+map <Leader>E :e app/assets/stylesheets/
+map <Leader>EE :e app/views/
+map <Leader>T :tabnew app/assets/stylesheets/
+map <Leader>TT :tabnew app/views/
+map <Leader>V :vsplit app/assets/stylesheets/
+map <Leader>VV :vsplit app/views/
+map <Leader>S :split app/assets/stylesheets/
+map <Leader>SS :split app/views/
+
 map <Leader>N :NERDTree <C-R>=expand("%:p:h") . "/" <CR>
 autocmd User Rails Rnavcommand step features/step_definitions -glob=**/* -suffix=_steps.rb
 
@@ -48,8 +59,8 @@ nmap <Leader>O :SessionOpen
 
 " NERD Commenter
 map <Leader>\\ <Leader>cc<CR>
-map <Leader>xx <Leader>cs<CR>
-map <Leader>zz <Leader>cu<CR>
+map <Leader>]] <Leader>cs<CR>
+map <Leader>[[ <Leader>cu<CR>
 
 " Disable middle button paste
 map <MiddleMouse> <Nop>

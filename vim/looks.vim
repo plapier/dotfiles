@@ -47,6 +47,6 @@ if has('gui_running')
 endif
 
 " Numbers
-"set number                     " Normal Absolute line numbers by default
-set relativenumber              " Relative Line Numbers by default
+"
+set number
 set numberwidth=5

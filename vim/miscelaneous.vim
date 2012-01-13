@@ -40,7 +40,6 @@ set ttimeoutlen=50                   " Speed up <esc>
 set nopaste                          " SnippetMate requirement
 set pastetoggle=<F7>                 " toggle past and nopaste
 
-
 " set cursorcolumn when editing HAML and others
 autocmd BufEnter *.html setlocal cursorcolumn
 autocmd BufEnter *.html.erb setlocal cursorcolumn

@@ -23,7 +23,7 @@ set autowrite                        " Automatically save before commands like :
 
 source $HOME/.vim/mappings.vim    " Key Mappings
 source $HOME/.vim/miscelaneous.vim
-source $HOME/.vim/number.vim      " Toggle Relative or Abs Line numbers
+" source $HOME/.vim/number.vim      " Toggle Relative or Abs Line numbers
 source $HOME/.vim/wrapping.vim
 source $HOME/.vim/copypaste.vim
 source $HOME/.vim/backups.vim
@@ -39,3 +39,4 @@ source $HOME/.vim/buffers.vim
 source $HOME/.vim/tabularizing.vim
 source $HOME/.vim/ruby-blocks.vim
 source $HOME/.vim/vundle.vim      " Vundles
+source $HOME/.vim/splits.vim      " Vundles
