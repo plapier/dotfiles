@@ -1,2 +1,2 @@
 #!/usr/bin/env ruby
-puts ARGF.read.split("\n").sort { |a,b| a.sub('@include ','') <=> b.sub('@include ', '') }
+puts ARGF.read.split("\n").sort { |a,b| a.sub('@include ','').sub('-', '') <=> b.sub('@include ', '').sub('-', '') }
