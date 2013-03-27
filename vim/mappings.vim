@@ -71,3 +71,19 @@ nnoremap <Left> :echoe "Use h"<CR>
 nnoremap <Right> :echoe "Use l"<CR>
 nnoremap <Up> :echoe "Use k"<CR>
 nnoremap <Down> :echoe "Use j"<CR>
+
+" Remap this becuase it is annoting
+nnoremap K L<CR>
+
+" Save file, switch to browser and reload
+map <D-d> <Esc>:w<CR>:RRB<CR>
+
+" Trim Trailing Whitespace
+nmap <Leader>1 :%s/\s\+$//<CR>
+
+"convert JS to Coffee
+vmap <Leader>jc <esc>:'<,'>!js2coffeescript<CR>
+
+"convert Coffee to JS
+vmap <leader>c <esc>:'<,'>:w !coffee -scb<CR>
+vmap <leader>cj <esc>:'<,'>!coffee -sbp<CR>

@@ -7,13 +7,13 @@ nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 
 " filetypes
-autocmd FileType python set omnifunc=pythoncomplete#Complete
+" autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType scss set omnifunc=csscomplete#CompleteCSS
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType c set omnifunc=ccomplete#Complete
+" autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+" autocmd FileType c set omnifunc=ccomplete#Complete
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
 autocmd FileType jst let &l:commentstring='<!--%s-->'          " Set NERD_Commenter comment type
 autocmd FileType scss let &l:commentstring='//%s'              " Set NERD_Commenter comment type
@@ -34,21 +34,12 @@ let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"                 " Tags
 let clj_highlight_builtins = 1                                 " clojure.vim
 let NERDSpaceDelims = 1                                        " Add a space around comments
 let g:NERDCustomDelimiters = { 'scss': { 'left': '//', 'right': '', 'leftAlt': '/*', 'rightAlt': '*/' } }
+let g:RefreshRunningBrowserReturnFocus = 0                     " False - don't return to browser after refresh
 
 
 set ttimeoutlen=50                   " Speed up <esc>
 set nopaste                          " SnippetMate requirement
 set pastetoggle=<F7>                 " toggle past and nopaste
-
-" set cursorcolumn when editing HAML and others
-autocmd BufEnter *.html setlocal cursorcolumn
-autocmd BufEnter *.html.erb setlocal cursorcolumn
-autocmd BufEnter *.haml setlocal cursorcolumn
-autocmd BufEnter *.scss setlocal cursorcolumn
-autocmd BufEnter *.less setlocal cursorcolumn
-autocmd BufEnter *.js setlocal cursorcolumn
-autocmd BufEnter *.jst setlocal cursorcolumn
-autocmd BufEnter *.ejs setlocal cursorcolumn
 
 
 """""""""""""""""""""""""""""""""

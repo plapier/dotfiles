@@ -3,12 +3,13 @@
 """""""""""""""""""""""""""""""""
 runtime macros/matchit.vim           " Enable matchit
 runtime bundle/vim-pathogen/autoload/pathogen.vim
-set rtp+=~/.vim/bundle/vundle/       " Vundle
-call vundle#rc()
 call pathogen#helptags()
 call pathogen#infect()
 filetype off
 syntax on
+
+set rtp+=~/.vim/bundle/vundle/       " Vundle
+call vundle#rc()
 filetype plugin indent on            " indent files, ftplugins
 
 set nocompatible                     " We're on vim, not vi
@@ -40,3 +41,4 @@ source $HOME/.vim/tabularizing.vim
 source $HOME/.vim/ruby-blocks.vim
 source $HOME/.vim/vundle.vim      " Vundles
 source $HOME/.vim/splits.vim      " Vundles
+source $HOME/.vim/wildignore.vim  " Wild Ignore for Command T

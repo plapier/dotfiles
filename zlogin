@@ -6,6 +6,12 @@ git_prompt_info() {
   fi
 }
 
+# ESC to normal mode (VIM)
+bindkey -v
+
+# search history
+bindkey "^r" history-incremental-search-backward
+
 # makes color constants available
 autoload -U colors
 colors
@@ -18,7 +24,6 @@ setopt prompt_subst
 
 # prompt
 export PS1='$(git_prompt_info)[${SSH_CONNECTION+"%{$fg_bold[green]%}%n@%m:"}%{$fg_bold[blue]%}%~%{$reset_color%}] '
-
 
 export PATH=/usr/local/bin:$PATH
 export PATH=~/bin:$PATH

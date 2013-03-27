@@ -10,6 +10,7 @@ set showmatch                        " Show matching brackets.
 set mat=5                            " Bracket blinking.
 set laststatus=2                     " Always show status line (not only for multiple windows)
 set cursorline                       " Highlight cursor line
+set cursorcolumn                     " Highlight cusor column
 set listchars=tab:>\ ,trail:•,extends:>,precedes:<,nbsp:+
 set list                             " Show trailing whiteshace and tabs
 set showcmd                          " Display incomplete commands
@@ -19,7 +20,7 @@ set splitright                       " VSplit windows to the right
 set history=50
 
 
-set guifont=Consolas:h14
+set guifont=Consolas:h16
 "set guifont=Anonymous\ Pro:h16
 "set guifont=DejaVu\ Sans\ Mono:h16
 "set guifont=Inconsolata:h16
@@ -42,7 +43,8 @@ if has('gui_running')
   set guioptions-=T              " Remove toolbar and menus in gvim
   set guioptions-=m
   set guioptions-=l
-  set guioptions-=r
+  set guioptions-=r              " remove right-hand scroll bar
+  set guioptions-=L              " Remove left-hand scroll bar
   set mousehide                  " Hide mouse after chars typed, only gvim
 endif
 
