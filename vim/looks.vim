@@ -21,7 +21,8 @@ set history=50
 
 
 set guifont=Consolas:h16
-"set guifont=Anonymous\ Pro:h16
+" set guifont=Anonymous\ Pro:h16
+" set guifont=Monaco:h16
 "set guifont=DejaVu\ Sans\ Mono:h16
 "set guifont=Inconsolata:h16
 "
@@ -30,6 +31,7 @@ let g:solarized_contrast = "normal"
 set t_Co=256
 set background=dark
 :colorscheme solarized
+" :colorscheme toychest
 ":colorscheme rubyblue
 ":colorscheme vividchalk
 ":colorscheme neon

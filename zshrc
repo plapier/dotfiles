@@ -28,7 +28,6 @@ export EDITOR=vim
 if [ -e "$HOME/.aliases" ]; then
   source "$HOME/.aliases"
 fi
-alias heroku='nocorrect meteor'
 
 # vi mode
 bindkey -v
@@ -78,11 +77,6 @@ zstyle ':predict' verbose true
 
 if [[ -s /Users/phil/.rvm/scripts/rvm ]] ; then source /Users/phil/.rvm/scripts/rvm ; fi
 
-# RVM
-[[ -s '/Users/phil/.rvm/scripts/rvm' ]] && source '/Users/phil/.rvm/scripts/rvm'
-
-#postgresql
-#PATH="/Applications/Postgres.app/Contents/MacOS/bin:$PATH"
 
 # awesome cd movements from zshkit
 setopt AUTOCD
@@ -95,8 +89,7 @@ setopt CORRECT CORRECT_ALL
 # Enable extended globbing
 setopt EXTENDED_GLOB
 
-PATH=./bin:$PATH
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
 ###-begin-npm-completion-###
 #
 # npm command completion script

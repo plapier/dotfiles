@@ -35,7 +35,7 @@ let clj_highlight_builtins = 1                                 " clojure.vim
 let NERDSpaceDelims = 1                                        " Add a space around comments
 let g:NERDCustomDelimiters = { 'scss': { 'left': '//', 'right': '', 'leftAlt': '/*', 'rightAlt': '*/' } }
 let g:RefreshRunningBrowserReturnFocus = 0                     " False - don't return to browser after refresh
-
+let g:neocomplcache_enable_at_startup = 1                      " neocomplete.vim plugin
 
 set ttimeoutlen=50                   " Speed up <esc>
 set nopaste                          " SnippetMate requirement

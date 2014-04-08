@@ -37,8 +37,8 @@ map <Leader>N :NERDTree <C-R>=expand("%:p:h") . "/" <CR>
 autocmd User Rails Rnavcommand step features/step_definitions -glob=**/* -suffix=_steps.rb
 
 " Unset highlighting
-nnoremap <Leader>h :nohls<CR><C-L>
-nmap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+nnoremap <Leader>n :nohls<CR>
+" nmap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 
 " Ctrl-j/k deletes blank line below/above, and Alt-j/k inserts.
 nnoremap <silent><C-j> m`:silent +g/\m^\s*$/d<CR>``:noh<CR>
@@ -87,3 +87,12 @@ vmap <Leader>jc <esc>:'<,'>!js2coffeescript<CR>
 "convert Coffee to JS
 vmap <leader>c <esc>:'<,'>:w !coffee -scb<CR>
 vmap <leader>cj <esc>:'<,'>!coffee -sbp<CR>
+
+" Tabularize Mappings to align by character
+if exists(":Tabularize")
+  nnoremap <Leader>a :Tabularize /
+  vnoremap <Leader>a :Tabularize /
+  " vmap <Leader>a= :Tabularize /=<CR>
+  " vmap <Leader>a: :Tabularize /:\zs<CR>
+  " vmap <Leader>a/ :Tabularize /
+endif

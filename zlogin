@@ -25,5 +25,12 @@ setopt prompt_subst
 # prompt
 export PS1='$(git_prompt_info)[${SSH_CONNECTION+"%{$fg_bold[green]%}%n@%m:"}%{$fg_bold[blue]%}%~%{$reset_color%}] '
 
-export PATH=/usr/local/bin:$PATH
-export PATH=~/bin:$PATH
+# echo $PATH
+# export PATH=$PATH:/usr/local/bin:$PATH
+export PATH="$PATH:/Users/$USER/bin"
+# ### Added by the Heroku Toolbelt
+#
+export PATH="$PATH:/usr/local/heroku/bin"
+
+export PATH="$PATH:$HOME/.rvm/bin:/Applications/Postgres.app/Contents/Versions/9.3/bin"
+# echo $PATH
