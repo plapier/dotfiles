@@ -58,3 +58,6 @@ alias -g ONE="| awk '{ print \$1}'"
 alias bower='noglob bower'
 # Quick look at a file from the shell
 alias ql='qlmanage -p'
+
+alias logs='nocorrect logs'
+alias nvm='nocorrect nvm'

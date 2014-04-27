@@ -82,7 +82,8 @@ map <D-d> <Esc>:w<CR>:RRB<CR>
 nmap <Leader>1 :%s/\s\+$//<CR>
 
 "convert JS to Coffee
-vmap <Leader>jc <esc>:'<,'>!js2coffeescript<CR>
+" vmap <Leader>jc <esc>:'<,'>!js2coffeescript<CR>
+vmap <Leader>jc <esc>:'<,'>!js2coffee<CR>
 
 "convert Coffee to JS
 vmap <leader>c <esc>:'<,'>:w !coffee -scb<CR>
