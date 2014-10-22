@@ -9,6 +9,7 @@ alias be="bundle exec"
 alias bw='sass --watch stylesheets/sass:stylesheets'
 alias bwc='sass --watch --style compressed stylesheets/sass:stylesheets'
 alias cw='coffee --watch -c'
+alias cb='coffeebar -m -w'
 alias cuc="bundle exec cucumber"
 alias js="jekyll serve -w"
 alias migrate="rake db:migrate db:test:prepare"

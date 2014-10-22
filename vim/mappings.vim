@@ -97,3 +97,5 @@ if exists(":Tabularize")
   " vmap <Leader>a: :Tabularize /:\zs<CR>
   " vmap <Leader>a/ :Tabularize /
 endif
+
+iabbrev visiblity visibility

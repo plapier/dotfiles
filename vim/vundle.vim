@@ -1,7 +1,7 @@
 " Bundle 'Raimondi/delimitMate'
+" Bundle 'hail2u/vim-css3-syntax'
 Bundle 'briancollins/vim-jst'
 Bundle 'cakebaker/scss-syntax.vim'
-" Bundle 'hail2u/vim-css3-syntax'
 Bundle 'othree/html5.vim'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'skwp/greplace.vim'

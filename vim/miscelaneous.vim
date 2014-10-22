@@ -10,6 +10,8 @@ nnoremap <C-y> 3<C-y>
 " autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+" Allow stylesheets to autocomplete hyphenated words
+autocmd FileType css,scss,sass setlocal iskeyword+=-
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType scss set omnifunc=csscomplete#CompleteCSS
 " autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
@@ -18,6 +20,7 @@ autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
 autocmd FileType jst let &l:commentstring='<!--%s-->'          " Set NERD_Commenter comment type
 autocmd FileType scss let &l:commentstring='//%s'              " Set NERD_Commenter comment type
 autocmd BufNewFile,BufRead Gemfile setlocal filetype=ruby      " Set ruby syntax for Gemfile
+
 
 au BufRead,BufNewFile *.css set ft=css syntax=css              " Set CSS filetype and sntax to CSS
 au BufRead,BufNewFile *.less set ft=scss syntax=scss           " Set LESS filetype and syntax to SCSS
