@@ -1,8 +1,10 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_cnt =8
 let g:netrw_dirhist_1='/Users/phil/Sites/IoraHealth/public/stylesheets/sass'
 let g:netrw_dirhist_2='/Users/phil/Dev/testapp/app/assets/stylesheets'
 let g:netrw_dirhist_3='/Users/phil/Dev/bourbon/_includes'
 let g:netrw_dirhist_4='/Users/phil/Sites/swaave/app/assets/stylesheets'
 let g:netrw_dirhist_5='/Users/lapier/.zsh'
 let g:netrw_dirhist_6='/Users/lapier/.oh-my-zsh'
+let g:netrw_dirhist_7='/Users/lapier/Sites/server/vmsetup'
+let g:netrw_dirhist_8='/Users/lapier/Sites/server'

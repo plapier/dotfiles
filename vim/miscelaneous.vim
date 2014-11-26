@@ -40,6 +40,13 @@ let g:NERDCustomDelimiters = { 'scss': { 'left': '//', 'right': '', 'leftAlt': '
 let g:RefreshRunningBrowserReturnFocus = 0                     " False - don't return to browser after refresh
 let g:neocomplcache_enable_at_startup = 1                      " neocomplete.vim plugin
 
+let g:CommandTMaxHeight=20                                     " CommandT height
+let g:CommandTMatchWindowAtTop=1
+" let g:CommandTMatchWindowReverse=1
+let g:CommandTHighlightColor='DiffAdd'
+let g:CommandTHighlightColor='pandocFootnoteInline'
+let g:CommandTWildIgnore=&wildignore . "*.o,*.obj,*.d,*.png,*.svn-base,*.gif,*.jpg,*.pak,*.ninja,*.so,*.a,*.gz,*.swf,*.tmp.*,out/**,out_*/**,**/third_party/**,*.mk"
+
 set ttimeoutlen=50                   " Speed up <esc>
 set nopaste                          " SnippetMate requirement
 set pastetoggle=<F7>                 " toggle past and nopaste
