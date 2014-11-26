@@ -3,7 +3,7 @@
 # This loads nvm at start of $PATH
 [ -s "$HOME/.nvm/nvm.sh" ] && . "$HOME/.nvm/nvm.sh"
 
-# export PATH="$PATH:/Users/$USER/bin"
+export PATH="$PATH:/Users/$USER/.bin"
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init - zsh)"
 

@@ -1,4 +1,4 @@
-thoughtbot Designer dotfiles
+My dotfiles
 ============================
 
 Install
