@@ -68,10 +68,10 @@ map <MiddleMouse> <Nop>
 imap <MiddleMouse> <Nop>
 
 " Get off my lawn
-nnoremap <Left> :echoe "Use h"<CR>
-nnoremap <Right> :echoe "Use l"<CR>
-nnoremap <Up> :echoe "Use k"<CR>
-nnoremap <Down> :echoe "Use j"<CR>
+" nnoremap <Left> :echoe "Use h"<CR>
+" nnoremap <Right> :echoe "Use l"<CR>
+" nnoremap <Up> :echoe "Use k"<CR>
+" nnoremap <Down> :echoe "Use j"<CR>
 
 " Remap this becuase it is annoting
 nnoremap K L<CR>
@@ -98,5 +98,9 @@ if exists(":Tabularize")
   " vmap <Leader>a: :Tabularize /:\zs<CR>
   " vmap <Leader>a/ :Tabularize /
 endif
+
+" CommandT — Rebuild cache
+map <Leader>0 :CommandTFlush<CR>
+
 
 iabbrev visiblity visibility

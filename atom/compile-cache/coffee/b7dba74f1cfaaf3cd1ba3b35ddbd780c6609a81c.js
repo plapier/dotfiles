@@ -1,0 +1,64 @@
+(function() {
+  var CompositeDisposable, ScssSort, ScssSortView;
+
+  ScssSortView = require('./scss-sort-view');
+
+  CompositeDisposable = require('atom').CompositeDisposable;
+
+  module.exports = ScssSort = {
+    scssSortView: null,
+    modalPanel: null,
+    subscriptions: null,
+    activate: function(state) {
+      return atom.commands.add('atom-workspace', "scss-sort:sort-selection", (function(_this) {
+        return function() {
+          return _this.sort_selection();
+        };
+      })(this));
+    },
+    sort_selection: function() {
+      var editor, selection, sortedText, textArray;
+      editor = atom.workspace.getActivePaneItem();
+      selection = editor.getLastSelection();
+      textArray = selection.getText().split('\n').filter(function(e) {
+        return e;
+      });
+      sortedText = textArray.sort(function(a, b) {
+        var newA, newB;
+        newA = a.replace(/@include /i, '').replace(/-webkit-/i, '').replace(/-moz-/i, '');
+        newB = b.replace(/@include /i, '').replace(/-webkit-/i, '').replace(/-moz-/i, '');
+        if (newA > newB) {
+          return 1;
+        }
+        if (newA < newB) {
+          return -1;
+        }
+        return 0;
+      });
+      sortedText.push("");
+      return selection.insertText(sortedText.join('\n'));
+    },
+    deactivate: function() {
+      this.modalPanel.destroy();
+      this.subscriptions.dispose();
+      return this.scssSortView.destroy();
+    },
+    serialize: function() {
+      return {
+        scssSortViewState: this.scssSortView.serialize()
+      };
+    },
+    toggle: function() {
+      console.log('ScssSort was toggled!');
+      if (this.modalPanel.isVisible()) {
+        return this.modalPanel.hide();
+      } else {
+        return this.modalPanel.show();
+      }
+    }
+  };
+
+}).call(this);
+
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAiZmlsZSI6ICIiLAogICJzb3VyY2VSb290IjogIiIsCiAgInNvdXJjZXMiOiBbCiAgICAiIgogIF0sCiAgIm5hbWVzIjogW10sCiAgIm1hcHBpbmdzIjogIkFBQUE7QUFBQSxNQUFBLDJDQUFBOztBQUFBLEVBQUEsWUFBQSxHQUFlLE9BQUEsQ0FBUSxrQkFBUixDQUFmLENBQUE7O0FBQUEsRUFDQyxzQkFBdUIsT0FBQSxDQUFRLE1BQVIsRUFBdkIsbUJBREQsQ0FBQTs7QUFBQSxFQUdBLE1BQU0sQ0FBQyxPQUFQLEdBQWlCLFFBQUEsR0FDZjtBQUFBLElBQUEsWUFBQSxFQUFjLElBQWQ7QUFBQSxJQUNBLFVBQUEsRUFBWSxJQURaO0FBQUEsSUFFQSxhQUFBLEVBQWUsSUFGZjtBQUFBLElBSUEsUUFBQSxFQUFVLFNBQUMsS0FBRCxHQUFBO2FBQ1IsSUFBSSxDQUFDLFFBQVEsQ0FBQyxHQUFkLENBQWtCLGdCQUFsQixFQUFvQywwQkFBcEMsRUFBZ0UsQ0FBQSxTQUFBLEtBQUEsR0FBQTtlQUFBLFNBQUEsR0FBQTtpQkFBRyxLQUFDLENBQUEsY0FBRCxDQUFBLEVBQUg7UUFBQSxFQUFBO01BQUEsQ0FBQSxDQUFBLENBQUEsSUFBQSxDQUFoRSxFQURRO0lBQUEsQ0FKVjtBQUFBLElBT0EsY0FBQSxFQUFnQixTQUFBLEdBQUE7QUFDZCxVQUFBLHdDQUFBO0FBQUEsTUFBQSxNQUFBLEdBQVMsSUFBSSxDQUFDLFNBQVMsQ0FBQyxpQkFBZixDQUFBLENBQVQsQ0FBQTtBQUFBLE1BQ0EsU0FBQSxHQUFZLE1BQU0sQ0FBQyxnQkFBUCxDQUFBLENBRFosQ0FBQTtBQUFBLE1BRUEsU0FBQSxHQUFZLFNBQVMsQ0FBQyxPQUFWLENBQUEsQ0FBbUIsQ0FBQyxLQUFwQixDQUEwQixJQUExQixDQUErQixDQUFDLE1BQWhDLENBQXVDLFNBQUMsQ0FBRCxHQUFBO2VBQU8sRUFBUDtNQUFBLENBQXZDLENBRlosQ0FBQTtBQUFBLE1BR0EsVUFBQSxHQUFhLFNBQVMsQ0FBQyxJQUFWLENBQWUsU0FBQyxDQUFELEVBQUksQ0FBSixHQUFBO0FBQzFCLFlBQUEsVUFBQTtBQUFBLFFBQUEsSUFBQSxHQUFPLENBQUMsQ0FBQyxPQUFGLENBQVUsWUFBVixFQUF3QixFQUF4QixDQUEyQixDQUFDLE9BQTVCLENBQW9DLFdBQXBDLEVBQWlELEVBQWpELENBQW9ELENBQUMsT0FBckQsQ0FBNkQsUUFBN0QsRUFBdUUsRUFBdkUsQ0FBUCxDQUFBO0FBQUEsUUFDQSxJQUFBLEdBQU8sQ0FBQyxDQUFDLE9BQUYsQ0FBVSxZQUFWLEVBQXdCLEVBQXhCLENBQTJCLENBQUMsT0FBNUIsQ0FBb0MsV0FBcEMsRUFBaUQsRUFBakQsQ0FBb0QsQ0FBQyxPQUFyRCxDQUE2RCxRQUE3RCxFQUF1RSxFQUF2RSxDQURQLENBQUE7QUFFQSxRQUFBLElBQUksSUFBQSxHQUFPLElBQVg7QUFBc0IsaUJBQU8sQ0FBUCxDQUF0QjtTQUZBO0FBR0EsUUFBQSxJQUFJLElBQUEsR0FBTyxJQUFYO0FBQXNCLGlCQUFPLENBQUEsQ0FBUCxDQUF0QjtTQUhBO0FBSUEsZUFBTyxDQUFQLENBTDBCO01BQUEsQ0FBZixDQUhiLENBQUE7QUFBQSxNQVNBLFVBQVUsQ0FBQyxJQUFYLENBQWdCLEVBQWhCLENBVEEsQ0FBQTthQVVBLFNBQVMsQ0FBQyxVQUFWLENBQXFCLFVBQVUsQ0FBQyxJQUFYLENBQWdCLElBQWhCLENBQXJCLEVBWGM7SUFBQSxDQVBoQjtBQUFBLElBb0JBLFVBQUEsRUFBWSxTQUFBLEdBQUE7QUFDVixNQUFBLElBQUMsQ0FBQSxVQUFVLENBQUMsT0FBWixDQUFBLENBQUEsQ0FBQTtBQUFBLE1BQ0EsSUFBQyxDQUFBLGFBQWEsQ0FBQyxPQUFmLENBQUEsQ0FEQSxDQUFBO2FBRUEsSUFBQyxDQUFBLFlBQVksQ0FBQyxPQUFkLENBQUEsRUFIVTtJQUFBLENBcEJaO0FBQUEsSUF5QkEsU0FBQSxFQUFXLFNBQUEsR0FBQTthQUNUO0FBQUEsUUFBQSxpQkFBQSxFQUFtQixJQUFDLENBQUEsWUFBWSxDQUFDLFNBQWQsQ0FBQSxDQUFuQjtRQURTO0lBQUEsQ0F6Qlg7QUFBQSxJQTRCQSxNQUFBLEVBQVEsU0FBQSxHQUFBO0FBQ04sTUFBQSxPQUFPLENBQUMsR0FBUixDQUFZLHVCQUFaLENBQUEsQ0FBQTtBQUVBLE1BQUEsSUFBRyxJQUFDLENBQUEsVUFBVSxDQUFDLFNBQVosQ0FBQSxDQUFIO2VBQ0UsSUFBQyxDQUFBLFVBQVUsQ0FBQyxJQUFaLENBQUEsRUFERjtPQUFBLE1BQUE7ZUFHRSxJQUFDLENBQUEsVUFBVSxDQUFDLElBQVosQ0FBQSxFQUhGO09BSE07SUFBQSxDQTVCUjtHQUpGLENBQUE7QUFBQSIKfQ==
+//# sourceURL=/Users/lapier/github/scss-sort/lib/scss-sort.coffee

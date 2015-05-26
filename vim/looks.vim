@@ -30,7 +30,8 @@ let g:solarized_contrast = "normal"
 
 set t_Co=256
 set background=dark
-:colorscheme solarized
+:colorscheme tomorrow-night
+" :colorscheme solarized
 " :colorscheme toychest
 ":colorscheme rubyblue
 ":colorscheme vividchalk

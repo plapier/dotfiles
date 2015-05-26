@@ -89,3 +89,8 @@ setopt EXTENDED_GLOB
 
 # NVM Completion
 [[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
+
+export NVM_DIR="/Users/lapier/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+alias rsync_vm="find metaserver/metaserver -name *.coffee -exec touch {} \;"

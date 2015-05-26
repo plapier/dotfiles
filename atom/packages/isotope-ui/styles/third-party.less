@@ -1,0 +1,55 @@
+/*
+* tweaks to non-core packages
+*/
+
+atom-workspace .browser-toolbar {
+  background: transparent;
+  .omnibox-container .omnibox input {
+    border-radius: @component-border-radius;
+    background: @level-3-bg;
+  }
+}
+atom-workspace .browser-page webview {
+  margin: 0;
+}
+
+.git-control {
+  overflow: hidden;
+}
+
+.cli-status {
+  atom-text-editor[mini] {
+    height: @component-line-height;
+  }
+}
+
+atom-text-editor,
+atom-text-editor::shadow {
+
+  atom-color-highlight {
+    dot-color-marker {
+      margin-top: .4em;
+      max-width: .6em;
+      max-height: .6em;
+      border-radius: @component-border-radius;
+
+      &.selected {
+        box-shadow: 0 0 1px 1px @base-fg;
+
+        .selector {
+          display: none;
+        }
+      }
+    }
+  }
+
+  // minimap
+  atom-text-editor-minimap::shadow .minimap-visible-area {
+    background-color: contrast(
+        @syntax-background-color,
+        darken(@syntax-background-color, 33%),
+        lighten(@syntax-background-color, 33%)
+      );
+    opacity: .33;
+  }
+}

@@ -1,0 +1,11 @@
+[core]
+	excludesfile = /Users/lapier/.gitignore
+	; editor = mvim -f
+  editor = vim
+[user]
+	name = Phil LaPier
+	email = phil.lapier@gmail.com
+[push]
+	default = simple
+[credential]
+	helper = osxkeychain

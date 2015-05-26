@@ -1,0 +1,25 @@
+{
+   "background": {
+      "persistent": false,
+      "scripts": [ "device/RegisterExtension.js" ]
+   },
+   "content_scripts": [ {
+      "js": [ "injected/GlobalHook.js" ],
+      "matches": [ "\u003Call_urls>" ],
+      "run_at": "document_start"
+   } ],
+   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+   "description": "Adds React debugging tools to the Chrome Developer Tools.",
+   "devtools_page": "main.html",
+   "icons": {
+      "128": "icons/icon128.png",
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA39Lr82J1eer+RvXeQG6HYHb2A6xU/83bcIyOcu+Wu2vYO/jbBvlD3m/xqrU4xSXJ/uAC1XY/YtlRs2X2RE1XiYMMlnqw27QdI5tVcSnKedmTFNAsnSaQ/OZT5tzH3HntLDfrFof5BC5RmFuie+kQKGTh673JW0ZdKTUsW406Fckagl9WpPL+qp3Gah3Jw02zxfQX9yUd5gJHYvv8T31DO9+HsI8lPeEjanURY59rRUfg3JKy1aPfts6eISy9kpHC+LrRSHU2Zp5AuUkOh8qEg6DoHFwBNYX20bdd6ekj0OZiIz/9xj9ceNhAr85QYB0641Tzhs3Tg96k56VNwjdN2QIDAQAB",
+   "manifest_version": 2,
+   "name": "React Developer Tools",
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "0.12.1",
+   "web_accessible_resources": [ "main.html", "views/devpanel.html" ]
+}

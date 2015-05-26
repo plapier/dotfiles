@@ -44,6 +44,7 @@ alias gpu='git push'
 #alias gr='git rebase'
 alias gs='git status'
 alias gx='gitx --all'
+alias gclean='git clean -f -d'
 
 # Other
 alias ln='ln -v'
@@ -64,3 +65,8 @@ alias ql='qlmanage -p'
 
 alias logs='nocorrect logs'
 alias nvm='nocorrect nvm'
+alias touchall='find static -name "*.coffee" -exec touch {} \;'
+
+# Show hidden files in finder
+alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
+alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'

@@ -1,0 +1,62 @@
+(function() {
+  var CompositeDisposable, ScssSort, ScssSortView;
+
+  ScssSortView = require('./scss-sort-view');
+
+  CompositeDisposable = require('atom').CompositeDisposable;
+
+  module.exports = ScssSort = {
+    scssSortView: null,
+    modalPanel: null,
+    subscriptions: null,
+    activate: function(state) {
+      return atom.commands.add('atom-workspace', "scss-sort:sort", (function(_this) {
+        return function() {
+          return _this.sort();
+        };
+      })(this));
+    },
+    sort: function() {
+      var editor, selection, sortedText, text, textArray;
+      editor = atom.workspace.getActivePaneItem();
+      selection = editor.getLastSelection();
+      text = selection.getText();
+      textArray = text.split('\n');
+      sortedText = textArray.sort(function(a, b) {
+        var newA, newB;
+        newA = a.str.replace(/@include/i, '');
+        newB = b.str.replace(/@include/i, '');
+        if (newA > newB) {
+          return 1;
+        }
+        if (newA < newB) {
+          return -1;
+        }
+        return 0;
+      });
+      return console.log(sortedText);
+    },
+    deactivate: function() {
+      this.modalPanel.destroy();
+      this.subscriptions.dispose();
+      return this.scssSortView.destroy();
+    },
+    serialize: function() {
+      return {
+        scssSortViewState: this.scssSortView.serialize()
+      };
+    },
+    toggle: function() {
+      console.log('ScssSort was toggled!');
+      if (this.modalPanel.isVisible()) {
+        return this.modalPanel.hide();
+      } else {
+        return this.modalPanel.show();
+      }
+    }
+  };
+
+}).call(this);
+
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAiZmlsZSI6ICIiLAogICJzb3VyY2VSb290IjogIiIsCiAgInNvdXJjZXMiOiBbCiAgICAiIgogIF0sCiAgIm5hbWVzIjogW10sCiAgIm1hcHBpbmdzIjogIkFBQUE7QUFBQSxNQUFBLDJDQUFBOztBQUFBLEVBQUEsWUFBQSxHQUFlLE9BQUEsQ0FBUSxrQkFBUixDQUFmLENBQUE7O0FBQUEsRUFDQyxzQkFBdUIsT0FBQSxDQUFRLE1BQVIsRUFBdkIsbUJBREQsQ0FBQTs7QUFBQSxFQUdBLE1BQU0sQ0FBQyxPQUFQLEdBQWlCLFFBQUEsR0FDZjtBQUFBLElBQUEsWUFBQSxFQUFjLElBQWQ7QUFBQSxJQUNBLFVBQUEsRUFBWSxJQURaO0FBQUEsSUFFQSxhQUFBLEVBQWUsSUFGZjtBQUFBLElBSUEsUUFBQSxFQUFVLFNBQUMsS0FBRCxHQUFBO2FBQ1IsSUFBSSxDQUFDLFFBQVEsQ0FBQyxHQUFkLENBQWtCLGdCQUFsQixFQUFvQyxnQkFBcEMsRUFBc0QsQ0FBQSxTQUFBLEtBQUEsR0FBQTtlQUFBLFNBQUEsR0FBQTtpQkFBRyxLQUFDLENBQUEsSUFBRCxDQUFBLEVBQUg7UUFBQSxFQUFBO01BQUEsQ0FBQSxDQUFBLENBQUEsSUFBQSxDQUF0RCxFQURRO0lBQUEsQ0FKVjtBQUFBLElBT0EsSUFBQSxFQUFNLFNBQUEsR0FBQTtBQUNKLFVBQUEsOENBQUE7QUFBQSxNQUFBLE1BQUEsR0FBUyxJQUFJLENBQUMsU0FBUyxDQUFDLGlCQUFmLENBQUEsQ0FBVCxDQUFBO0FBQUEsTUFDQSxTQUFBLEdBQVksTUFBTSxDQUFDLGdCQUFQLENBQUEsQ0FEWixDQUFBO0FBQUEsTUFFQSxJQUFBLEdBQU8sU0FBUyxDQUFDLE9BQVYsQ0FBQSxDQUZQLENBQUE7QUFBQSxNQUdBLFNBQUEsR0FBWSxJQUFJLENBQUMsS0FBTCxDQUFXLElBQVgsQ0FIWixDQUFBO0FBQUEsTUFJQSxVQUFBLEdBQWEsU0FBUyxDQUFDLElBQVYsQ0FBZSxTQUFDLENBQUQsRUFBSSxDQUFKLEdBQUE7QUFDMUIsWUFBQSxVQUFBO0FBQUEsUUFBQSxJQUFBLEdBQU8sQ0FBQyxDQUFDLEdBQUcsQ0FBQyxPQUFOLENBQWMsV0FBZCxFQUEyQixFQUEzQixDQUFQLENBQUE7QUFBQSxRQUNBLElBQUEsR0FBTyxDQUFDLENBQUMsR0FBRyxDQUFDLE9BQU4sQ0FBYyxXQUFkLEVBQTJCLEVBQTNCLENBRFAsQ0FBQTtBQUVBLFFBQUEsSUFBSSxJQUFBLEdBQU8sSUFBWDtBQUNFLGlCQUFPLENBQVAsQ0FERjtTQUZBO0FBSUEsUUFBQSxJQUFJLElBQUEsR0FBTyxJQUFYO0FBQ0UsaUJBQU8sQ0FBQSxDQUFQLENBREY7U0FKQTtBQU1BLGVBQU8sQ0FBUCxDQVAwQjtNQUFBLENBQWYsQ0FKYixDQUFBO2FBWUEsT0FBTyxDQUFDLEdBQVIsQ0FBWSxVQUFaLEVBYkk7SUFBQSxDQVBOO0FBQUEsSUF3QkEsVUFBQSxFQUFZLFNBQUEsR0FBQTtBQUNWLE1BQUEsSUFBQyxDQUFBLFVBQVUsQ0FBQyxPQUFaLENBQUEsQ0FBQSxDQUFBO0FBQUEsTUFDQSxJQUFDLENBQUEsYUFBYSxDQUFDLE9BQWYsQ0FBQSxDQURBLENBQUE7YUFFQSxJQUFDLENBQUEsWUFBWSxDQUFDLE9BQWQsQ0FBQSxFQUhVO0lBQUEsQ0F4Qlo7QUFBQSxJQTZCQSxTQUFBLEVBQVcsU0FBQSxHQUFBO2FBQ1Q7QUFBQSxRQUFBLGlCQUFBLEVBQW1CLElBQUMsQ0FBQSxZQUFZLENBQUMsU0FBZCxDQUFBLENBQW5CO1FBRFM7SUFBQSxDQTdCWDtBQUFBLElBZ0NBLE1BQUEsRUFBUSxTQUFBLEdBQUE7QUFDTixNQUFBLE9BQU8sQ0FBQyxHQUFSLENBQVksdUJBQVosQ0FBQSxDQUFBO0FBRUEsTUFBQSxJQUFHLElBQUMsQ0FBQSxVQUFVLENBQUMsU0FBWixDQUFBLENBQUg7ZUFDRSxJQUFDLENBQUEsVUFBVSxDQUFDLElBQVosQ0FBQSxFQURGO09BQUEsTUFBQTtlQUdFLElBQUMsQ0FBQSxVQUFVLENBQUMsSUFBWixDQUFBLEVBSEY7T0FITTtJQUFBLENBaENSO0dBSkYsQ0FBQTtBQUFBIgp9
+//# sourceURL=/Users/lapier/github/scss-sort/lib/scss-sort.coffee

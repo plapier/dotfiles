@@ -1,0 +1,1041 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+ <title>Server Error</title>
+ 
+<!-- 
+    This is the Pylons error handler.
+
+    Adapted for inclusion in Pylons by James Gardner. 
+    Uses code from Ian Bicking, Mike Bayer and others.
+-->
+
+<style type="text/css">
+        .red {
+            color:#FF0000;
+        }
+        .bold {
+            font-weight: bold;
+        }
+</style>
+<script type="text/javascript">
+
+if (document.images)
+{
+  pic1= new Image(100,25); 
+  pic1.src="/_debug/media/pylons/img/tab-yellow.png"; 
+}
+
+function switch_display(id) {
+    ids = ['extra_data', 'template_data', 'traceback_data']
+    for (i in ids){
+        part = ids[i] 
+        var el = document.getElementById(part);
+        el.className = "hidden-data";
+        var el = document.getElementById(part+'_tab');
+        el.className = "not-active";
+        var el = document.getElementById(part+'_link');
+        el.className = "not-active";
+    }
+    var el = document.getElementById(id);
+    el.className = "active";
+    var el = document.getElementById(id+'_link');
+    el.className = "active";
+    var el = document.getElementById(id+'_tab');
+    el.className = "active";
+}   
+</script>
+
+<style type="text/css">
+body {
+  font-family: Helvetica, sans-serif;
+}
+
+table {
+  width: 100%;
+}
+
+tr.header {
+  background-color: #006;
+  color: #fff;
+}
+
+tr.even {
+  background-color: #ddd;
+}
+
+table.variables td {
+  vertical-align: top;
+  overflow: auto;
+}
+
+a.button {
+  background-color: #ccc;
+  border: 2px outset #aaa;
+  color: #000;
+  text-decoration: none;
+}
+
+a.button:hover {
+  background-color: #ddd;
+}
+
+code.source {
+  color: #006;
+}
+
+a.switch_source {
+  color: #090;
+  text-decoration: none;
+}
+
+a.switch_source:hover {
+  background-color: #ddd;
+}
+
+.source-highlight {
+  background-color: #ff9;
+}
+
+</style>
+
+<script type="text/javascript">
+function hide_display(id) {
+    var el = document.getElementById(id);
+    if (el.className == "hidden-data") {
+        el.className = "";
+        return true;
+    } else {
+        el.className = "hidden-data";
+        return false;
+    }
+}
+document.write('<style type="text/css">\n');
+document.write('.hidden-data {display: none}\n');
+document.write('</style>\n');
+function show_button(toggle_id, name) {
+    document.write('<a href="#' + toggle_id
+        + '" onclick="javascript:hide_display(\'' + toggle_id
+        + '\')" class="button">' + name + '</a><br>');
+}
+
+function switch_source(el, hide_type) {
+    while (el) {
+        if (el.getAttribute &&
+            el.getAttribute('source-type') == hide_type) {
+            break;
+        }
+        el = el.parentNode;
+    }
+    if (! el) {
+        return false;
+    }
+    el.style.display = 'none';
+    if (hide_type == 'long') {
+        while (el) {
+            if (el.getAttribute &&
+                el.getAttribute('source-type') == 'short') {
+                break;
+            }
+            el = el.nextSibling;
+        }
+    } else {
+        while (el) {
+            if (el.getAttribute &&
+                el.getAttribute('source-type') == 'long') {
+                break;
+            }
+            el = el.previousSibling;
+        }
+    }
+    if (el) {
+        el.style.display = '';
+    }
+    return false;
+}
+
+</script><script type="text/javascript" src="/_debug/media/MochiKit.packed.js"></script>
+<script type="text/javascript" src="/_debug/media/debug.js"></script>
+<script type="text/javascript">
+debug_base = '/_debug';
+debug_count = 1419038226;
+</script>
+
+
+<!-- CSS Imports -->
+<link rel="stylesheet" href="/_debug/media/pylons/style/orange.css" type="text/css" media="screen" />
+
+<!-- Favorite Icons -->
+<link rel="icon" href="/_debug/media/pylons/img/icon-16.png" type="image/png" />
+
+<!-- Mako Styles -->
+<style type="text/css">
+    .stacktrace { margin:5px 5px 5px 5px; }
+    .highlight { padding:0px 10px 0px 10px; background-color:#9F9FDF; }
+    .nonhighlight { padding:0px; background-color:#DFDFDF; }
+    .sample { padding:10px; margin:10px 10px 10px 10px; font-family:monospace; font-size: 110%; }
+    .sampleline { padding:0px 10px 0px 10px; }
+    .sourceline { margin:5px 5px 10px 5px; font-family:monospace; font-size: 110%;}
+</style>
+
+</head>
+
+<body id="documentation" onload="switch_display('traceback_data')">
+<!-- We are only using a table to ensure old browsers see the message correctly -->
+
+<noscript>
+<div style="border-bottom: 1px solid #808080">
+<div style="border-bottom: 1px solid #404040">
+<table width="100%" border="0" cellpadding="0" bgcolor="#FFFFE1"><tr><td valign="middle"><img src="/_debug/media/pylons/img/warning.gif" alt="Warning" /></td><td>&nbsp;</td><td><span style="padding: 0px; margin: 0px; font-family: Tahoma, sans-serif; font-size: 11px">Warning, your browser does not support JavaScript so you will not be able to use the interactive debugging on this page.</span></td></tr></table>
+</div>
+</div>
+</noscript>
+    
+    <!-- Top anchor -->
+    <a name="top"></a>
+    
+    <!-- Logo -->
+    <h1 id="logo"><a class="no-underline" href="http://pylonshq.com"><img class="no-border" src="/_debug/media/pylons/img/logo.gif" alt="Pylons" title="Pylons"/></a></h1>
+    <p class="invisible"><a href="#content">Skip to content</a></p>
+
+    <!-- Main Content -->
+    <div id="nav-bar">
+
+        <!-- Section Navigation -->
+        <h4 class="invisible">Section Links</h4>
+
+            <ul id="navlist">
+               <!--  %(links)s -->
+                <li id='traceback_data_tab' class="active"><a href="javascript:switch_display('traceback_data')" id='traceback_data_link' class="active"  accesskey="1">Traceback</a></li>
+                <li id='extra_data_tab' class="" ><a href="javascript:switch_display('extra_data')" id='extra_data_link' accesskey="2" >Extra Data</a></li>
+                <li id='template_data_tab'><a href="javascript:switch_display('template_data')" accesskey="3" id='template_data_link'>Template</a></li>
+            </ul>
+    </div>
+    <div id="main-content">
+        <div class="hr"><hr class="hr" /></div>
+        <div class="content-padding">
+            <div id="extra_data" class="hidden-data">
+                <h1 class="first"><a name="content"></a>Extra Data</h1><table class="variables">
+<tr class="header"><th colspan="2">CGI Variables</th></tr>
+<tr class="odd"><td>CONTENT_LENGTH</td>
+<td><tt>'0'</tt></td></tr>
+<tr class="even"><td>HTTP_ACCEPT</td>
+<td><tt>'application/json, text/javascript, */*; q=0.01'</tt></td></tr>
+<tr class="odd"><td>HTTP_ACCEPT_ENCODING</td>
+<td><tt>'gzip, deflate, sdch'</tt></td></tr>
+<tr class="even"><td>HTTP_ACCEPT_LANGUAGE</td>
+<td><tt>'en-US,en;q=0.8'</tt></td></tr>
+<tr class="odd"><td>HTTP_CONNECTION</td>
+<td><tt>'close'</tt></td></tr>
+<tr class="even"><td>HTTP_COOKIE</td>
+<td><tt>'locale=en; gvc=Mzk0MDA4NjY2MTcwMTQ4MTU4MDkyODU3NzcxOTkxMDI4MDUxNDY%3D; lid=AAAGwcd3vXh9-WFW0tLCPKQ2dHblKL_HSOCQTQb39pAr6Q; t_dev_dbdev=eKvK3Oc8cLBtBDmF1eIOihdK; jar=W3sidWlkIjogMiwgImgiOiAiQUFBWE90dmF3OGdMaTBKM3RlTUVXbHQwMFVRcDAtR0FHMU51UFdqLXd1bjcwQSIsICJleHBpcmVzIjogMTQyMTYyMzEzMywgIm5zIjogMiwgInJlbWVtYmVyIjogdHJ1ZX1d;<wbr> l=MjU3OTQ2OTQ0NDM4MDU4ODg4NTYwODYyODc2NTI0ODUxMzQzNTUy; blid_dev_dbdev=AABrijcU4kX3HV9qknvI6280EcHLPzy6MSiTrgl5iWkwEA;<wbr> js_csrf_dev_dbdev=eKvK3Oc8cLBtBDmF1eIOihdK; pumpkin=7ebf2007e305959fc278b315b948afae; bjar_dev_dbdev=W3sidWlkIjogMiwgInNlc3NfaWQiOiAyNTc5NDY5NDQ0MzgwNTg4ODg1NjA4NjI4NzY1MjQ4NTEzNDM1NTIsICJleHBpcmVzIjogMTQyMTYyMzEzMywgInRlYW1faWQiOiAxLCAicm9sZSI6ICJ3b3JrIn1d;<wbr> backend=stage; puc=OWZiYjhhMQ%3D%3D'</tt></td></tr>
+<tr class="odd"><td>HTTP_HOST</td>
+<td><tt>'meta-dbdev.dev.corp.dropbox.com'</tt></td></tr>
+<tr class="even"><td>HTTP_REFERER</td>
+<td><tt>'https://meta-dbdev.dev.corp.dropbox.com/ns_feed/4'</tt></td></tr>
+<tr class="odd"><td>HTTP_USER_AGENT</td>
+<td><tt>'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'</tt></td></tr>
+<tr class="even"><td>HTTP_X_DROPBOX_PARENT_REQUEST_ID</td>
+<td><tt>'75a65d550345bed88f098bf8179f89ec'</tt></td></tr>
+<tr class="odd"><td>HTTP_X_DROPBOX_REQUEST_ID</td>
+<td><tt>'4917757b06a66add2ebb7b5768b69f09'</tt></td></tr>
+<tr class="even"><td>HTTP_X_FORWARDED_FOR</td>
+<td><tt>'192.168.252.1'</tt></td></tr>
+<tr class="odd"><td>HTTP_X_FORWARDED_PROTO</td>
+<td><tt>'https'</tt></td></tr>
+<tr class="even"><td>HTTP_X_HOST</td>
+<td><tt>'*.dropbox.com'</tt></td></tr>
+<tr class="odd"><td>HTTP_X_REAL_IP</td>
+<td><tt>'192.168.252.1'</tt></td></tr>
+<tr class="even"><td>HTTP_X_REQUESTED_WITH</td>
+<td><tt>'XMLHttpRequest'</tt></td></tr>
+<tr class="odd"><td>PATH_INFO</td>
+<td><tt>'/activity_feed_api/user_queue'</tt></td></tr>
+<tr class="even"><td>QUERY_STRING</td>
+<td><tt>'_subject_uid=2'</tt></td></tr>
+<tr class="odd"><td>REMOTE_ADDR</td>
+<td><tt>'127.0.0.1'</tt></td></tr>
+<tr class="even"><td>REQUEST_METHOD</td>
+<td><tt>'GET'</tt></td></tr>
+<tr class="odd"><td>SERVER_NAME</td>
+<td><tt>'0.0.0.0'</tt></td></tr>
+<tr class="even"><td>SERVER_PORT</td>
+<td><tt>'5000'</tt></td></tr>
+<tr class="odd"><td>SERVER_PROTOCOL</td>
+<td><tt>'HTTP/1.0'</tt></td></tr>
+</table>
+<table class="variables">
+<tr class="header"><th colspan="2">Configuration</th></tr>
+<tr class="odd"><td>__file__</td>
+<td><tt>'/srv/server/metaserver/dev1.ini'</tt></td></tr>
+<tr class="even"><td>android_notifier.is_android_notifier</td>
+<td><tt>'False'</tt></td></tr>
+<tr class="odd"><td>apihookserver.is_apihookserver</td>
+<td><tt>'False'</tt></td></tr>
+<tr class="even"><td>apihookserver.num_worker_threads</td>
+<td><tt>'2'</tt></td></tr>
+<tr class="odd"><td>app_conf</td>
+<td><tt>{'sqlalchemy.global.url': 'mysql://dropbox@localhost:3306/global?use_unicode=1&amp;<wbr>charset=utf8', 'fb_notifier.ns_refresh_enabled': 'True', 'reload_config.reload_interval': '60', 'status_port': '10001', 'fb_notifier.ns_refresh_limit': '10000', 'port': '5000', 'reload_config.filename': '/db/metaserver/reloadable_dev_config.ini', 'ios_notifier.is_ios_notifier': 'False', 'fb_notifier.is_fb_notifier': 'False', 'ios_notifier.apns_env_sandbox': 'True', 'fb_notifier.ns_refresh_timeout': '60', 'fb_notifier.num_worker_threads': '2', 'apihookserver.num_worker_threads': '2', 'vortex_service_name': 'dev-meta', 'android_notifier.is_android_notifier': 'False', 'photos_notifier.is_ios_notifier': 'False', 'sqlalchemy.global.strategy': 'threadlocal', 'sqlalchemy.global.pool_recycle': '3600', 'cache_dir': '/srv/server/metaserver/data', 'enable_gandalf_loader': 'False', 'apihookserver.is_apihookserver': 'False', 'sqlalchemy.global.pool_size': '20', 'metaserver.verbose_server': 'True', 'photos_notifier.is_android_notifier': 'False', 'package': 'metaserver', 'beaker.session.type': 'memory', 'sqlalchemy.config.url': 'mysql://dropbox@localhost:3306/dev_config?use_unicode=1&amp;<wbr>charset=utf8', 'beaker.session.key': 'dropbox', 'db_migrate.data_batch': 'dev', 'beaker.session.secret': 'se1!kcret!2123', 'metaserver.enable_long_running': 'True'}</tt></td></tr>
+<tr class="even"><td>beaker.cache.data_dir</td>
+<td><tt>'/srv/server/metaserver/data/cache'</tt></td></tr>
+<tr class="odd"><td>beaker.session.data_dir</td>
+<td><tt>'/srv/server/metaserver/data/sessions'</tt></td></tr>
+<tr class="even"><td>beaker.session.key</td>
+<td><tt>'dropbox'</tt></td></tr>
+<tr class="odd"><td>beaker.session.secret</td>
+<td><tt>'se1!kcret!2123'</tt></td></tr>
+<tr class="even"><td>beaker.session.type</td>
+<td><tt>'memory'</tt></td></tr>
+<tr class="odd"><td>buffet.template_engines</td>
+<td><tt>[{'engine': 'cheetah', 'alias': None, 'template_root': 'metaserver.templates', 'template_options': {'myghty.data_dir': '/srv/server/metaserver/data/templates', 'mako.directories': ['/srv/server/metaserver/metaserver/templates'], 'myghty.component_root': [{'templates': '/srv/server/metaserver/metaserver/templates'}], 'kid.encoding': 'utf-8', 'kid.assume_encoding': 'utf-8', 'mako.module_directory': '/srv/server/metaserver/data/templates', 'myghty.allow_globals': ['c', 'config', 'g', 'h', 'render', 'request', 'session', 'translator', 'ungettext', '_', 'N_'], 'myghty.output_encoding': 'utf-8', 'myghty.raise_error': True, 'mako.output_encoding': 'utf-8', 'mako.filesystem_checks': True}}]</tt></td></tr>
+<tr class="even"><td>buffet.template_options</td>
+<td><tt>{'myghty.data_dir': '/srv/server/metaserver/data/templates', 'mako.directories': ['/srv/server/metaserver/metaserver/templates'], 'myghty.component_root': [{'templates': '/srv/server/metaserver/metaserver/templates'}], 'kid.encoding': 'utf-8', 'kid.assume_encoding': 'utf-8', 'mako.module_directory': '/srv/server/metaserver/data/templates', 'myghty.allow_globals': ['c', 'config', 'g', 'h', 'render', 'request', 'session', 'translator', 'ungettext', '_', 'N_'], 'myghty.output_encoding': 'utf-8', 'myghty.raise_error': True, 'mako.output_encoding': 'utf-8', 'mako.filesystem_checks': True}</tt></td></tr>
+<tr class="odd"><td>cache.dir</td>
+<td><tt>'/srv/server/metaserver/data'</tt></td></tr>
+<tr class="even"><td>db_migrate.data_batch</td>
+<td><tt>'dev'</tt></td></tr>
+<tr class="odd"><td>debug</td>
+<td><tt>True</tt></td></tr>
+<tr class="even"><td>disallow_global_master_connection</td>
+<td><tt>False</tt></td></tr>
+<tr class="odd"><td>email_to</td>
+<td><tt>'nobody@dropbox.com'</tt></td></tr>
+<tr class="even"><td>enable_gandalf_loader</td>
+<td><tt>'False'</tt></td></tr>
+<tr class="odd"><td>error_email_from</td>
+<td><tt>'paste@localhost'</tt></td></tr>
+<tr class="even"><td>fb_notifier.is_fb_notifier</td>
+<td><tt>'False'</tt></td></tr>
+<tr class="odd"><td>fb_notifier.ns_refresh_enabled</td>
+<td><tt>'True'</tt></td></tr>
+<tr class="even"><td>fb_notifier.ns_refresh_limit</td>
+<td><tt>'10000'</tt></td></tr>
+<tr class="odd"><td>fb_notifier.ns_refresh_timeout</td>
+<td><tt>'60'</tt></td></tr>
+<tr class="even"><td>fb_notifier.num_worker_threads</td>
+<td><tt>'2'</tt></td></tr>
+<tr class="odd"><td>forward_to_exc_server</td>
+<td><tt>'False'</tt></td></tr>
+<tr class="even"><td>global_conf</td>
+<td><tt>{'error_email_from': 'paste@localhost', 'email_to': 'nobody@dropbox.com', 'forward_to_exc_server': 'False', 'debug': 'true', '__file__': '/srv/server/metaserver/dev1.ini', 'smtp_server': 'localhost', 'here': '/srv/server/metaserver'}</tt></td></tr>
+<tr class="odd"><td>here</td>
+<td><tt>'/srv/server/metaserver'</tt></td></tr>
+<tr class="even"><td>import.sentinel</td>
+<td><tt>1</tt></td></tr>
+<tr class="odd"><td>ios_notifier.apns_env_sandbox</td>
+<td><tt>'True'</tt></td></tr>
+<tr class="even"><td>ios_notifier.is_ios_notifier</td>
+<td><tt>'False'</tt></td></tr>
+<tr class="odd"><td>metaserver.enable_long_running</td>
+<td><tt>True</tt></td></tr>
+<tr class="even"><td>metaserver.verbose_server</td>
+<td><tt>'True'</tt></td></tr>
+<tr class="odd"><td>package</td>
+<td><tt>'metaserver'</tt></td></tr>
+<tr class="even"><td>photos_notifier.is_android_notifier</td>
+<td><tt>'False'</tt></td></tr>
+<tr class="odd"><td>photos_notifier.is_ios_notifier</td>
+<td><tt>'False'</tt></td></tr>
+<tr class="even"><td>port</td>
+<td><tt>'5000'</tt></td></tr>
+<tr class="odd"><td>pylons.base_app</td>
+<td><tt>&lt;pylons_common.config.DropboxBaseWSGIApp object at 0x7f70fc400750&gt;</tt></td></tr>
+<tr class="even"><td>pylons.cache_dir</td>
+<td><tt>'/srv/server/metaserver/data'</tt></td></tr>
+<tr class="odd"><td>pylons.db_engines</td>
+<td><tt>{}</tt></td></tr>
+<tr class="even"><td>pylons.environ_config</td>
+<td><tt>{}</tt></td></tr>
+<tr class="odd"><td>pylons.errorware</td>
+<td><tt>{'debug': True}</tt></td></tr>
+<tr class="even"><td>pylons.g</td>
+<td><tt>&lt;metaserver.lib.app_globals.Globals object at 0x7f71090d2450&gt;</tt></td></tr>
+<tr class="odd"><td>pylons.h</td>
+<td><tt>&lt;module 'metaserver.lib.helpers' from '/srv/server/metaserver/metaserver/lib/helpers.pyc'&gt;</tt></td></tr>
+<tr class="even"><td>pylons.package</td>
+<td><tt>'metaserver'</tt></td></tr>
+<tr class="odd"><td>pylons.paths</td>
+<td><tt>{'templates': ['/srv/server/metaserver/metaserver/templates'], 'controllers': ['/srv/server/metaserver/metaserver/controllers'], 'static_files': '/srv/server/metaserver/metaserver/public', 'root': '/srv/server/metaserver/metaserver'}</tt></td></tr>
+<tr class="even"><td>pylons.request_options</td>
+<td><tt>{'errors': 'replace', 'decode_param_names': False, 'charset': 'utf-8', 'language': 'en-us'}</tt></td></tr>
+<tr class="odd"><td>pylons.response_options</td>
+<td><tt>{'headers': {'Pragma': 'no-cache', 'Cache-Control': 'no-cache'}, 'errors': 'strict', 'charset': 'utf-8', 'content_type': 'text/html'}</tt></td></tr>
+<tr class="even"><td>pylons.strict_c</td>
+<td><tt>False</tt></td></tr>
+<tr class="odd"><td>reload_config.filename</td>
+<td><tt>'/db/metaserver/reloadable_dev_config.ini'</tt></td></tr>
+<tr class="even"><td>reload_config.reload_interval</td>
+<td><tt>'60'</tt></td></tr>
+<tr class="odd"><td>routes.map</td>
+<td><tt>&lt;metaserver.config.routing.TimedDropboxMapper object at 0x7f7109eff0b0&gt;</tt></td></tr>
+<tr class="even"><td>smtp_server</td>
+<td><tt>'localhost'</tt></td></tr>
+<tr class="odd"><td>sqlalchemy.config.url</td>
+<td><tt>'mysql://dropbox@localhost:3306/dev_config?use_unicode=1&amp;<wbr>charset=utf8'</tt></td></tr>
+<tr class="even"><td>sqlalchemy.global.pool_recycle</td>
+<td><tt>'3600'</tt></td></tr>
+<tr class="odd"><td>sqlalchemy.global.pool_size</td>
+<td><tt>'20'</tt></td></tr>
+<tr class="even"><td>sqlalchemy.global.strategy</td>
+<td><tt>'threadlocal'</tt></td></tr>
+<tr class="odd"><td>sqlalchemy.global.url</td>
+<td><tt>'mysql://dropbox@localhost:3306/global?use_unicode=1&amp;<wbr>charset=utf8'</tt></td></tr>
+<tr class="even"><td>status_port</td>
+<td><tt>'10001'</tt></td></tr>
+<tr class="odd"><td>valid_controllers</td>
+<td><tt>['carousel_email_digest_experiment', 'api_v2/files_descendants', 'api_v2/validators.babelt', 'bluemail/scheduler/pages', 'api_v2/validators_users', 'teams/admin_offboarding', 'teams/member_onboarding', 'bluemail/scheduler/api', 'api_samsung_htc_albums', 'carousel/conversations', 'business/business_base', 'teams/admin_onboarding', 'teams/activity_log_api', 'api_v2/files_metadata', 'carousel/carousel_app', 'chrome_package_upload', 'license_key_payments', 'api_log_custom_event', 'business/single_page', 'teams/team_dashboard', 'teams/trial_buy_now', 'teams/reporting_api', 'api_v2/files_delta', 'face_rec_prototype', 'bluemail/cms/pages', 'growth_experiments', 'rpc_upload_session', 'help/support_forms', 'api_v2/users_info', 'api_shared_folder', 'localizable_image', 'photo_collections', 'api_notifications', 'check_app_uploads', 'teams/team_upsell', 'bluemail/cms/api', 'moneytree_events', 'datastores_admin', 'carousel/gallery', 'top_notification', 'teams/groups_api', 'api_collections', 'teams/team_join', 'universal/auth', 'api_auto_login', 'test_decorator', 'carousel_admin', 'business/media', 'business/index', 'help/articles2', 'api_mobile_log', 'for_good/index', 'teams/team_api', 'teams/contacts', 'api_v2/api_v2', 'team_reseller', 'team_payments', 'guide/article', 'activity_feed', 'file_activity', 'browse_helper', 'shared_folder', 'help/articles', 'api_open_with', 'release_notes', 'contactimport', 'bug_reporter', 'api_carousel', 'collections_', 'api_dropdown', 'api_contacts', 'search_admin', 'rpc_carousel', 'web_carousel', 'partnerships', 'downloading', 'sem_library', 'mobile_core', 'check_files', 'struct_sync', 'teams/utils', 'debug_panel', 'ui_library', 'server_exc', 'moar_space', 'api_search', 'onboarding', 'api_oauth2', 'space_race', 'opensource', 'annotation', 'help/admin', 'help/aesop', 'developers', 'update_web', 'teams/team', 'api_media', 'snapshots', 'api_delta', 'api_deals', 'workspace', 'exception', 'facebook', 'apihooks', 'template', 'api_task', 'api_sync', 'sem_page', 'watchcat', 'contacts', 'payments', 'web_auth', 'twitter', 'votebox', 'shmodel', 'harmony', 'crashes', 'faceoff', 'zendesk', 'dropins', 'mailbox', 'profile', 'gandalf', 'api_app', 'browse', 'notify', 'groups', 'upsell', 'client', 'dochax', 'photos', 'mobile', 'remail', 'omaha', 'admin', 'email', 'asana', 'error', 'terms', 'tools', 'block', 'news', 'i18n', 'test', 'loom', 'jobs', 'api', 'dbz', 'rpc', 'dbx', 'web']</tt></td></tr>
+<tr class="even"><td>vortex_service_name</td>
+<td><tt>'dev-meta'</tt></td></tr>
+</table>
+<table class="variables">
+<tr class="header"><th colspan="2">WSGI Variables</th></tr>
+<tr class="odd"><td>application</td>
+<td><tt>&lt;dropbox.middleware.cookie_check.CookieCheckMiddleware object at 0x7f70fc4fb4d0&gt;</tt></td></tr>
+<tr class="even"><td>beaker.cache</td>
+<td><tt>&lt;beaker.cache.CacheManager object at 0x7f70fc4fb390&gt;</tt></td></tr>
+<tr class="odd"><td>beaker.get_session</td>
+<td><tt>&lt;bound method SessionMiddleware._get_session of &lt;beaker.middleware.SessionMiddleware object at 0x7f70fc4ef690&gt;&gt;</tt></td></tr>
+<tr class="even"><td>beaker.session</td>
+<td><tt>{'_accessed_time': 1419038330.095776, '_creation_time': 1419038330.095776}</tt></td></tr>
+<tr class="odd"><td>cors</td>
+<td><tt>None</tt></td></tr>
+<tr class="even"><td>dropbox.exc_handled_by_pylons</td>
+<td><tt>'500 Internal Server Error'</tt></td></tr>
+<tr class="odd"><td>dropbox.response_status</td>
+<td><tt>500</tt></td></tr>
+<tr class="even"><td>paste.cookies.dict</td>
+<td><tt>({'lid': 'AAAGwcd3vXh9-WFW0tLCPKQ2dHblKL_HSOCQTQb39pAr6Q', 'pumpkin': '7ebf2007e305959fc278b315b948afae', 't_dev_dbdev': 'eKvK3Oc8cLBtBDmF1eIOihdK', 'locale': 'en', 'gvc': 'Mzk0MDA4NjY2MTcwMTQ4MTU4MDkyODU3NzcxOTkxMDI4MDUxNDY%3D', 'jar': '<wbr>W3sidWlkIjogMiwgImgiOiAiQUFBWE90dmF3OGdMaTBKM3RlTUVXbHQwMFVRcDAtR0FHMU51UFdqLXd1bjcwQSIsICJleHBpcmVzIjogMTQyMTYyMzEzMywgIm5zIjogMiwgInJlbWVtYmVyIjogdHJ1ZX1d'<wbr>, 'l': 'MjU3OTQ2OTQ0NDM4MDU4ODg4NTYwODYyODc2NTI0ODUxMzQzNTUy', 'puc': 'OWZiYjhhMQ%3D%3D', 'blid_dev_dbdev': 'AABrijcU4kX3HV9qknvI6280EcHLPzy6MSiTrgl5iWkwEA', 'js_csrf_dev_dbdev': 'eKvK3Oc8cLBtBDmF1eIOihdK', 'backend': 'stage', 'bjar_dev_dbdev': '<wbr>W3sidWlkIjogMiwgInNlc3NfaWQiOiAyNTc5NDY5NDQ0MzgwNTg4ODg1NjA4NjI4NzY1MjQ4NTEzNDM1NTIsICJleHBpcmVzIjogMTQyMTYyMzEzMywgInRlYW1faWQiOiAxLCAicm9sZSI6ICJ3b3JrIn1d'<wbr>}, 'locale=en; gvc=Mzk0MDA4NjY2MTcwMTQ4MTU4MDkyODU3NzcxOTkxMDI4MDUxNDY%3D; lid=AAAGwcd3vXh9-WFW0tLCPKQ2dHblKL_HSOCQTQb39pAr6Q; t_dev_dbdev=eKvK3Oc8cLBtBDmF1eIOihdK; jar=W3sidWlkIjogMiwgImgiOiAiQUFBWE90dmF3OGdMaTBKM3RlTUVXbHQwMFVRcDAtR0FHMU51UFdqLXd1bjcwQSIsICJleHBpcmVzIjogMTQyMTYyMzEzMywgIm5zIjogMiwgInJlbWVtYmVyIjogdHJ1ZX1d;<wbr> l=MjU3OTQ2OTQ0NDM4MDU4ODg4NTYwODYyODc2NTI0ODUxMzQzNTUy; blid_dev_dbdev=AABrijcU4kX3HV9qknvI6280EcHLPzy6MSiTrgl5iWkwEA;<wbr> js_csrf_dev_dbdev=eKvK3Oc8cLBtBDmF1eIOihdK; pumpkin=7ebf2007e305959fc278b315b948afae; bjar_dev_dbdev=W3sidWlkIjogMiwgInNlc3NfaWQiOiAyNTc5NDY5NDQ0MzgwNTg4ODg1NjA4NjI4NzY1MjQ4NTEzNDM1NTIsICJleHBpcmVzIjogMTQyMTYyMzEzMywgInRlYW1faWQiOiAxLCAicm9sZSI6ICJ3b3JrIn1d;<wbr> backend=stage; puc=OWZiYjhhMQ%3D%3D')</tt></td></tr>
+<tr class="odd"><td>paste.evalexception</td>
+<td><tt>&lt;pylons.error.PylonsEvalException object at 0x7f70fc512cd0&gt;</tt></td></tr>
+<tr class="even"><td>paste.evalexception.debug_count</td>
+<td><tt>1419038226</tt></td></tr>
+<tr class="odd"><td>paste.expected_exceptions</td>
+<td><tt>[&lt;class 'pylons_common.util.BandwidthException'&gt;, &lt;class 'pylons_common.util.FolderExistsException'&gt;, &lt;class 'pylons_common.util.RestrictedBlockException'&gt;, &lt;class 'pylons_common.util.QuotaException'&gt;, &lt;class 'dropbox.http.status.HttpStatusException'&gt;, &lt;class 'oauth.oauth.OAuthError'&gt;, &lt;class 'dropbox.security.exceptions.SecurityErrorCsrf'&gt;, &lt;class 'dropbox.rpc.client.RpcHTTPClientError'&gt;, &lt;class 'dropbox.http.status.HttpDirectResponseException'&gt;, &lt;class 'dropbox.rpc.base.RpcException'&gt;]</tt></td></tr>
+<tr class="even"><td>paste.httpserver.thread_pool</td>
+<td><tt>&lt;paste.httpserver.ThreadPool object at 0x7f70fc0b9a90&gt;</tt></td></tr>
+<tr class="odd"><td>paste.parsed_dict_querystring</td>
+<td><tt>(MultiDict([('_subject_uid', '2')]), '_subject_uid=2')</tt></td></tr>
+<tr class="even"><td>paste.parsed_formvars</td>
+<td><tt>(MultiDict([]), &lt;socket._fileobject object at 0x7f70a0068650 length=0&gt;)</tt></td></tr>
+<tr class="odd"><td>paste.recursive.forward</td>
+<td><tt>&lt;paste.recursive.Forwarder from /&gt;</tt></td></tr>
+<tr class="even"><td>paste.recursive.include</td>
+<td><tt>&lt;paste.recursive.Includer from /&gt;</tt></td></tr>
+<tr class="odd"><td>paste.recursive.include_app_iter</td>
+<td><tt>&lt;paste.recursive.IncluderAppIter from /&gt;</tt></td></tr>
+<tr class="even"><td>paste.recursive.script_name</td>
+<td><tt>''</tt></td></tr>
+<tr class="odd"><td>paste.registry</td>
+<td><tt>&lt;paste.registry.Registry object at 0x7f70a0097b90&gt;</tt></td></tr>
+<tr class="even"><td>paste.throw_errors</td>
+<td><tt>True</tt></td></tr>
+<tr class="odd"><td>pylons.action_method</td>
+<td><tt>&lt;bound method ActivityFeedController.feed_api_user_queue of &lt;<wbr>metaserver.controllers.activity_feed.ActivityFeedController object at 0x7f70a0097e90&gt;&gt;</tt></td></tr>
+<tr class="even"><td>pylons.environ_config</td>
+<td><tt>{'cache': 'beaker.cache', 'session': 'beaker.session'}</tt></td></tr>
+<tr class="odd"><td>pylons.error_call</td>
+<td><tt>True</tt></td></tr>
+<tr class="even"><td>pylons.routes_dict</td>
+<td><tt>{'action': 'feed_api_user_queue', 'controller': 'activity_feed'}</tt></td></tr>
+<tr class="odd"><td>routes.route</td>
+<td><tt>&lt;dropbox.routing.mapper.Route object at 0x7f7109850d60&gt;</tt></td></tr>
+<tr class="even"><td>wsgi process</td>
+<td><tt>'Multithreaded'</tt></td></tr>
+<tr class="odd"><td>wsgiorg.routing_args</td>
+<td><tt>((), {'action': 'feed_api_user_queue', 'controller': 'activity_feed'})</tt></td></tr>
+</table>
+
+        <br />
+        <div id="util-link">
+            <script type="text/javascript">
+            show_button('extra_data_text', 'text version')
+            </script>
+        </div>
+        <div id="extra_data_text" class="hidden-data">
+        <textarea style="width: 100%" rows=120 cols=60>
+
+CGI Variables
+-------------
+  CONTENT_LENGTH: '0'
+  HTTP_ACCEPT: 'application/json, text/javascript, */*; q=0.01'
+  HTTP_ACCEPT_ENCODING: 'gzip, deflate, sdch'
+  HTTP_ACCEPT_LANGUAGE: 'en-US,en;q=0.8'
+  HTTP_CONNECTION: 'close'
+  HTTP_COOKIE: 'locale=en; gvc=Mzk0MDA4NjY2MTcwMTQ4MTU4MDkyODU3NzcxOTkxMDI4MDUxNDY%3D; lid=AAAGwcd3vXh9-WFW0tLCPKQ2dHblKL_HSOCQTQb39pAr6Q; t_dev_dbdev=eKvK3Oc8cLBtBDmF1eIOihdK; jar=W3sidWlkIjogMiwgImgiOiAiQUFBWE90dmF3OGdMaTBKM3RlTUVXbHQwMFVRcDAtR0FHMU51UFdqLXd1bjcwQSIsICJleHBpcmVzIjogMTQyMTYyMzEzMywgIm5zIjogMiwgInJlbWVtYmVyIjogdHJ1ZX1d; l=MjU3OTQ2OTQ0NDM4MDU4ODg4NTYwODYyODc2NTI0ODUxMzQzNTUy; blid_dev_dbdev=AABrijcU4kX3HV9qknvI6280EcHLPzy6MSiTrgl5iWkwEA; js_csrf_dev_dbdev=eKvK3Oc8cLBtBDmF1eIOihdK; pumpkin=7ebf2007e305959fc278b315b948afae; bjar_dev_dbdev=W3sidWlkIjogMiwgInNlc3NfaWQiOiAyNTc5NDY5NDQ0MzgwNTg4ODg1NjA4NjI4NzY1MjQ4NTEzNDM1NTIsICJleHBpcmVzIjogMTQyMTYyMzEzMywgInRlYW1faWQiOiAxLCAicm9sZSI6ICJ3b3JrIn1d; backend=stage; puc=OWZiYjhhMQ%3D%3D'
+  HTTP_HOST: 'meta-dbdev.dev.corp.dropbox.com'
+  HTTP_REFERER: 'https://meta-dbdev.dev.corp.dropbox.com/ns_feed/4'
+  HTTP_USER_AGENT: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'
+  HTTP_X_DROPBOX_PARENT_REQUEST_ID: '75a65d550345bed88f098bf8179f89ec'
+  HTTP_X_DROPBOX_REQUEST_ID: '4917757b06a66add2ebb7b5768b69f09'
+  HTTP_X_FORWARDED_FOR: '192.168.252.1'
+  HTTP_X_FORWARDED_PROTO: 'https'
+  HTTP_X_HOST: '*.dropbox.com'
+  HTTP_X_REAL_IP: '192.168.252.1'
+  HTTP_X_REQUESTED_WITH: 'XMLHttpRequest'
+  PATH_INFO: '/activity_feed_api/user_queue'
+  QUERY_STRING: '_subject_uid=2'
+  REMOTE_ADDR: '127.0.0.1'
+  REQUEST_METHOD: 'GET'
+  SERVER_NAME: '0.0.0.0'
+  SERVER_PORT: '5000'
+  SERVER_PROTOCOL: 'HTTP/1.0'
+
+Configuration
+-------------
+  __file__: '/srv/server/metaserver/dev1.ini'
+  android_notifier.is_android_notifier: 'False'
+  apihookserver.is_apihookserver: 'False'
+  apihookserver.num_worker_threads: '2'
+  app_conf: {'sqlalchemy.global.url': 'mysql://dropbox@localhost:3306/global?use_unicode=1&charset=utf8', 'fb_notifier.ns_refresh_enabled': 'True', 'reload_config.reload_interval': '60', 'status_port': '10001', 'fb_notifier.ns_refresh_limit': '10000', 'port': '5000', 'reload_config.filename': '/db/metaserver/reloadable_dev_config.ini', 'ios_notifier.is_ios_notifier': 'False', 'fb_notifier.is_fb_notifier': 'False', 'ios_notifier.apns_env_sandbox': 'True', 'fb_notifier.ns_refresh_timeout': '60', 'fb_notifier.num_worker_threads': '2', 'apihookserver.num_worker_threads': '2', 'vortex_service_name': 'dev-meta', 'android_notifier.is_android_notifier': 'False', 'photos_notifier.is_ios_notifier': 'False', 'sqlalchemy.global.strategy': 'threadlocal', 'sqlalchemy.global.pool_recycle': '3600', 'cache_dir': '/srv/server/metaserver/data', 'enable_gandalf_loader': 'False', 'apihookserver.is_apihookserver': 'False', 'sqlalchemy.global.pool_size': '20', 'metaserver.verbose_server': 'True', 'ph...running': 'True'}
+  beaker.cache.data_dir: '/srv/server/metaserver/data/cache'
+  beaker.session.data_dir: '/srv/server/metaserver/data/sessions'
+  beaker.session.key: 'dropbox'
+  beaker.session.secret: 'se1!kcret!2123'
+  beaker.session.type: 'memory'
+  buffet.template_engines: [{'engine': 'cheetah', 'alias': None, 'template_root': 'metaserver.templates', 'template_options': {'myghty.data_dir': '/srv/server/metaserver/data/templates', 'mako.directories': ['/srv/server/metaserver/metaserver/templates'], 'myghty.component_root': [{'templates': '/srv/server/metaserver/metaserver/templates'}], 'kid.encoding': 'utf-8', 'kid.assume_encoding': 'utf-8', 'mako.module_directory': '/srv/server/metaserver/data/templates', 'myghty.allow_globals': ['c', 'config', 'g', 'h', 'render', 'request', 'session', 'translator', 'ungettext', '_', 'N_'], 'myghty.output_encoding': 'utf-8', 'myghty.raise_error': True, 'mako.output_encoding': 'utf-8', 'mako.filesystem_checks': True}}]
+  buffet.template_options: {'myghty.data_dir': '/srv/server/metaserver/data/templates', 'mako.directories': ['/srv/server/metaserver/metaserver/templates'], 'myghty.component_root': [{'templates': '/srv/server/metaserver/metaserver/templates'}], 'kid.encoding': 'utf-8', 'kid.assume_encoding': 'utf-8', 'mako.module_directory': '/srv/server/metaserver/data/templates', 'myghty.allow_globals': ['c', 'config', 'g', 'h', 'render', 'request', 'session', 'translator', 'ungettext', '_', 'N_'], 'myghty.output_encoding': 'utf-8', 'myghty.raise_error': True, 'mako.output_encoding': 'utf-8', 'mako.filesystem_checks': True}
+  cache.dir: '/srv/server/metaserver/data'
+  db_migrate.data_batch: 'dev'
+  debug: True
+  disallow_global_master_connection: False
+  email_to: 'nobody@dropbox.com'
+  enable_gandalf_loader: 'False'
+  error_email_from: 'paste@localhost'
+  fb_notifier.is_fb_notifier: 'False'
+  fb_notifier.ns_refresh_enabled: 'True'
+  fb_notifier.ns_refresh_limit: '10000'
+  fb_notifier.ns_refresh_timeout: '60'
+  fb_notifier.num_worker_threads: '2'
+  forward_to_exc_server: 'False'
+  global_conf: {'error_email_from': 'paste@localhost', 'email_to': 'nobody@dropbox.com', 'forward_to_exc_server': 'False', 'debug': 'true', '__file__': '/srv/server/metaserver/dev1.ini', 'smtp_server': 'localhost', 'here': '/srv/server/metaserver'}
+  here: '/srv/server/metaserver'
+  import.sentinel: 1
+  ios_notifier.apns_env_sandbox: 'True'
+  ios_notifier.is_ios_notifier: 'False'
+  metaserver.enable_long_running: True
+  metaserver.verbose_server: 'True'
+  package: 'metaserver'
+  photos_notifier.is_android_notifier: 'False'
+  photos_notifier.is_ios_notifier: 'False'
+  port: '5000'
+  pylons.base_app: <pylons_common.config.DropboxBaseWSGIApp object at 0x7f70fc400750>
+  pylons.cache_dir: '/srv/server/metaserver/data'
+  pylons.db_engines: {}
+  pylons.environ_config: {}
+  pylons.errorware: {'debug': True}
+  pylons.g: <metaserver.lib.app_globals.Globals object at 0x7f71090d2450>
+  pylons.h: <module 'metaserver.lib.helpers' from '/srv/server/metaserver/metaserver/lib/helpers.pyc'>
+  pylons.package: 'metaserver'
+  pylons.paths: {'templates': ['/srv/server/metaserver/metaserver/templates'], 'controllers': ['/srv/server/metaserver/metaserver/controllers'], 'static_files': '/srv/server/metaserver/metaserver/public', 'root': '/srv/server/metaserver/metaserver'}
+  pylons.request_options: {'errors': 'replace', 'decode_param_names': False, 'charset': 'utf-8', 'language': 'en-us'}
+  pylons.response_options: {'headers': {'Pragma': 'no-cache', 'Cache-Control': 'no-cache'}, 'errors': 'strict', 'charset': 'utf-8', 'content_type': 'text/html'}
+  pylons.strict_c: False
+  reload_config.filename: '/db/metaserver/reloadable_dev_config.ini'
+  reload_config.reload_interval: '60'
+  routes.map: <metaserver.config.routing.TimedDropboxMapper object at 0x7f7109eff0b0>
+  smtp_server: 'localhost'
+  sqlalchemy.config.url: 'mysql://dropbox@localhost:3306/dev_config?use_unicode=1&charset=utf8'
+  sqlalchemy.global.pool_recycle: '3600'
+  sqlalchemy.global.pool_size: '20'
+  sqlalchemy.global.strategy: 'threadlocal'
+  sqlalchemy.global.url: 'mysql://dropbox@localhost:3306/global?use_unicode=1&charset=utf8'
+  status_port: '10001'
+  valid_controllers: ['carousel_email_digest_experiment', 'api_v2/files_descendants', 'api_v2/validators.babelt', 'bluemail/scheduler/pages', 'api_v2/validators_users', 'teams/admin_offboarding', 'teams/member_onboarding', 'bluemail/scheduler/api', 'api_samsung_htc_albums', 'carousel/conversations', 'business/business_base', 'teams/admin_onboarding', 'teams/activity_log_api', 'api_v2/files_metadata', 'carousel/carousel_app', 'chrome_package_upload', 'license_key_payments', 'api_log_custom_event', 'business/single_page', 'teams/team_dashboard', 'teams/trial_buy_now', 'teams/reporting_api', 'api_v2/files_delta', 'face_rec_prototype', 'bluemail/cms/pages', 'growth_experiments', 'rpc_upload_session', 'help/support_forms', 'api_v2/users_info', 'api_shared_folder', 'localizable_image', 'photo_collections', 'api_notifications', 'check_app_uploads', 'teams/team_upsell', 'bluemail/cms/api', 'moneytree_events', 'datastores_admin', 'carousel/gallery', 'top_notification', 'teams/groups_api', 'api_c...c', 'dbx', 'web']
+  vortex_service_name: 'dev-meta'
+
+WSGI Variables
+--------------
+  application: <dropbox.middleware.cookie_check.CookieCheckMiddleware object at 0x7f70fc4fb4d0>
+  beaker.cache: <beaker.cache.CacheManager object at 0x7f70fc4fb390>
+  beaker.get_session: <bound method SessionMiddleware._get_session of <beaker.middleware.SessionMiddleware object at 0x7f70fc4ef690>>
+  beaker.session: {'_accessed_time': 1419038330.095776, '_creation_time': 1419038330.095776}
+  cors: None
+  dropbox.exc_handled_by_pylons: '500 Internal Server Error'
+  dropbox.response_status: 500
+  paste.cookies.dict: ({'lid': 'AAAGwcd3vXh9-WFW0tLCPKQ2dHblKL_HSOCQTQb39pAr6Q', 'pumpkin': '7ebf2007e305959fc278b315b948afae', 't_dev_dbdev': 'eKvK3Oc8cLBtBDmF1eIOihdK', 'locale': 'en', 'gvc': 'Mzk0MDA4NjY2MTcwMTQ4MTU4MDkyODU3NzcxOTkxMDI4MDUxNDY%3D', 'jar': 'W3sidWlkIjogMiwgImgiOiAiQUFBWE90dmF3OGdMaTBKM3RlTUVXbHQwMFVRcDAtR0FHMU51UFdqLXd1bjcwQSIsICJleHBpcmVzIjogMTQyMTYyMzEzMywgIm5zIjogMiwgInJlbWVtYmVyIjogdHJ1ZX1d', 'l': 'MjU3OTQ2OTQ0NDM4MDU4ODg4NTYwODYyODc2NTI0ODUxMzQzNTUy', 'puc': 'OWZiYjhhMQ%3D%3D', 'blid_dev_dbdev': 'AABrijcU4kX3HV9qknvI6280EcHLPzy6MSiTrgl5iWkwEA', 'js_csrf_dev_dbdev': 'eKvK3Oc8cLBtBDmF1eIOihdK', 'backend': 'stage', 'bjar_dev_dbdev': 'W3sidWlkIjogMiwgInNlc3NfaWQiOiAyNTc5NDY5NDQ0MzgwNTg4ODg1NjA4NjI4NzY1MjQ4NTEzNDM1NTIsICJleHBpcmVzIjogMTQyMTYyMzEzMywgInRlYW1faWQiOiAxLCAicm9sZSI6ICJ3b3JrIn1d'}, 'locale=en; gvc=Mzk0MDA4NjY2MTcwMTQ4MTU4MDkyODU3NzcxOTkxMDI4MDUxNDY%3D; lid=AAAGwcd3vXh9-WFW0tLCPKQ2dHblKL_HSOCQTQb39pAr6Q; t_dev_dbdev=eKvK3Oc8cLBtBDmF1eIOihdK; jar=W3sidWlkIjogM...WZiYjhhMQ%3D%3D')
+  paste.evalexception: <pylons.error.PylonsEvalException object at 0x7f70fc512cd0>
+  paste.evalexception.debug_count: 1419038226
+  paste.expected_exceptions: [<class 'pylons_common.util.BandwidthException'>, <class 'pylons_common.util.FolderExistsException'>, <class 'pylons_common.util.RestrictedBlockException'>, <class 'pylons_common.util.QuotaException'>, <class 'dropbox.http.status.HttpStatusException'>, <class 'oauth.oauth.OAuthError'>, <class 'dropbox.security.exceptions.SecurityErrorCsrf'>, <class 'dropbox.rpc.client.RpcHTTPClientError'>, <class 'dropbox.http.status.HttpDirectResponseException'>, <class 'dropbox.rpc.base.RpcException'>]
+  paste.httpserver.thread_pool: <paste.httpserver.ThreadPool object at 0x7f70fc0b9a90>
+  paste.parsed_dict_querystring: (MultiDict([('_subject_uid', '2')]), '_subject_uid=2')
+  paste.parsed_formvars: (MultiDict([]), <socket._fileobject object at 0x7f70a0068650 length=0>)
+  paste.recursive.forward: <paste.recursive.Forwarder from />
+  paste.recursive.include: <paste.recursive.Includer from />
+  paste.recursive.include_app_iter: <paste.recursive.IncluderAppIter from />
+  paste.recursive.script_name: ''
+  paste.registry: <paste.registry.Registry object at 0x7f70a0097b90>
+  paste.throw_errors: True
+  pylons.action_method: <bound method ActivityFeedController.feed_api_user_queue of <metaserver.controllers.activity_feed.ActivityFeedController object at 0x7f70a0097e90>>
+  pylons.environ_config: {'cache': 'beaker.cache', 'session': 'beaker.session'}
+  pylons.error_call: True
+  pylons.routes_dict: {'action': 'feed_api_user_queue', 'controller': 'activity_feed'}
+  routes.route: <dropbox.routing.mapper.Route object at 0x7f7109850d60>
+  wsgi process: 'Multithreaded'
+  wsgiorg.routing_args: ((), {'action': 'feed_api_user_queue', 'controller': 'activity_feed'})</textarea>
+        </div>
+        
+            </div>
+            <div id="template_data" class="hidden-data">
+                <p>No Template information available.</p>
+            </div>
+            <div id="traceback_data">
+                
+        <div style="float: left; width: 100%; padding-bottom: 20px;">
+        <h1 class="first"><a name="content"></a>Error Traceback</h1>
+        <div id="error-area" style="display: none; background-color: #600; color: #fff; border: 2px solid black">
+        <button onclick="return clearError()">clear this</button>
+        <div id="error-container"></div>
+        <button onclick="return clearError()">clear this</button>
+        </div>
+        
+    <style type="text/css">
+            #util-link a, #util-link a:link, #util-link a:visited,
+            #util-link a:active {
+                border-bottom: 2px outset #aaa
+            }
+    </style>
+    Module <span class="module" title="/srv/server/metaserver/metaserver/lib/metaserver_session.py">metaserver.lib.metaserver_session</span>:<b>388</b> in <code>wrapper</code>  <a href="#" class="switch_source" tbid="140121436592608" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return &quot;err:&quot;+json.dumps(errors)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try:<br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return f(self, *a, **kw)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; except AjaxError, e:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; request_rollback()</code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#0000AF"><b>return</b></font> <font color="#333333">f</font><b>(</b><font color="#333333">self</font><b>,</b> <b>*</b><font color="#333333">a</font><b>,</b> <b>**</b><font color="#333333">kw</font><b>)</b></code><br>
+Module <span class="module" title="/srv/server/metaserver/metaserver/lib/metaserver_session.py">metaserver.lib.metaserver_session</span>:<b>1347</b> in <code>wrapper</code>  <a href="#" class="switch_source" tbid="140121436590376" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#608060">#######################################</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">pageload_start</font> <b>=</b> <font color="#333333">time</font><b>.</b><font color="#333333">time</font><b>(</b><b>)</b><br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">ret</font> <b>=</b> <font color="#333333">handle_argument_errors</font><b>(</b><font color="#333333">f</font><b>)</b><b>(</b><font color="#333333">self</font><b>,</b> <b>*</b><font color="#333333">exec_args</font><b>,</b> <b>**</b><font color="#333333">filtered_request_args</font><b>)</b></span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">pageload_ms</font> <b>=</b> <font color="#DD2200"><b>1000</b></font><b>*</b><b>(</b><font color="#333333">time</font><b>.</b><font color="#333333">time</font><b>(</b><b>)</b> <b>-</b> <font color="#333333">pageload_start</font><b>)</b></code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#333333">ret</font> <b>=</b> <font color="#333333">handle_argument_errors</font><b>(</b><font color="#333333">f</font><b>)</b><b>(</b><font color="#333333">self</font><b>,</b> <b>*</b><font color="#333333">exec_args</font><b>,</b> <b>**</b><font color="#333333">filtered_request_args</font><b>)</b></code><br>
+Module <span class="module" title="/srv/server/metaserver/pylons_common/dropbox_session.py">pylons_common.dropbox_session</span>:<b>1332</b> in <code>wrap</code>  <a href="#" class="switch_source" tbid="140121697656776" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#A0008A">"Bad arguments for a route, args: %r, kwargs: %r, error: %r"</font> <b>%</b> <b>(</b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">args</font><b>,</b> <font color="#333333">kwargs</font><b>,</b> <font color="#333333">e</font><b>)</b><b>)</b><br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000AF"><b>return</b></font> <font color="#333333">f</font><b>(</b><b>*</b><font color="#333333">args</font><b>,</b> <b>**</b><font color="#333333">kwargs</font><b>)</b></span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">wrap</font><b>.</b><font color="#333333">func_name</font> <b>=</b> <font color="#333333">f</font><b>.</b><font color="#333333">func_name</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000AF"><b>return</b></font> <font color="#333333">wrap</font></code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#0000AF"><b>return</b></font> <font color="#333333">f</font><b>(</b><b>*</b><font color="#333333">args</font><b>,</b> <b>**</b><font color="#333333">kwargs</font><b>)</b></code><br>
+Module <span class="module" title="/srv/server/metaserver/metaserver/controllers/activity_feed.py">metaserver.controllers.activity_feed</span>:<b>476</b> in <code>feed_api_user_queue</code>  <a href="#" class="switch_source" tbid="140121436570040" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000AF"><b>return</b></font> <font color="#333333">json</font><b>.</b><font color="#333333">dumps</font><b>(</b><font color="#333333">activity_success_payload</font><b>(</b><font color="#333333">dict</font><b>(</b><br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">queue</font><b>=</b><font color="#333333">allocate_streams_update_queue</font><b>(</b><font color="#333333">user</font><b>)</b><b>)</b></span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>)</b><b>)</b></code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#333333">queue</font><b>=</b><font color="#333333">allocate_streams_update_queue</font><b>(</b><font color="#333333">user</font><b>)</b><b>)</b></code><br>
+Module <span class="module" title="/srv/server/metaserver/metaserver/lib/stream/live_update.py">metaserver.lib.stream.live_update</span>:<b>29</b> in <code>allocate_streams_update_queue</code>  <a href="#" class="switch_source" tbid="140121436845264" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; channel_ids=[EVENT_BUS_CHANNEL_ID_PREFIX + str(user.id)],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; event_types=_ALL_EVENT_TYPES,<br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tags=dict(user_id=user.id),</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; )<br>
+&nbsp;&nbsp;&nbsp; </code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#333333">tags</font><b>=</b><font color="#333333">dict</font><b>(</b><font color="#333333">user_id</font><b>=</b><font color="#333333">user</font><b>.</b><font color="#333333">id</font><b>)</b><b>,</b></code><br>
+Module <span class="module" title="/srv/server/metaserver/dropbox/eventbus/api/messaging_to_queue_server.py">dropbox.eventbus.api.messaging_to_queue_server</span>:<b>95</b> in <code>allocate_event_queue</code>  <a href="#" class="switch_source" tbid="140121436620632" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; status = getattr(e, 'status', 500)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text = getattr(e, 'text', str(e))<br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; raise EventBusQueueAllocationException(status=status, text=text)</span><br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return event_queue_resp</code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#0000AF"><b>raise</b></font> <font color="#333333">EventBusQueueAllocationException</font><b>(</b><font color="#333333">status</font><b>=</b><font color="#333333">status</font><b>,</b> <font color="#333333">text</font><b>=</b><font color="#333333">text</font><b>)</b></code><br>
+<b>&lt;class 'dropbox.eventbus.api.messaging_to_queue_server.EventBusQueueAllocationException'&gt;: 
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Dropbox - 5xx&lt;/title&gt;
+&lt;link href=&quot;https://www.dropbox.com/static/css/main.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;
+&lt;link rel=&quot;shortcut icon&quot; href=&quot;/static/images/favicon.ico&quot;/&gt;
+&lt;/head&gt;
+&lt;body style=&quot;background-color:#fff&quot;&gt;
+&lt;br/&gt;&lt;br/&gt;
+&lt;div align=&quot;center&quot;&gt;
+&lt;table&gt;&lt;tr&gt;&lt;td width=&quot;600px&quot;&gt;
+&lt;center&gt;&lt;img id=&quot;errorimage&quot; src=&quot;/static/images/sickbox.png&quot;/&gt;&lt;/center&gt;
+&lt;div id=&quot;errorbox&quot;&gt;
+&lt;h1&gt;Error&lt;/h1&gt;Something went wrong. Don't worry, your files are still safe and the Dropboxers have been notified. Check out our &lt;a href=&quot;https://www.dropbox.com/help&quot;&gt;Help Center&lt;/a&gt; and &lt;a href=&quot;https://forums.dropbox.com&quot;&gt;forums&lt;/a&gt; for help, or head back to &lt;a href=&quot;https://www.dropbox.com/home&quot;&gt;home&lt;/a&gt;.
+&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;/static/javascript/external/prototype.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+message = {&quot;fr&quot;: &quot;\x3ch1&gt;Error\x3c/h1&gt;Something went wrong. Don't worry, your files are still safe and the Dropboxers have been notified. Check out our \x3ca href=\&quot;https://www.dropbox.com/help\&quot;&gt;Help Center\x3c/a&gt; and \x3ca href=\&quot;https://forums.dropbox.com\&quot;&gt;forums\x3c/a&gt; for help, or head back to \x3ca href=\&quot;https://www.dropbox.com/home\&quot;&gt;home\x3c/a&gt;.&quot;, &quot;de&quot;: &quot;\x3ch1&gt;Fehler\x3c/h1&gt;Es ist etwas schief gelaufen. Keine Angst, deine Dateien sind weiterhin sicher und die Dropboxer wurden benachrichtigt. Suche im \x3ca href=\&quot;https://www.dropbox.com/help\&quot;&gt;Hilfecenter\x3c/a&gt; oder in den \x3ca href=\&quot;https://forums.dropbox.com\&quot;&gt;Foren\x3c/a&gt; nach Hilfe. Oder geh zur\u00fcck zur \x3ca href=\&quot;https://www.dropbox.com/home\&quot;&gt;Startseite\x3c/a&gt;.&quot;, &quot;ko&quot;: &quot;\x3ch1&gt;\uc624\ub958\x3c/h1&gt;\ubb38\uc81c\uac00 \ubc1c\uc0dd\ud588\uc2b5\ub2c8\ub2e4. \ud30c\uc77c\uc774 \uc190\uc0c1\ub418\uc9c0 \uc54a\uc558\uc73c\ubbc0\ub85c \uc548\uc2ec\ud558\uc2dc\uae30 \ubc14\ub77c\uba70, \uc774 \ubb38\uc81c\ub294 Dropboxer \uc0ac\uc6a9\uc790\uc5d0\uac8c \ud1b5\ubcf4\ub418\uc5c8\uc2b5\ub2c8\ub2e4. \ub3c4\uc6c0\uc774 \ud544\uc694\ud55c \uacbd\uc6b0 Dropbox\uc758 \x3ca href=\&quot;https://www.dropbox.com/help\&quot;&gt;\ub3c4\uc6c0\ub9d0 \uc13c\ud130\x3c/a&gt; \ubc0f \x3ca href=\&quot;https://forums.dropbox.com\&quot;&gt;\ud3ec\ub7fc\x3c/a&gt;\uc744 \ucc38\uc870\ud558\uac70\ub098 \x3ca href=\&quot;https://www.dropbox.com/home\&quot;&gt;\ud648\x3c/a&gt;\uc73c\ub85c \ub3cc\uc544\uac00\uc138\uc694.&quot;, &quot;ja&quot;: &quot;\x3ch1&gt;\u30a8\u30e9\u30fc\x3c/h1&gt;\u6240\u5b9a\u306e\u51e6\u7406\u304c\u5b8c\u4e86\u3057\u307e\u305b\u3093\u3067\u3057\u305f\u3002\u3054\u5229\u7528\u306e\u30d5\u30a1\u30a4\u30eb\u306f\u5b89\u5168\u306b\u4fdd\u5b58\u3055\u308c\u3066\u304a\u308a\u3001Dropbox \u30b9\u30bf\u30c3\u30d5\u306b\u554f\u984c\u306e\u901a\u77e5\u304c\u9001\u3089\u308c\u3066\u3044\u307e\u3059\u3002\x3ca href=\&quot;https://www.dropbox.com/help\&quot;&gt;\u30d8\u30eb\u30d7\u30bb\u30f3\u30bf\u30fc\x3c/a&gt;\u3068\x3ca href=\&quot;https://forums.dropbox.com\&quot;&gt;\u30d5\u30a9\u30fc\u30e9\u30e0\x3c/a&gt;\u3067\u4e0d\u660e\u306a\u70b9\u3092\u304a\u8abf\u3079\u304f\u3060\u3055\u3044\u3002\u307e\u305f\u306f\u3001\x3ca href=\&quot;https://www.dropbox.com/home\&quot;&gt;\u30db\u30fc\u30e0\x3c/a&gt;\u306b\u623b\u3063\u3066\u304f\u3060\u3055\u3044\u3002&quot;, &quot;es&quot;: &quot;\x3ch1&gt;Error\x3c/h1&gt;Algo sali\u00f3 mal. No te preocupes; tus archivos a\u00fan est\u00e1n a salvo y los dropboxers han recibido una notificaci\u00f3n. Consulta el \x3ca href=\&quot;https://www.dropbox.com/help\&quot;&gt;Centro de ayuda\x3c/a&gt; y los \x3ca href=\&quot;https://forums.dropbox.com\&quot;&gt;foros\x3c/a&gt; para obtener ayuda o vuelve al \x3ca href=\&quot;https://www.dropbox.com/home\&quot;&gt;Inicio\x3c/a&gt;.&quot;};
+function read_cookie (name) {
+	    var nameEQ = name + &quot;=&quot;;
+	    var ca = document.cookie.split(';');
+	    for (var i = 0; i &lt; ca.length; i++) {
+		    var c = ca[i];
+		    while (c.charAt(0) == ' ') {
+                c = c.substring(1, c.length);
+            }
+		    if (c.indexOf(nameEQ) === 0) {
+                return c.substring(nameEQ.length, c.length);
+            }
+	    }
+	    return null;
+}
+Event.observe(document, 'dom:loaded', function () {
+    var locale = read_cookie('locale');
+    if (locale) {
+       var msg = message[locale];
+       if (msg) {
+           $('errorbox').update(msg);
+       }
+    }
+});
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</b>
+    <br />
+    <br />
+    <div id="util-link">
+        <script type="text/javascript">
+        show_button('short_text_version', 'text version')
+        </script>
+    </div>
+    <div id="short_text_version" class="hidden-data">
+    <textarea style="width: 100%" rows=59 cols=60>File '/srv/server/metaserver/metaserver/lib/metaserver_session.py', line 388 in wrapper
+  return f(self, *a, **kw)
+File '/srv/server/metaserver/metaserver/lib/metaserver_session.py', line 1347 in wrapper
+  ret = handle_argument_errors(f)(self, *exec_args, **filtered_request_args)
+File '/srv/server/metaserver/pylons_common/dropbox_session.py', line 1332 in wrap
+  return f(*args, **kwargs)
+File '/srv/server/metaserver/metaserver/controllers/activity_feed.py', line 476 in feed_api_user_queue
+  queue=allocate_streams_update_queue(user))
+File '/srv/server/metaserver/metaserver/lib/stream/live_update.py', line 29 in allocate_streams_update_queue
+  tags=dict(user_id=user.id),
+File '/srv/server/metaserver/dropbox/eventbus/api/messaging_to_queue_server.py', line 95 in allocate_event_queue
+  raise EventBusQueueAllocationException(status=status, text=text)
+EventBusQueueAllocationException: 
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Dropbox - 5xx&lt;/title&gt;
+&lt;link href="https://www.dropbox.com/static/css/main.css" rel="stylesheet" type="text/css"&gt;
+&lt;link rel="shortcut icon" href="/static/images/favicon.ico"/&gt;
+&lt;/head&gt;
+&lt;body style="background-color:#fff"&gt;
+&lt;br/&gt;&lt;br/&gt;
+&lt;div align="center"&gt;
+&lt;table&gt;&lt;tr&gt;&lt;td width="600px"&gt;
+&lt;center&gt;&lt;img id="errorimage" src="/static/images/sickbox.png"/&gt;&lt;/center&gt;
+&lt;div id="errorbox"&gt;
+&lt;h1&gt;Error&lt;/h1&gt;Something went wrong. Don't worry, your files are still safe and the Dropboxers have been notified. Check out our &lt;a href="https://www.dropbox.com/help"&gt;Help Center&lt;/a&gt; and &lt;a href="https://forums.dropbox.com"&gt;forums&lt;/a&gt; for help, or head back to &lt;a href="https://www.dropbox.com/home"&gt;home&lt;/a&gt;.
+&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;script type="text/javascript" src="/static/javascript/external/prototype.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+message = {"fr": "\x3ch1&gt;Error\x3c/h1&gt;Something went wrong. Don't worry, your files are still safe and the Dropboxers have been notified. Check out our \x3ca href=\"https://www.dropbox.com/help\"&gt;Help Center\x3c/a&gt; and \x3ca href=\"https://forums.dropbox.com\"&gt;forums\x3c/a&gt; for help, or head back to \x3ca href=\"https://www.dropbox.com/home\"&gt;home\x3c/a&gt;.", "de": "\x3ch1&gt;Fehler\x3c/h1&gt;Es ist etwas schief gelaufen. Keine Angst, deine Dateien sind weiterhin sicher und die Dropboxer wurden benachrichtigt. Suche im \x3ca href=\"https://www.dropbox.com/help\"&gt;Hilfecenter\x3c/a&gt; oder in den \x3ca href=\"https://forums.dropbox.com\"&gt;Foren\x3c/a&gt; nach Hilfe. Oder geh zur\u00fcck zur \x3ca href=\"https://www.dropbox.com/home\"&gt;Startseite\x3c/a&gt;.", "ko": "\x3ch1&gt;\uc624\ub958\x3c/h1&gt;\ubb38\uc81c\uac00 \ubc1c\uc0dd\ud588\uc2b5\ub2c8\ub2e4. \ud30c\uc77c\uc774 \uc190\uc0c1\ub418\uc9c0 \uc54a\uc558\uc73c\ubbc0\ub85c \uc548\uc2ec\ud558\uc2dc\uae30 \ubc14\ub77c\uba70, \uc774 \ubb38\uc81c\ub294 Dropboxer \uc0ac\uc6a9\uc790\uc5d0\uac8c \ud1b5\ubcf4\ub418\uc5c8\uc2b5\ub2c8\ub2e4. \ub3c4\uc6c0\uc774 \ud544\uc694\ud55c \uacbd\uc6b0 Dropbox\uc758 \x3ca href=\"https://www.dropbox.com/help\"&gt;\ub3c4\uc6c0\ub9d0 \uc13c\ud130\x3c/a&gt; \ubc0f \x3ca href=\"https://forums.dropbox.com\"&gt;\ud3ec\ub7fc\x3c/a&gt;\uc744 \ucc38\uc870\ud558\uac70\ub098 \x3ca href=\"https://www.dropbox.com/home\"&gt;\ud648\x3c/a&gt;\uc73c\ub85c \ub3cc\uc544\uac00\uc138\uc694.", "ja": "\x3ch1&gt;\u30a8\u30e9\u30fc\x3c/h1&gt;\u6240\u5b9a\u306e\u51e6\u7406\u304c\u5b8c\u4e86\u3057\u307e\u305b\u3093\u3067\u3057\u305f\u3002\u3054\u5229\u7528\u306e\u30d5\u30a1\u30a4\u30eb\u306f\u5b89\u5168\u306b\u4fdd\u5b58\u3055\u308c\u3066\u304a\u308a\u3001Dropbox \u30b9\u30bf\u30c3\u30d5\u306b\u554f\u984c\u306e\u901a\u77e5\u304c\u9001\u3089\u308c\u3066\u3044\u307e\u3059\u3002\x3ca href=\"https://www.dropbox.com/help\"&gt;\u30d8\u30eb\u30d7\u30bb\u30f3\u30bf\u30fc\x3c/a&gt;\u3068\x3ca href=\"https://forums.dropbox.com\"&gt;\u30d5\u30a9\u30fc\u30e9\u30e0\x3c/a&gt;\u3067\u4e0d\u660e\u306a\u70b9\u3092\u304a\u8abf\u3079\u304f\u3060\u3055\u3044\u3002\u307e\u305f\u306f\u3001\x3ca href=\"https://www.dropbox.com/home\"&gt;\u30db\u30fc\u30e0\x3c/a&gt;\u306b\u623b\u3063\u3066\u304f\u3060\u3055\u3044\u3002", "es": "\x3ch1&gt;Error\x3c/h1&gt;Algo sali\u00f3 mal. No te preocupes; tus archivos a\u00fan est\u00e1n a salvo y los dropboxers han recibido una notificaci\u00f3n. Consulta el \x3ca href=\"https://www.dropbox.com/help\"&gt;Centro de ayuda\x3c/a&gt; y los \x3ca href=\"https://forums.dropbox.com\"&gt;foros\x3c/a&gt; para obtener ayuda o vuelve al \x3ca href=\"https://www.dropbox.com/home\"&gt;Inicio\x3c/a&gt;."};
+function read_cookie (name) {
+	    var nameEQ = name + "=";
+	    var ca = document.cookie.split(';');
+	    for (var i = 0; i &lt; ca.length; i++) {
+		    var c = ca[i];
+		    while (c.charAt(0) == ' ') {
+                c = c.substring(1, c.length);
+            }
+		    if (c.indexOf(nameEQ) === 0) {
+                return c.substring(nameEQ.length, c.length);
+            }
+	    }
+	    return null;
+}
+Event.observe(document, 'dom:loaded', function () {
+    var locale = read_cookie('locale');
+    if (locale) {
+       var msg = message[locale];
+       if (msg) {
+           $('errorbox').update(msg);
+       }
+    }
+});
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</textarea>
+    </div>
+    
+        <br />
+        <div id="util-link">
+            <script type="text/javascript">
+            show_button('full_traceback', 'full traceback')
+            </script>
+        </div>
+        <div id="full_traceback" class="hidden-data">
+        URL: <a href="https://meta-dbdev.dev.corp.dropbox.com/activity_feed_api/user_queue?_subject_uid=2">https://meta-dbdev.dev.corp.dropbox.com/activity_feed_api/user_queue?_subject_uid=2</a><br>
+Module <span class="module" title="/usr/local/lib/python2.7/site-packages/Pylons-0.9.6.2-py2.7.egg/pylons/error.py">pylons.error</span>:<b>245</b> in <code>respond</code>  <a href="#" class="switch_source" tbid="140121437281456" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000AF"><b>try</b></font><b>:</b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">__traceback_supplement__</font> <b>=</b> <font color="#333333">Supplement</font><b>,</b> <font color="#333333">self</font><b>,</b> <font color="#333333">environ</font><br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">app_iter</font> <b>=</b> <font color="#333333">self</font><b>.</b><font color="#333333">application</font><b>(</b><font color="#333333">environ</font><b>,</b> <font color="#333333">detect_start_response</font><b>)</b></span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000AF"><b>try</b></font><b>:</b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">return_iter</font> <b>=</b> <font color="#333333">list</font><b>(</b><font color="#333333">app_iter</font><b>)</b></code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#333333">app_iter</font> <b>=</b> <font color="#333333">self</font><b>.</b><font color="#333333">application</font><b>(</b><font color="#333333">environ</font><b>,</b> <font color="#333333">detect_start_response</font><b>)</b></code><br>
+Module <span class="module" title="/srv/server/metaserver/dropbox/middleware/cookie_check.py">dropbox.middleware.cookie_check</span>:<b>80</b> in <code>__call__</code>  <a href="#" class="switch_source" tbid="140121437280448" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return start_response(status, headers, exc_info)<br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp; </span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return self.app(environ, cookie_check_start_response)</code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#0000AF"><b>return</b></font> <font color="#333333">self</font><b>.</b><font color="#333333">app</font><b>(</b><font color="#333333">environ</font><b>,</b> <font color="#333333">cookie_check_start_response</font><b>)</b></code><br>
+Module <span class="module" title="/srv/server/metaserver/pylons_common/security/middleware.py">pylons_common.security.middleware</span>:<b>22</b> in <code>__call__</code>  <a href="#" class="switch_source" tbid="140121437088152" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; raise ValueError(&quot;Invalid header Key: %r, Value: %r&quot; % (key, value))<br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return start_response(status, response_headers, exc_info)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return self.app(environ, start_response_wrapper)</code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#0000AF"><b>return</b></font> <font color="#333333">self</font><b>.</b><font color="#333333">app</font><b>(</b><font color="#333333">environ</font><b>,</b> <font color="#333333">start_response_wrapper</font><b>)</b></code><br>
+Module <span class="module" title="/usr/local/lib/python2.7/site-packages/Paste-1.7.5.1-py2.7.egg/paste/registry.py">paste.registry</span>:<b>379</b> in <code>__call__</code>  <a href="#" class="switch_source" tbid="140121437087000" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000AF"><b>try</b></font><b>:</b><br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">app_iter</font> <b>=</b> <font color="#333333">self</font><b>.</b><font color="#333333">application</font><b>(</b><font color="#333333">environ</font><b>,</b> <font color="#333333">start_response</font><b>)</b></span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000AF"><b>except</b></font> <font color="#333333">Exception</font><b>,</b> <font color="#333333">e</font><b>:</b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#007F00"># Regardless of if the content is an iterable, generator, list</font></code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#333333">app_iter</font> <b>=</b> <font color="#333333">self</font><b>.</b><font color="#333333">application</font><b>(</b><font color="#333333">environ</font><b>,</b> <font color="#333333">start_response</font><b>)</b></code><br>
+Module <span class="module" title="/usr/local/lib/python2.7/site-packages/Pylons-0.9.6.2-py2.7.egg/pylons/wsgiapp.py">pylons.wsgiapp</span>:<b>314</b> in <code>__call__</code>  <a href="#" class="switch_source" tbid="140121437316088" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a>&nbsp;&nbsp;&nbsp; <font color="#0000AF"><b>def</b></font> <font color="#9C7A00"><b>__call__</b></font><b>(</b><b>self</b><b>,</b> <b>environ</b><b>,</b> <b>start_response</b><b>)</b><b>:</b><br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">environ</font><b>[</b><font color="#600080">'pylons.environ_config'</font><b>]</b> <b>=</b> <font color="#333333">self</font><b>.</b><font color="#333333">econf</font></span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000AF"><b>return</b></font> <font color="#333333">self</font><b>.</b><font color="#333333">app</font><b>(</b><font color="#333333">environ</font><b>,</b> <font color="#333333">start_response</font><b>)</b></code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#0000AF"><b>return</b></font> <font color="#333333">self</font><b>.</b><font color="#333333">app</font><b>(</b><font color="#333333">environ</font><b>,</b> <font color="#333333">start_response</font><b>)</b></code><br>
+Module <span class="module" title="/usr/local/lib/python2.7/site-packages/Beaker-1.5.4-py2.7.egg/beaker/middleware.py">beaker.middleware</span>:<b>73</b> in <code>__call__</code>  <a href="#" class="switch_source" tbid="140121437315512" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">self</font><b>.</b><font color="#333333">cache_manager</font><b>)</b><br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">environ</font><b>[</b><font color="#333333">self</font><b>.</b><font color="#333333">environ_key</font><b>]</b> <b>=</b> <font color="#333333">self</font><b>.</b><font color="#333333">cache_manager</font></span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000AF"><b>return</b></font> <font color="#333333">self</font><b>.</b><font color="#333333">app</font><b>(</b><font color="#333333">environ</font><b>,</b> <font color="#333333">start_response</font><b>)</b></code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#0000AF"><b>return</b></font> <font color="#333333">self</font><b>.</b><font color="#333333">app</font><b>(</b><font color="#333333">environ</font><b>,</b> <font color="#333333">start_response</font><b>)</b></code><br>
+Module <span class="module" title="/usr/local/lib/python2.7/site-packages/Beaker-1.5.4-py2.7.egg/beaker/middleware.py">beaker.middleware</span>:<b>152</b> in <code>__call__</code>  <a href="#" class="switch_source" tbid="140121437285048" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headers.append(('Set-cookie', cookie))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return start_response(status, headers, exc_info)<br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return self.wrap_app(environ, session_start_response)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; def _get_session(self):</code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#0000AF"><b>return</b></font> <font color="#333333">self</font><b>.</b><font color="#333333">wrap_app</font><b>(</b><font color="#333333">environ</font><b>,</b> <font color="#333333">session_start_response</font><b>)</b></code><br>
+Module <span class="module" title="/usr/local/lib/python2.7/site-packages/Routes-1.7.3-py2.7.egg/routes/middleware.py">routes.middleware</span>:<b>99</b> in <code>__call__</code>  <a href="#" class="switch_source" tbid="140121437284832" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; environ['SCRIPT_NAME'] = environ['SCRIPT_NAME'][:-1]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; response = self.app(environ, start_response)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; del config.environ<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; del self.mapper.environ</code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#333333">response</font> <b>=</b> <font color="#333333">self</font><b>.</b><font color="#333333">app</font><b>(</b><font color="#333333">environ</font><b>,</b> <font color="#333333">start_response</font><b>)</b></code><br>
+Module <span class="module" title="/usr/local/lib/python2.7/site-packages/Pylons-0.9.6.2-py2.7.egg/pylons/wsgiapp.py">pylons.wsgiapp</span>:<b>95</b> in <code>__call__</code>  <a href="#" class="switch_source" tbid="140121697747168" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">controller</font> <b>=</b> <font color="#333333">self</font><b>.</b><font color="#333333">resolve</font><b>(</b><font color="#333333">environ</font><b>,</b> <font color="#333333">start_response</font><b>)</b><br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">response</font> <b>=</b> <font color="#333333">self</font><b>.</b><font color="#333333">dispatch</font><b>(</b><font color="#333333">controller</font><b>,</b> <font color="#333333">environ</font><b>,</b> <font color="#333333">start_response</font><b>)</b></span><br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000AF"><b>if</b></font> <font color="#600080">'paste.testing_variables'</font> <font color="#0000AF"><b>in</b></font> <font color="#333333">environ</font> <font color="#0000AF"><b>and</b></font> <font color="#333333">hasattr</font><b>(</b><font color="#333333">response</font><b>,</b></code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#333333">response</font> <b>=</b> <font color="#333333">self</font><b>.</b><font color="#333333">dispatch</font><b>(</b><font color="#333333">controller</font><b>,</b> <font color="#333333">environ</font><b>,</b> <font color="#333333">start_response</font><b>)</b></code><br>
+Module <span class="module" title="/usr/local/lib/python2.7/site-packages/Pylons-0.9.6.2-py2.7.egg/pylons/wsgiapp.py">pylons.wsgiapp</span>:<b>236</b> in <code>dispatch</code>  <a href="#" class="switch_source" tbid="140121701113584" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if log_debug:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; log.debug(&quot;Calling controller class with WSGI interface&quot;)<br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return controller(environ, start_response)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; def load_test_env(self, environ):</code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#0000AF"><b>return</b></font> <font color="#333333">controller</font><b>(</b><font color="#333333">environ</font><b>,</b> <font color="#333333">start_response</font><b>)</b></code><br>
+Module <span class="module" title="/srv/server/metaserver/metaserver/lib/base.py">metaserver.lib.base</span>:<b>349</b> in <code>__call__</code>  <a href="#" class="switch_source" tbid="140121697706136" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">stopwatch</font><b>.</b><font color="#333333">global_sw</font><b>(</b><b>)</b><b>.</b><font color="#333333">addslowtag</font><b>(</b><font color="#600080">'slow_90000ms'</font><b>,</b> <font color="#DD2200"><b>90</b></font><b>)</b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000AF"><b>with</b></font> <font color="#333333">metaserver_environment</font><b>(</b><font color="#333333">controller</font><b>,</b> <font color="#333333">action</font><b>,</b> <font color="#333333">expected_exceptions</font><b>)</b><b>:</b><br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">ret</font> <b>=</b> <font color="#333333">self</font><b>.</b><font color="#333333">_call_inner</font><b>(</b><font color="#333333">environ</font><b>,</b> <font color="#333333">start_response</font><b>)</b></span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000AF"><b>if</b></font> <font color="#333333">hasattr</font><b>(</b><font color="#333333">ret</font><b>,</b> <font color="#600080">'__iter__'</font><b>)</b><b>:</b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#007F00"># Wrap output generators so that we can report exceptions.</font></code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#333333">ret</font> <b>=</b> <font color="#333333">self</font><b>.</b><font color="#333333">_call_inner</font><b>(</b><font color="#333333">environ</font><b>,</b> <font color="#333333">start_response</font><b>)</b></code><br>
+Module <span class="module" title="/srv/server/metaserver/metaserver/lib/base.py">metaserver.lib.base</span>:<b>435</b> in <code>_call_inner</code>  <a href="#" class="switch_source" tbid="140121697706424" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">start_time</font> <b>=</b> <font color="#333333">time</font><b>.</b><font color="#333333">time</font><b>(</b><b>)</b><br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">ret</font> <b>=</b> <font color="#333333">WSGIController</font><b>.</b><font color="#333333">__call__</font><b>(</b><font color="#333333">self</font><b>,</b> <font color="#333333">environ</font><b>,</b> <font color="#333333">start_response</font><b>)</b></span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">total_time</font> <b>=</b> <font color="#333333">time</font><b>.</b><font color="#333333">time</font><b>(</b><b>)</b> <b>-</b> <font color="#333333">start_time</font></code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#333333">ret</font> <b>=</b> <font color="#333333">WSGIController</font><b>.</b><font color="#333333">__call__</font><b>(</b><font color="#333333">self</font><b>,</b> <font color="#333333">environ</font><b>,</b> <font color="#333333">start_response</font><b>)</b></code><br>
+Module <span class="module" title="/usr/local/lib/python2.7/site-packages/Pylons-0.9.6.2-py2.7.egg/pylons/controllers/core.py">pylons.controllers.core</span>:<b>164</b> in <code>__call__</code>  <a href="#" class="switch_source" tbid="140121437080104" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return response(environ, self.start_response)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; response = self._dispatch_call()</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if not start_response_called:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # If its not a WSGI response, and we have content, it needs to</code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#333333">response</font> <b>=</b> <font color="#333333">self</font><b>.</b><font color="#333333">_dispatch_call</font><b>(</b><b>)</b></code><br>
+Module <span class="module" title="/usr/local/lib/python2.7/site-packages/Pylons-0.9.6.2-py2.7.egg/pylons/controllers/core.py">pylons.controllers.core</span>:<b>120</b> in <code>_dispatch_call</code>  <a href="#" class="switch_source" tbid="140121437080896" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; req.environ['pylons.action_method'] = func<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; response = self._inspect_call(func)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if log_debug:</code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#333333">response</font> <b>=</b> <font color="#333333">self</font><b>.</b><font color="#333333">_inspect_call</font><b>(</b><font color="#333333">func</font><b>)</b></code><br>
+Module <span class="module" title="/usr/local/lib/python2.7/site-packages/Pylons-0.9.6.2-py2.7.egg/pylons/controllers/core.py">pylons.controllers.core</span>:<b>79</b> in <code>_inspect_call</code>  <a href="#" class="switch_source" tbid="140121437080464" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">func</font><b>.</b><font color="#333333">__name__</font><b>,</b> <font color="#333333">args</font><b>)</b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000AF"><b>try</b></font><b>:</b><br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">result</font> <b>=</b> <font color="#333333">func</font><b>(</b><b>**</b><font color="#333333">args</font><b>)</b></span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000AF"><b>except</b></font> <font color="#333333">HTTPException</font><b>,</b> <font color="#333333">httpe</font><b>:</b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000AF"><b>if</b></font> <font color="#333333">log_debug</font><b>:</b></code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#333333">result</font> <b>=</b> <font color="#333333">func</font><b>(</b><b>**</b><font color="#333333">args</font><b>)</b></code><br>
+Module <span class="module" title="/srv/server/metaserver/metaserver/lib/metaserver_session.py">metaserver.lib.metaserver_session</span>:<b>388</b> in <code>wrapper</code>  <a href="#" class="switch_source" tbid="140121436592608" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return &quot;err:&quot;+json.dumps(errors)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try:<br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return f(self, *a, **kw)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; except AjaxError, e:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; request_rollback()</code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#0000AF"><b>return</b></font> <font color="#333333">f</font><b>(</b><font color="#333333">self</font><b>,</b> <b>*</b><font color="#333333">a</font><b>,</b> <b>**</b><font color="#333333">kw</font><b>)</b></code><br>
+Module <span class="module" title="/srv/server/metaserver/metaserver/lib/metaserver_session.py">metaserver.lib.metaserver_session</span>:<b>1347</b> in <code>wrapper</code>  <a href="#" class="switch_source" tbid="140121436590376" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#608060">#######################################</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">pageload_start</font> <b>=</b> <font color="#333333">time</font><b>.</b><font color="#333333">time</font><b>(</b><b>)</b><br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">ret</font> <b>=</b> <font color="#333333">handle_argument_errors</font><b>(</b><font color="#333333">f</font><b>)</b><b>(</b><font color="#333333">self</font><b>,</b> <b>*</b><font color="#333333">exec_args</font><b>,</b> <b>**</b><font color="#333333">filtered_request_args</font><b>)</b></span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">pageload_ms</font> <b>=</b> <font color="#DD2200"><b>1000</b></font><b>*</b><b>(</b><font color="#333333">time</font><b>.</b><font color="#333333">time</font><b>(</b><b>)</b> <b>-</b> <font color="#333333">pageload_start</font><b>)</b></code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#333333">ret</font> <b>=</b> <font color="#333333">handle_argument_errors</font><b>(</b><font color="#333333">f</font><b>)</b><b>(</b><font color="#333333">self</font><b>,</b> <b>*</b><font color="#333333">exec_args</font><b>,</b> <b>**</b><font color="#333333">filtered_request_args</font><b>)</b></code><br>
+Module <span class="module" title="/srv/server/metaserver/pylons_common/dropbox_session.py">pylons_common.dropbox_session</span>:<b>1332</b> in <code>wrap</code>  <a href="#" class="switch_source" tbid="140121697656776" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#A0008A">"Bad arguments for a route, args: %r, kwargs: %r, error: %r"</font> <b>%</b> <b>(</b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">args</font><b>,</b> <font color="#333333">kwargs</font><b>,</b> <font color="#333333">e</font><b>)</b><b>)</b><br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000AF"><b>return</b></font> <font color="#333333">f</font><b>(</b><b>*</b><font color="#333333">args</font><b>,</b> <b>**</b><font color="#333333">kwargs</font><b>)</b></span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">wrap</font><b>.</b><font color="#333333">func_name</font> <b>=</b> <font color="#333333">f</font><b>.</b><font color="#333333">func_name</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000AF"><b>return</b></font> <font color="#333333">wrap</font></code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#0000AF"><b>return</b></font> <font color="#333333">f</font><b>(</b><b>*</b><font color="#333333">args</font><b>,</b> <b>**</b><font color="#333333">kwargs</font><b>)</b></code><br>
+Module <span class="module" title="/srv/server/metaserver/metaserver/controllers/activity_feed.py">metaserver.controllers.activity_feed</span>:<b>476</b> in <code>feed_api_user_queue</code>  <a href="#" class="switch_source" tbid="140121436570040" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000AF"><b>return</b></font> <font color="#333333">json</font><b>.</b><font color="#333333">dumps</font><b>(</b><font color="#333333">activity_success_payload</font><b>(</b><font color="#333333">dict</font><b>(</b><br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#333333">queue</font><b>=</b><font color="#333333">allocate_streams_update_queue</font><b>(</b><font color="#333333">user</font><b>)</b><b>)</b></span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>)</b><b>)</b></code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#333333">queue</font><b>=</b><font color="#333333">allocate_streams_update_queue</font><b>(</b><font color="#333333">user</font><b>)</b><b>)</b></code><br>
+Module <span class="module" title="/srv/server/metaserver/metaserver/lib/stream/live_update.py">metaserver.lib.stream.live_update</span>:<b>29</b> in <code>allocate_streams_update_queue</code>  <a href="#" class="switch_source" tbid="140121436845264" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; channel_ids=[EVENT_BUS_CHANNEL_ID_PREFIX + str(user.id)],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; event_types=_ALL_EVENT_TYPES,<br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tags=dict(user_id=user.id),</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; )<br>
+&nbsp;&nbsp;&nbsp; </code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#333333">tags</font><b>=</b><font color="#333333">dict</font><b>(</b><font color="#333333">user_id</font><b>=</b><font color="#333333">user</font><b>.</b><font color="#333333">id</font><b>)</b><b>,</b></code><br>
+Module <span class="module" title="/srv/server/metaserver/dropbox/eventbus/api/messaging_to_queue_server.py">dropbox.eventbus.api.messaging_to_queue_server</span>:<b>95</b> in <code>allocate_event_queue</code>  <a href="#" class="switch_source" tbid="140121436620632" onClick="return showFrame(this)">&nbsp; &nbsp; <img src="/_debug/media/pylons/img/plus.jpg" border=0 width=9 height=9> &nbsp; &nbsp;</a><br>
+<code style="display: none" class="source" source-type="long"><a class="switch_source" onclick="return switch_source(this, 'long')" href="#">&lt;&lt;&nbsp; </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; status = getattr(e, 'status', 500)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text = getattr(e, 'text', str(e))<br>
+<span class="source-highlight">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; raise EventBusQueueAllocationException(status=status, text=text)</span><br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return event_queue_resp</code><code class="source" source-type="short"><a onclick="return switch_source(this, 'short')" class="switch_source" href="#">&gt;&gt;&nbsp; </a><font color="#0000AF"><b>raise</b></font> <font color="#333333">EventBusQueueAllocationException</font><b>(</b><font color="#333333">status</font><b>=</b><font color="#333333">status</font><b>,</b> <font color="#333333">text</font><b>=</b><font color="#333333">text</font><b>)</b></code><br>
+<b>&lt;class 'dropbox.eventbus.api.messaging_to_queue_server.EventBusQueueAllocationException'&gt;: 
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Dropbox - 5xx&lt;/title&gt;
+&lt;link href=&quot;https://www.dropbox.com/static/css/main.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;
+&lt;link rel=&quot;shortcut icon&quot; href=&quot;/static/images/favicon.ico&quot;/&gt;
+&lt;/head&gt;
+&lt;body style=&quot;background-color:#fff&quot;&gt;
+&lt;br/&gt;&lt;br/&gt;
+&lt;div align=&quot;center&quot;&gt;
+&lt;table&gt;&lt;tr&gt;&lt;td width=&quot;600px&quot;&gt;
+&lt;center&gt;&lt;img id=&quot;errorimage&quot; src=&quot;/static/images/sickbox.png&quot;/&gt;&lt;/center&gt;
+&lt;div id=&quot;errorbox&quot;&gt;
+&lt;h1&gt;Error&lt;/h1&gt;Something went wrong. Don't worry, your files are still safe and the Dropboxers have been notified. Check out our &lt;a href=&quot;https://www.dropbox.com/help&quot;&gt;Help Center&lt;/a&gt; and &lt;a href=&quot;https://forums.dropbox.com&quot;&gt;forums&lt;/a&gt; for help, or head back to &lt;a href=&quot;https://www.dropbox.com/home&quot;&gt;home&lt;/a&gt;.
+&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;/static/javascript/external/prototype.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+message = {&quot;fr&quot;: &quot;\x3ch1&gt;Error\x3c/h1&gt;Something went wrong. Don't worry, your files are still safe and the Dropboxers have been notified. Check out our \x3ca href=\&quot;https://www.dropbox.com/help\&quot;&gt;Help Center\x3c/a&gt; and \x3ca href=\&quot;https://forums.dropbox.com\&quot;&gt;forums\x3c/a&gt; for help, or head back to \x3ca href=\&quot;https://www.dropbox.com/home\&quot;&gt;home\x3c/a&gt;.&quot;, &quot;de&quot;: &quot;\x3ch1&gt;Fehler\x3c/h1&gt;Es ist etwas schief gelaufen. Keine Angst, deine Dateien sind weiterhin sicher und die Dropboxer wurden benachrichtigt. Suche im \x3ca href=\&quot;https://www.dropbox.com/help\&quot;&gt;Hilfecenter\x3c/a&gt; oder in den \x3ca href=\&quot;https://forums.dropbox.com\&quot;&gt;Foren\x3c/a&gt; nach Hilfe. Oder geh zur\u00fcck zur \x3ca href=\&quot;https://www.dropbox.com/home\&quot;&gt;Startseite\x3c/a&gt;.&quot;, &quot;ko&quot;: &quot;\x3ch1&gt;\uc624\ub958\x3c/h1&gt;\ubb38\uc81c\uac00 \ubc1c\uc0dd\ud588\uc2b5\ub2c8\ub2e4. \ud30c\uc77c\uc774 \uc190\uc0c1\ub418\uc9c0 \uc54a\uc558\uc73c\ubbc0\ub85c \uc548\uc2ec\ud558\uc2dc\uae30 \ubc14\ub77c\uba70, \uc774 \ubb38\uc81c\ub294 Dropboxer \uc0ac\uc6a9\uc790\uc5d0\uac8c \ud1b5\ubcf4\ub418\uc5c8\uc2b5\ub2c8\ub2e4. \ub3c4\uc6c0\uc774 \ud544\uc694\ud55c \uacbd\uc6b0 Dropbox\uc758 \x3ca href=\&quot;https://www.dropbox.com/help\&quot;&gt;\ub3c4\uc6c0\ub9d0 \uc13c\ud130\x3c/a&gt; \ubc0f \x3ca href=\&quot;https://forums.dropbox.com\&quot;&gt;\ud3ec\ub7fc\x3c/a&gt;\uc744 \ucc38\uc870\ud558\uac70\ub098 \x3ca href=\&quot;https://www.dropbox.com/home\&quot;&gt;\ud648\x3c/a&gt;\uc73c\ub85c \ub3cc\uc544\uac00\uc138\uc694.&quot;, &quot;ja&quot;: &quot;\x3ch1&gt;\u30a8\u30e9\u30fc\x3c/h1&gt;\u6240\u5b9a\u306e\u51e6\u7406\u304c\u5b8c\u4e86\u3057\u307e\u305b\u3093\u3067\u3057\u305f\u3002\u3054\u5229\u7528\u306e\u30d5\u30a1\u30a4\u30eb\u306f\u5b89\u5168\u306b\u4fdd\u5b58\u3055\u308c\u3066\u304a\u308a\u3001Dropbox \u30b9\u30bf\u30c3\u30d5\u306b\u554f\u984c\u306e\u901a\u77e5\u304c\u9001\u3089\u308c\u3066\u3044\u307e\u3059\u3002\x3ca href=\&quot;https://www.dropbox.com/help\&quot;&gt;\u30d8\u30eb\u30d7\u30bb\u30f3\u30bf\u30fc\x3c/a&gt;\u3068\x3ca href=\&quot;https://forums.dropbox.com\&quot;&gt;\u30d5\u30a9\u30fc\u30e9\u30e0\x3c/a&gt;\u3067\u4e0d\u660e\u306a\u70b9\u3092\u304a\u8abf\u3079\u304f\u3060\u3055\u3044\u3002\u307e\u305f\u306f\u3001\x3ca href=\&quot;https://www.dropbox.com/home\&quot;&gt;\u30db\u30fc\u30e0\x3c/a&gt;\u306b\u623b\u3063\u3066\u304f\u3060\u3055\u3044\u3002&quot;, &quot;es&quot;: &quot;\x3ch1&gt;Error\x3c/h1&gt;Algo sali\u00f3 mal. No te preocupes; tus archivos a\u00fan est\u00e1n a salvo y los dropboxers han recibido una notificaci\u00f3n. Consulta el \x3ca href=\&quot;https://www.dropbox.com/help\&quot;&gt;Centro de ayuda\x3c/a&gt; y los \x3ca href=\&quot;https://forums.dropbox.com\&quot;&gt;foros\x3c/a&gt; para obtener ayuda o vuelve al \x3ca href=\&quot;https://www.dropbox.com/home\&quot;&gt;Inicio\x3c/a&gt;.&quot;};
+function read_cookie (name) {
+	    var nameEQ = name + &quot;=&quot;;
+	    var ca = document.cookie.split(';');
+	    for (var i = 0; i &lt; ca.length; i++) {
+		    var c = ca[i];
+		    while (c.charAt(0) == ' ') {
+                c = c.substring(1, c.length);
+            }
+		    if (c.indexOf(nameEQ) === 0) {
+                return c.substring(nameEQ.length, c.length);
+            }
+	    }
+	    return null;
+}
+Event.observe(document, 'dom:loaded', function () {
+    var locale = read_cookie('locale');
+    if (locale) {
+       var msg = message[locale];
+       if (msg) {
+           $('errorbox').update(msg);
+       }
+    }
+});
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</b>
+            <br />
+            <div id="util-link">
+                <script type="text/javascript">
+                show_button('long_text_version', 'full traceback text version')
+                </script>
+            </div>
+            <div id="long_text_version" class="hidden-data">
+            <textarea style="width: 100%" rows=90 cols=60>URL: https://meta-dbdev.dev.corp.dropbox.com/activity_feed_api/user_queue?_subject_uid=2
+File '/usr/local/lib/python2.7/site-packages/Pylons-0.9.6.2-py2.7.egg/pylons/error.py', line 245 in respond
+  app_iter = self.application(environ, detect_start_response)
+File '/srv/server/metaserver/dropbox/middleware/cookie_check.py', line 80 in __call__
+  return self.app(environ, cookie_check_start_response)
+File '/srv/server/metaserver/pylons_common/security/middleware.py', line 22 in __call__
+  return self.app(environ, start_response_wrapper)
+File '/usr/local/lib/python2.7/site-packages/Paste-1.7.5.1-py2.7.egg/paste/registry.py', line 379 in __call__
+  app_iter = self.application(environ, start_response)
+File '/usr/local/lib/python2.7/site-packages/Pylons-0.9.6.2-py2.7.egg/pylons/wsgiapp.py', line 314 in __call__
+  return self.app(environ, start_response)
+File '/usr/local/lib/python2.7/site-packages/Beaker-1.5.4-py2.7.egg/beaker/middleware.py', line 73 in __call__
+  return self.app(environ, start_response)
+File '/usr/local/lib/python2.7/site-packages/Beaker-1.5.4-py2.7.egg/beaker/middleware.py', line 152 in __call__
+  return self.wrap_app(environ, session_start_response)
+File '/usr/local/lib/python2.7/site-packages/Routes-1.7.3-py2.7.egg/routes/middleware.py', line 99 in __call__
+  response = self.app(environ, start_response)
+File '/usr/local/lib/python2.7/site-packages/Pylons-0.9.6.2-py2.7.egg/pylons/wsgiapp.py', line 95 in __call__
+  response = self.dispatch(controller, environ, start_response)
+File '/usr/local/lib/python2.7/site-packages/Pylons-0.9.6.2-py2.7.egg/pylons/wsgiapp.py', line 236 in dispatch
+  return controller(environ, start_response)
+File '/srv/server/metaserver/metaserver/lib/base.py', line 349 in __call__
+  ret = self._call_inner(environ, start_response)
+File '/srv/server/metaserver/metaserver/lib/base.py', line 435 in _call_inner
+  ret = WSGIController.__call__(self, environ, start_response)
+File '/usr/local/lib/python2.7/site-packages/Pylons-0.9.6.2-py2.7.egg/pylons/controllers/core.py', line 164 in __call__
+  response = self._dispatch_call()
+File '/usr/local/lib/python2.7/site-packages/Pylons-0.9.6.2-py2.7.egg/pylons/controllers/core.py', line 120 in _dispatch_call
+  response = self._inspect_call(func)
+File '/usr/local/lib/python2.7/site-packages/Pylons-0.9.6.2-py2.7.egg/pylons/controllers/core.py', line 79 in _inspect_call
+  result = func(**args)
+File '/srv/server/metaserver/metaserver/lib/metaserver_session.py', line 388 in wrapper
+  return f(self, *a, **kw)
+File '/srv/server/metaserver/metaserver/lib/metaserver_session.py', line 1347 in wrapper
+  ret = handle_argument_errors(f)(self, *exec_args, **filtered_request_args)
+File '/srv/server/metaserver/pylons_common/dropbox_session.py', line 1332 in wrap
+  return f(*args, **kwargs)
+File '/srv/server/metaserver/metaserver/controllers/activity_feed.py', line 476 in feed_api_user_queue
+  queue=allocate_streams_update_queue(user))
+File '/srv/server/metaserver/metaserver/lib/stream/live_update.py', line 29 in allocate_streams_update_queue
+  tags=dict(user_id=user.id),
+File '/srv/server/metaserver/dropbox/eventbus/api/messaging_to_queue_server.py', line 95 in allocate_event_queue
+  raise EventBusQueueAllocationException(status=status, text=text)
+EventBusQueueAllocationException: 
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Dropbox - 5xx&lt;/title&gt;
+&lt;link href="https://www.dropbox.com/static/css/main.css" rel="stylesheet" type="text/css"&gt;
+&lt;link rel="shortcut icon" href="/static/images/favicon.ico"/&gt;
+&lt;/head&gt;
+&lt;body style="background-color:#fff"&gt;
+&lt;br/&gt;&lt;br/&gt;
+&lt;div align="center"&gt;
+&lt;table&gt;&lt;tr&gt;&lt;td width="600px"&gt;
+&lt;center&gt;&lt;img id="errorimage" src="/static/images/sickbox.png"/&gt;&lt;/center&gt;
+&lt;div id="errorbox"&gt;
+&lt;h1&gt;Error&lt;/h1&gt;Something went wrong. Don't worry, your files are still safe and the Dropboxers have been notified. Check out our &lt;a href="https://www.dropbox.com/help"&gt;Help Center&lt;/a&gt; and &lt;a href="https://forums.dropbox.com"&gt;forums&lt;/a&gt; for help, or head back to &lt;a href="https://www.dropbox.com/home"&gt;home&lt;/a&gt;.
+&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;script type="text/javascript" src="/static/javascript/external/prototype.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+message = {"fr": "\x3ch1&gt;Error\x3c/h1&gt;Something went wrong. Don't worry, your files are still safe and the Dropboxers have been notified. Check out our \x3ca href=\"https://www.dropbox.com/help\"&gt;Help Center\x3c/a&gt; and \x3ca href=\"https://forums.dropbox.com\"&gt;forums\x3c/a&gt; for help, or head back to \x3ca href=\"https://www.dropbox.com/home\"&gt;home\x3c/a&gt;.", "de": "\x3ch1&gt;Fehler\x3c/h1&gt;Es ist etwas schief gelaufen. Keine Angst, deine Dateien sind weiterhin sicher und die Dropboxer wurden benachrichtigt. Suche im \x3ca href=\"https://www.dropbox.com/help\"&gt;Hilfecenter\x3c/a&gt; oder in den \x3ca href=\"https://forums.dropbox.com\"&gt;Foren\x3c/a&gt; nach Hilfe. Oder geh zur\u00fcck zur \x3ca href=\"https://www.dropbox.com/home\"&gt;Startseite\x3c/a&gt;.", "ko": "\x3ch1&gt;\uc624\ub958\x3c/h1&gt;\ubb38\uc81c\uac00 \ubc1c\uc0dd\ud588\uc2b5\ub2c8\ub2e4. \ud30c\uc77c\uc774 \uc190\uc0c1\ub418\uc9c0 \uc54a\uc558\uc73c\ubbc0\ub85c \uc548\uc2ec\ud558\uc2dc\uae30 \ubc14\ub77c\uba70, \uc774 \ubb38\uc81c\ub294 Dropboxer \uc0ac\uc6a9\uc790\uc5d0\uac8c \ud1b5\ubcf4\ub418\uc5c8\uc2b5\ub2c8\ub2e4. \ub3c4\uc6c0\uc774 \ud544\uc694\ud55c \uacbd\uc6b0 Dropbox\uc758 \x3ca href=\"https://www.dropbox.com/help\"&gt;\ub3c4\uc6c0\ub9d0 \uc13c\ud130\x3c/a&gt; \ubc0f \x3ca href=\"https://forums.dropbox.com\"&gt;\ud3ec\ub7fc\x3c/a&gt;\uc744 \ucc38\uc870\ud558\uac70\ub098 \x3ca href=\"https://www.dropbox.com/home\"&gt;\ud648\x3c/a&gt;\uc73c\ub85c \ub3cc\uc544\uac00\uc138\uc694.", "ja": "\x3ch1&gt;\u30a8\u30e9\u30fc\x3c/h1&gt;\u6240\u5b9a\u306e\u51e6\u7406\u304c\u5b8c\u4e86\u3057\u307e\u305b\u3093\u3067\u3057\u305f\u3002\u3054\u5229\u7528\u306e\u30d5\u30a1\u30a4\u30eb\u306f\u5b89\u5168\u306b\u4fdd\u5b58\u3055\u308c\u3066\u304a\u308a\u3001Dropbox \u30b9\u30bf\u30c3\u30d5\u306b\u554f\u984c\u306e\u901a\u77e5\u304c\u9001\u3089\u308c\u3066\u3044\u307e\u3059\u3002\x3ca href=\"https://www.dropbox.com/help\"&gt;\u30d8\u30eb\u30d7\u30bb\u30f3\u30bf\u30fc\x3c/a&gt;\u3068\x3ca href=\"https://forums.dropbox.com\"&gt;\u30d5\u30a9\u30fc\u30e9\u30e0\x3c/a&gt;\u3067\u4e0d\u660e\u306a\u70b9\u3092\u304a\u8abf\u3079\u304f\u3060\u3055\u3044\u3002\u307e\u305f\u306f\u3001\x3ca href=\"https://www.dropbox.com/home\"&gt;\u30db\u30fc\u30e0\x3c/a&gt;\u306b\u623b\u3063\u3066\u304f\u3060\u3055\u3044\u3002", "es": "\x3ch1&gt;Error\x3c/h1&gt;Algo sali\u00f3 mal. No te preocupes; tus archivos a\u00fan est\u00e1n a salvo y los dropboxers han recibido una notificaci\u00f3n. Consulta el \x3ca href=\"https://www.dropbox.com/help\"&gt;Centro de ayuda\x3c/a&gt; y los \x3ca href=\"https://forums.dropbox.com\"&gt;foros\x3c/a&gt; para obtener ayuda o vuelve al \x3ca href=\"https://www.dropbox.com/home\"&gt;Inicio\x3c/a&gt;."};
+function read_cookie (name) {
+	    var nameEQ = name + "=";
+	    var ca = document.cookie.split(';');
+	    for (var i = 0; i &lt; ca.length; i++) {
+		    var c = ca[i];
+		    while (c.charAt(0) == ' ') {
+                c = c.substring(1, c.length);
+            }
+		    if (c.indexOf(nameEQ) === 0) {
+                return c.substring(nameEQ.length, c.length);
+            }
+	    }
+	    return null;
+}
+Event.observe(document, 'dom:loaded', function () {
+    var locale = read_cookie('locale');
+    if (locale) {
+       var msg = message[locale];
+       if (msg) {
+           $('errorbox').update(msg);
+       }
+    }
+});
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</textarea>
+            </div>
+        </div>
+        
+    
+        <br />
+        <div class="highlight" style="padding: 20px;">
+        <b>Extra Features</b>
+        <table border="0">
+        <tr><td>&gt;&gt;</td><td>Display the lines of code near each part of the traceback</td></tr>
+        <tr><td><img src="/_debug/media/pylons/img/plus.jpg" /></td><td>Show a debug prompt to allow you to directly debug the code at the traceback</td></tr>
+        </table>
+        </div><button onclick="window.location.href='https://meta-dbdev.dev.corp.dropbox.com/activity_feed_api/user_queue?_subject_uid=2'">Re-GET Page</button><br>
+            </div>
+        </div>
+        <br class="clear" />
+        <div class="hr"><hr class="clear" /></div>
+        <!-- Footer -->
+    </div>
+    <div style=" background: #FFFF99; padding: 10px 10px 10px 6%">
+        The Pylons Team | 
+        <a href="#top" accesskey="9" title="Return to the top of the navigation links">Top</a>
+    </div>
+</body>
+</html>
