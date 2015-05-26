@@ -34,14 +34,6 @@
 	path = vim/bundle/vim-surround
 	url = https://github.com/tpope/vim-surround.git
   ignore = dirty
-[submodule "vim/bundle/vim-colors-solarized"]
-	path = vim/bundle/vim-colors-solarized
-	url = git://github.com/altercation/vim-colors-solarized.git
-  ignore = dirty
-[submodule "solarized"]
-	path = solarized
-	url = https://github.com/altercation/solarized.git
-  ignore = dirty
 [submodule "vim/bundle/submodule/vim-surround"]
 	path = vim/bundle/submodule/vim-surround
 	url = git://github.com/tpope/vim-surround.git
