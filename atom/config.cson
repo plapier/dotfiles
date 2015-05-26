@@ -43,21 +43,21 @@
     config: "common"
   "one-dark-ui":
     layoutMode: "Compact"
-".css.scss.source":
-  editor:
-    preferredLineLength: 120
 ".html.php.text":
   editor:
     preferredLineLength: 120
-".scss.source":
+".css.scss.source":
   editor:
     preferredLineLength: 120
-".sass.source":
+".perl6.source":
   editor:
     preferredLineLength: 120
 ".perl.source":
   editor:
     preferredLineLength: 120
-".perl6.source":
+".sass.source":
+  editor:
+    preferredLineLength: 120
+".scss.source":
   editor:
     preferredLineLength: 120
