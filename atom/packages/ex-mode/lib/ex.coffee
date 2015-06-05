@@ -97,7 +97,7 @@ class Ex
     filePath = filePath.trim()
     if filePath.indexOf(' ') isnt -1
       throw new CommandError('Only one file name allowed')
-    buffer = atom.workspace.getActiveEditor().buffer
+    buffer = atom.workspace.getActiveTextEditor().buffer
     filePath = buffer.getPath() if filePath is ''
     buffer.setPath(getFullPath(filePath))
     buffer.load()
@@ -105,7 +105,7 @@ class Ex
   e: (args...) => @edit(args...)
 
   enew: ->
-    buffer = atom.workspace.getActiveEditor().buffer
+    buffer = atom.workspace.getActiveTextEditor().buffer
     buffer.setPath(undefined)
     buffer.load()
 
@@ -114,7 +114,7 @@ class Ex
     deferred = Promise.defer()
 
     pane = atom.workspace.getActivePane()
-    editor = atom.workspace.getActiveEditor()
+    editor = atom.workspace.getActiveTextEditor()
     if atom.workspace.getActiveTextEditor().getPath() isnt undefined
       if filePath.length > 0
         editorPath = editor.getPath()
@@ -145,7 +145,7 @@ class Ex
   wq: (args...) =>
     @write(args...).then => @quit()
 
-  x: => @wq()
+  x: (args...) => @wq(args...)
 
   wa: ->
     atom.workspace.saveAll()
@@ -154,7 +154,6 @@ class Ex
     args = args.trim()
     filePaths = args.split(' ')
     filePaths = undefined if filePaths.length is 1 and filePaths[0] is ''
-    console.log filePaths, filePaths is ['']
     pane = atom.workspace.getActivePane()
     if filePaths? and filePaths.length > 0
       newPane = pane.splitUp()
@@ -224,5 +223,9 @@ class Ex
       pane.splitLeft(copyActiveItem: true)
 
   vsp: (args...) => @vsplit(args...)
+
+  delete: (range) ->
+    range = [[range[0], 0], [range[1] + 1, 0]]
+    atom.workspace.getActiveTextEditor().buffer.setTextInRange(range, '')
 
 module.exports = Ex

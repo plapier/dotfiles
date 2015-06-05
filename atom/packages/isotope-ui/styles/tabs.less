@@ -6,7 +6,7 @@
 @tab-text-color: @fg-subtle;
 
 .close-icon-mixin() {
-  margin-top: -7px;
+  margin-top: -8px;
   margin-right: -6px;
   top: 50%;
   right: @scale-a-l * 1rem;
@@ -14,8 +14,7 @@
   height: 12px;
   border: none !important; //overrule default modified indicator
   background: transparent;
-  transform: scale(0);
-  transition: transform .2s .1s, color .2s .1s;
+  opacity: 0;
 
   &:before {
     position: absolute;
@@ -28,53 +27,38 @@
 
   &:hover {
     color: @ui-accent;
-    transition: transform .1s, color .1s;
+    opacity: 1;
   }
 }
 
 .tab-bar {
   position: relative;
-  height: ~"calc("@tab-height + @tab-top-padding ~"- 4px)";
   overflow-x: auto;
   overflow-y: hidden;
   background: @tab-bar-background-color;
-
-  &:before {
-    content: '';
-    position: absolute;
-    top: ~"calc("@tab-height + @tab-top-padding ~"- 4px)";
-    left: 0;
-    width: 100%;
-    height: 1px;
-    margin-top: -1px;
-    background: @stroke;
-    z-index: 1;
-  }
 
   &::-webkit-scrollbar {
     display: none;
   }
 
   .tab {
-    top: @tab-top-padding;
     max-width: @tab-max-width;
-    height: ~"calc("@tab-height ~"- 1px)";
+    height: ~"calc("@tab-height ~"- 4px)";
     line-height: ~"calc("@tab-height ~"- 4px)";
     font-size: @scale-a-m * 1rem;
     padding: 0;
     margin: 0;
     color: @tab-text-color;
     background: transparent;
-    border-top-left-radius: @component-border-radius * 1.5;
-    border-top-right-radius: @component-border-radius * 1.5;
-    border: 1px solid transparent;
     border-bottom: none;
+    border-top: none;
+    text-align: center;
 
     &:hover {
       color: @base-fg;
       background: fade(@level-3-bg, 30%);
       .close-icon {
-        transform: scale(1);
+        opacity: 1;
         color: @base-fg;
       }
     }
@@ -149,6 +133,9 @@ atom-pane .tab-bar .tab.active {
   .title {
     padding-right: 20px; //overrule default
   }
+  .close-icon {
+    opacity: 1;
+  }
 }
 
 // only show active tab in the active pane
@@ -158,7 +145,6 @@ atom-pane.active .tab-bar .tab.active {
 
   .close-icon {
     color: contrast(@ui-theme-color, @base-fg, @level-1-bg);
-    transform: scale(1);
   }
 
   &:hover .close-icon {
@@ -222,10 +208,38 @@ body[data-isotope-ui-spacious='true'] {
     .tab {
       height: ~"calc("@tab-height ~"+ 3px)";
       line-height: ~"calc("@tab-height ~"+ 1px)";
-
     }
   }
   atom-pane .tab-bar .tab .title:before {
     line-height: pow(@scale-b, 4) * 1rem;
+  }
+}
+
+body:not([data-isotope-ui-minimal='true']) .tab-bar {
+  height: ~"calc("@tab-height + @tab-top-padding ~"- 2px)";
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: ~"calc("@tab-height + @tab-top-padding ~"- 2px)";
+    left: 0;
+    width: 100%;
+    height: 1px;
+    margin-top: -1px;
+    background: @stroke;
+    z-index: 1;
+  }
+  .tab {
+    top: @tab-top-padding;
+    border-top-left-radius: @component-border-radius * 1.5;
+    border-top-right-radius: @component-border-radius * 1.5;
+    border: 1px solid transparent;
+    height: ~"calc("@tab-height + @tab-top-padding ~"- 1px)";
+  }
+}
+
+body[data-isotope-ui-minimal='true'] {
+  .tab-bar .tab .close-icon {
+    margin-top: -6px;
   }
 }

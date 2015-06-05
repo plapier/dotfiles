@@ -1,8 +1,23 @@
-@tree-item-height: @scale-b-xl * 1rem;
+.project-root(@height) {
+  li.project-root,
+  li.project-root:not(.list-nested-item),
+  li.project-root.list-nested-item > .list-item {
+    //align it with tab titles
+    min-height: @height;
+    line-height: @height;
+  }
+  li.project-root.selected:before,
+  li.project-root:not(.list-nested-item).selected:before,
+  li.project-root.list-nested-item.selected > .list-item:before {
+    height: @height;
+    min-height: @height;
+    line-height: @height;
+  }
+}
 
 .tree-view.list-tree {
 
-  .li-mixin (@fg-subtle, @tree-item-height);
+  .li-mixin (@fg-subtle, @scale-b-xl * 1rem);
 
   padding: @space/3 0 0 0;
 
@@ -22,20 +37,7 @@
     .li-variation-mixin ( status-added,    @fg-added,    lighten(@fg-added, 12%) );
   }
 
-  li.project-root,
-  li.project-root:not(.list-nested-item),
-  li.project-root.list-nested-item > .list-item {
-    //align it with tab titles
-    min-height: @tab-height;
-    line-height: @tab-height;
-  }
-  li.project-root.selected:before,
-  li.project-root:not(.list-nested-item).selected:before,
-  li.project-root.list-nested-item.selected > .list-item:before {
-    height: @tab-height;
-    min-height: @tab-height;
-    line-height: @tab-height;
-  }
+  .project-root(~"calc("@tab-height ~"- 2px)");
 
   // hide pointer icons in treeview
   &.has-collapsable-children {
@@ -95,19 +97,15 @@
 }
 
 body[data-isotope-ui-spacious='true'] .tree-view.list-tree {
+  .project-root(~"calc("@component-line-height ~" + 4px)");
+}
 
-  li,
-  li:not(.list-nested-item),
-  li.list-nested-item > .list-item {
-    min-height: @component-line-height;
-    line-height: @component-line-height;
+body[data-isotope-ui-minimal='true'] {
+  .tree-view-resizer {
+    padding-left: 0;
   }
-
-  li.selected:before,
-  li:not(.list-nested-item).selected:before,
-  li.list-nested-item.selected > .list-item:before {
-    height: @component-line-height;
-    min-height: @component-line-height;
-    line-height: @component-line-height;
+  .tree-view.list-tree {
+    padding-top: 0;
+    .project-root(~"calc("@tab-height ~"- 4px)");
   }
 }

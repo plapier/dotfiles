@@ -28,11 +28,12 @@ class VimState
     @marks = {}
     @subscriptions.add @editor.onDidDestroy => @destroy()
 
-    @subscriptions.add @editor.onDidChangeSelectionRange =>
-      if _.all(@editor.getSelections(), (selection) -> selection.isEmpty())
+    @subscriptions.add @editor.onDidChangeSelectionRange _.debounce(=>
+      if @editor.getSelections().every((selection) -> selection.isEmpty())
         @activateCommandMode() if @mode is 'visual'
       else
         @activateVisualMode('characterwise') if @mode is 'command'
+    , 100)
 
     @editorElement.classList.add("vim-mode")
     @setupCommandMode()
@@ -111,6 +112,7 @@ class VimState
       'move-to-first-character-of-line': => new Motions.MoveToFirstCharacterOfLine(@editor, @)
       'move-to-first-character-of-line-and-down': => new Motions.MoveToFirstCharacterOfLineAndDown(@editor, @)
       'move-to-last-character-of-line': => new Motions.MoveToLastCharacterOfLine(@editor, @)
+      'move-to-last-nonblank-character-of-line-and-down': => new Motions.MoveToLastNonblankCharacterOfLineAndDown(@editor, @)
       'move-to-beginning-of-line': (e) => @moveOrRepeat(e)
       'move-to-first-character-of-line-up': => new Motions.MoveToFirstCharacterOfLineUp(@editor, @)
       'move-to-first-character-of-line-down': => new Motions.MoveToFirstCharacterOfLineDown(@editor, @)
@@ -149,7 +151,7 @@ class VimState
       'select-around-angle-brackets': => new TextObjects.SelectInsideBrackets(@editor, '<', '>', true)
       'select-around-square-brackets': => new TextObjects.SelectInsideBrackets(@editor, '[', ']', true)
       'select-around-parentheses': => new TextObjects.SelectInsideBrackets(@editor, '(', ')', true)
-      'select-around-paragraph': => new TextObjects.SelectInsideParagraph(@editor, true)
+      'select-around-paragraph': => new TextObjects.SelectAParagraph(@editor, true)
       'register-prefix': (e) => @registerPrefix(e)
       'repeat': (e) => new Operators.Repeat(@editor, @)
       'repeat-search': (e) => new Motions.RepeatSearch(@editor, @)

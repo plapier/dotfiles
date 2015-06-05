@@ -1,0 +1,20 @@
+{
+  "name": "scss-sort",
+  "main": "./lib/scss-sort",
+  "version": "0.0.0",
+  "description": "A short description of your package",
+  "keywords": [
+  ],
+  "activationCommands": {
+    "atom-workspace": "scss-sort:sort-selection",
+    "atom-workspace": "scss-sort:sort-rule-set",
+    "atom-workspace": "scss-sort:sort-nested-rule-set"
+  },
+  "repository": "https://github.com/atom/scss-sort",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=0.174.0 <2.0.0"
+  },
+  "dependencies": {
+  }
+}

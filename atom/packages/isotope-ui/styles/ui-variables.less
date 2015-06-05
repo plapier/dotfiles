@@ -2,8 +2,8 @@
 
 
 //provide defaults, users can set configs that are handled in config.less
-@font-family: 'Helvetica Neue', 'Segoe UI', Ubuntu, Cantarell, sans-serif;
-@font-size: 12px;
+@font-family: 'Open Sans', 'Helvetica Neue', 'Segoe UI', Ubuntu, Cantarell, sans-serif;
+@font-size: 11px;
 @font-weight: 200;
 
 
@@ -27,7 +27,6 @@
 @scale-b-xxl:  round(pow(@scale-b, 3), 1);
 
 @space: round(@scale-b-s, 1) * 1rem;
-@text-height: round(@scale-b-xxl) * 1rem;
 
 // leading color
 @ui-theme-color: @syntax-background-color;
@@ -37,7 +36,7 @@
   @ui-hue: 180;
 }
 .ui-hue() when (hsvhue(@ui-theme-color) > 0), (hsvsaturation(@ui-theme-color) > 0%) {
-  @ui-hue: hsvhue(@ui-theme-color) - 20;
+  @ui-hue: hsvhue(@ui-theme-color);
 }
 .ui-hue();
 
@@ -45,11 +44,18 @@
   @ui-saturation: min(hsvsaturation(@ui-theme-color), 24%);
 }
 .ui-saturation() when (hsvhue(@ui-theme-color) > 280), (hsvhue(@ui-theme-color) < 180) {
-  @ui-saturation: min(hsvsaturation(@ui-theme-color), 8%);
+  @ui-saturation: min(hsvsaturation(@ui-theme-color), 6%);
 }
 .ui-saturation();
 
-@ui-brightness:    25%;
+.ui-brightness() when (hsvvalue(@ui-theme-color) >= 50%) {
+  @ui-brightness: hsvvalue(@ui-theme-color) - 80%;
+}
+.ui-brightness() when (hsvvalue(@ui-theme-color) < 50%) {
+  @ui-brightness: hsvvalue(@ui-theme-color) + 6%;
+}
+.ui-brightness();
+
 @ui-accent:        spin( hsl( @ui-hue, 60% + @ui-saturation, 60%), 66 );
 
 
@@ -70,7 +76,7 @@
 
 
 // foreground
-@base-fg: hsl(@ui-hue, @ui-saturation, max(30%, (@ui-brightness) * 2.6) );
+@base-fg: hsl(@ui-hue, @ui-saturation, max(30%, (@ui-brightness) * 3.3) );
 
 @fg-subtle: fadeout(@base-fg, 18%);
 @fg-faded: fade(@base-fg, 24%);
@@ -159,7 +165,7 @@
 @component-padding:        @scale-a-m * 1rem;
 @component-icon-padding:   @space;
 @component-icon-size:      16/12 * 1rem;
-@component-line-height:    @text-height;
+@component-line-height:    round(@scale-b-xxl) * 1rem;
 @component-border-radius:  2px;
 
-@tab-height: @text-height + (@scale-b-s * 1rem);
+@tab-height: @component-line-height + (@scale-b-s * 1rem);
