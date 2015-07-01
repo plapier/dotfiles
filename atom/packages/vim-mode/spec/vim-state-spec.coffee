@@ -116,10 +116,11 @@ describe "VimState", ->
         expect(editorElement.classList.contains('command-mode')).toBe(false)
 
     describe "selecting text", ->
-      it "puts the editor into visual mode", ->
+      beforeEach ->
         spyOn(_._, "now").andCallFake -> window.now
-
         editor.setText("abc def")
+
+      it "puts the editor into visual mode", ->
         expect(vimState.mode).toEqual 'command'
         editor.setSelectedBufferRanges([[[0, 0], [0, 3]]])
 
@@ -128,6 +129,12 @@ describe "VimState", ->
         expect(vimState.mode).toEqual 'visual'
         expect(vimState.submode).toEqual 'characterwise'
         expect(editor.getSelectedBufferRanges()).toEqual([[[0, 0], [0, 3]]])
+
+      it "handles the editor being destroyed shortly after selecting text", ->
+        editor.setSelectedBufferRanges([[[0, 0], [0, 3]]])
+        editor.destroy()
+        vimState.destroy()
+        advanceClock(100)
 
     describe "the i keybinding", ->
       beforeEach -> keydown('i')
@@ -172,18 +179,18 @@ describe "VimState", ->
       beforeEach -> editor.setText("012345\n\nabcdef")
 
       describe "when cursor is in the middle of the line", ->
-        beforeEach -> editor.setCursorScreenPosition([0,3])
+        beforeEach -> editor.setCursorScreenPosition([0, 3])
 
         it "moves the cursor to the left when exiting insert mode", ->
           keydown('escape')
-          expect(editor.getCursorScreenPosition()).toEqual [0,2]
+          expect(editor.getCursorScreenPosition()).toEqual [0, 2]
 
       describe "when cursor is at the beginning of line", ->
-        beforeEach -> editor.setCursorScreenPosition([1,0])
+        beforeEach -> editor.setCursorScreenPosition([1, 0])
 
         it "leaves the cursor at the beginning of line", ->
           keydown('escape')
-          expect(editor.getCursorScreenPosition()).toEqual [1,0]
+          expect(editor.getCursorScreenPosition()).toEqual [1, 0]
 
       describe "on a line with content", ->
         beforeEach -> editor.setCursorScreenPosition([0, 6])
@@ -224,6 +231,16 @@ describe "VimState", ->
       expect(editorElement.classList.contains('command-mode')).toBe(true)
       expect(editorElement.classList.contains('visual-mode')).toBe(false)
 
+    it "puts the editor into command mode when <escape> is pressed on selection is reversed", ->
+      expect(editor.getSelectedText()).toBe("t")
+      keydown("h")
+      keydown("h")
+      expect(editor.getSelectedText()).toBe("e t")
+      expect(editor.getLastSelection().isReversed()).toBe(true)
+      keydown('escape')
+      expect(editorElement.classList.contains('command-mode')).toBe(true)
+      expect(editor.getCursorBufferPositions()).toEqual [[0, 2]]
+
     describe "motions", ->
       it "transforms the selection", ->
         keydown('w')
@@ -262,7 +279,6 @@ describe "VimState", ->
     describe "the o keybinding", ->
       it "reversed each selection", ->
         editor.addCursorAtBufferPosition([0, Infinity])
-        keydown("v")
         keydown("i")
         keydown("w")
 
@@ -286,6 +302,87 @@ describe "VimState", ->
           [0, 8]
         ])
 
+    describe "activate visualmode witin visualmode", ->
+      beforeEach ->
+        keydown('escape')
+        expect(vimState.mode).toEqual 'command'
+        expect(editorElement.classList.contains('command-mode')).toBe(true)
+
+      it "activateVisualMode with same type puts the editor into command mode", ->
+        keydown('v')
+        expect(editorElement.classList.contains('visual-mode')).toBe(true)
+        expect(vimState.submode).toEqual 'characterwise'
+        expect(editorElement.classList.contains('command-mode')).toBe(false)
+
+        keydown('v')
+        expect(vimState.mode).toEqual 'command'
+        expect(editorElement.classList.contains('command-mode')).toBe(true)
+
+        keydown('V', shift: true)
+        expect(editorElement.classList.contains('visual-mode')).toBe(true)
+        expect(vimState.submode).toEqual 'linewise'
+        expect(editorElement.classList.contains('command-mode')).toBe(false)
+
+        keydown('V', shift: true)
+        expect(vimState.mode).toEqual 'command'
+        expect(editorElement.classList.contains('command-mode')).toBe(true)
+
+        keydown('v', ctrl: true)
+        expect(editorElement.classList.contains('visual-mode')).toBe(true)
+        expect(vimState.submode).toEqual 'blockwise'
+        expect(editorElement.classList.contains('command-mode')).toBe(false)
+
+        keydown('v', ctrl: true)
+        expect(vimState.mode).toEqual 'command'
+        expect(editorElement.classList.contains('command-mode')).toBe(true)
+
+      describe "change submode within visualmode", ->
+        beforeEach ->
+          editor.setText("line one\nline two\nline three\n")
+          editor.setCursorBufferPosition([0, 5])
+          editor.addCursorAtBufferPosition([2, 5])
+
+        it "can change submode within visual mode", ->
+          keydown('v')
+          expect(editorElement.classList.contains('visual-mode')).toBe(true)
+          expect(vimState.submode).toEqual 'characterwise'
+          expect(editorElement.classList.contains('command-mode')).toBe(false)
+
+          keydown('V', shift: true)
+          expect(editorElement.classList.contains('visual-mode')).toBe(true)
+          expect(vimState.submode).toEqual 'linewise'
+          expect(editorElement.classList.contains('command-mode')).toBe(false)
+
+          keydown('v', ctrl: true)
+          expect(editorElement.classList.contains('visual-mode')).toBe(true)
+          expect(vimState.submode).toEqual 'blockwise'
+          expect(editorElement.classList.contains('command-mode')).toBe(false)
+
+          keydown('v')
+          expect(editorElement.classList.contains('visual-mode')).toBe(true)
+          expect(vimState.submode).toEqual 'characterwise'
+          expect(editorElement.classList.contains('command-mode')).toBe(false)
+
+
+        it "recover original range when shift from linewse to characterwise", ->
+          keydown('v')
+          keydown('i')
+          keydown('w')
+
+          expect(_.map(editor.getSelections(), (selection) ->
+            selection.getText())
+          ).toEqual(['one', 'three'])
+
+          keydown('V', shift: true)
+          expect(_.map(editor.getSelections(), (selection) ->
+            selection.getText())
+          ).toEqual(["line one\n", "line three\n"])
+
+          keydown('v', ctrl: true)
+          expect(_.map(editor.getSelections(), (selection) ->
+            selection.getText())
+          ).toEqual(['one', 'three'])
+
   describe "marks", ->
     beforeEach ->  editor.setText("text in line 1\ntext in line 2\ntext in line 3")
 
@@ -297,7 +394,7 @@ describe "VimState", ->
       editor.setCursorScreenPosition([2, 2])
       keydown('`')
       commandModeInputKeydown('t')
-      expect(editor.getCursorScreenPosition()).toEqual [1,1]
+      expect(editor.getCursorScreenPosition()).toEqual [1, 1]
 
     it "real (tracking) marking functionality", ->
       editor.setCursorScreenPosition([2, 2])
@@ -308,7 +405,7 @@ describe "VimState", ->
       keydown('escape')
       keydown('`')
       commandModeInputKeydown('q')
-      expect(editor.getCursorScreenPosition()).toEqual [3,2]
+      expect(editor.getCursorScreenPosition()).toEqual [3, 2]
 
     it "real (tracking) marking functionality", ->
       editor.setCursorScreenPosition([2, 2])
@@ -320,4 +417,4 @@ describe "VimState", ->
       keydown('escape')
       keydown('`')
       commandModeInputKeydown('q')
-      expect(editor.getCursorScreenPosition()).toEqual [1,2]
+      expect(editor.getCursorScreenPosition()).toEqual [1, 2]

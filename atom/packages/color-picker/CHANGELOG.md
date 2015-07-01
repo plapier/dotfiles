@@ -32,6 +32,12 @@ https://github.com/thomaslindstrom/color-picker
 ### v2.0.4
 - Remove Atom Module Cache from `package.json`
 
+### v2.0.5
+- Set or replace color on key press `enter`
+
+### v2.0.6
+- Fix issues with placement when using `Split View`
+
 ## v1.7.0
 - Fix deprecations
 

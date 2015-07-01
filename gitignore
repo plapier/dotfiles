@@ -2,3 +2,4 @@
 .DS_Store
 .vm_setup/
 */compile-cache/
+/ssh/

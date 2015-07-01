@@ -1,7 +1,7 @@
 {
   "name": "blackspace",
   "main": "./lib/blackspace",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Strips auto indentation whitespace",
   "repository": {
     "type": "git",
@@ -21,10 +21,10 @@
     "url": "https://github.com/iconara/blackspace/issues"
   },
   "homepage": "https://github.com/iconara/blackspace",
-  "_id": "blackspace@1.0.2",
-  "_shasum": "b0e5365254555275236120cd0104fe2d193ad642",
-  "_resolved": "file:../d-115420-45433-1gdljg9/package.tgz",
-  "_from": "../d-115420-45433-1gdljg9/package.tgz",
+  "_id": "blackspace@1.1.0",
+  "_shasum": "f324131f91edde9b947a913dac57f4b6922eb1d6",
+  "_resolved": "file:../d-115530-53152-1hra30/package.tgz",
+  "_from": "../d-115530-53152-1hra30/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [

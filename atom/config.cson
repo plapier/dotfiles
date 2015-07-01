@@ -4,11 +4,11 @@
   welcome:
     showOnStartup: false
   editor:
-    invisibles:
-      {}
+    invisibles: {}
     fontFamily: "Consolas"
     showIndentGuide: true
     softWrap: true
+    fontSize: 15
   core:
     disabledPackages: [
       "autosave"
@@ -28,17 +28,13 @@
       "css-comb"
     ]
     audioBeep: false
-  linter:
-    {}
-  "merge-conflicts":
-    {}
-  "isotope-ui":
-    {}
+  linter: {}
+  "merge-conflicts": {}
+  "isotope-ui": {}
   "atom-beautify":
     beautifyEntireFileOnSave: false
     _analyticsUserId: "9564159c-192b-4bfc-bef5-6a7e7ddd0f93"
-  "fuzzy-finder":
-    {}
+  "fuzzy-finder": {}
   "css-comb":
     config: "common"
   "one-dark-ui":
