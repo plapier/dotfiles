@@ -1,3 +1,34 @@
+# 2.8.4
+* Improved linter styling
+* Defaulted TH cells to a normal font weight
+* Improved styling for docks
+* Made tabs widths even and full-width
+* Cleaned up tree view styling
+* Made a few little things more Isotope-ish
+
+# 2.8.1, 2.8.2, 2.8.3
+* Fixed horizontal scrolling on the tree view (broken since Atom v1.17.0)
+
+# 2.8.0
+* Updated the default system font stack
+* Fixed deprecated (since Atom v1.13.0) selectors
+
+# 2.7.1
+* Added text-color-modified
+
+# 2.7.0 - Atom 1.1.0
+* Removes Markdown customizations that are now integrated into core
+
+# 2.6.0 - Fresh up
+* Back on track to remain the cleanest UI for Atom!
+* Lots of little tweaks and tucks.
+* Now defaults to the system UI font so it looks awesome everywhere. Packaged fonts still available in settings!
+* Spacious mode was constantly 'breaking' so it's gone. Sorry!
+
+# 2.5.0 - Markdown
+* The Markdown Preview tab now has a styling to match the UI.
+* Lots of little tweaks
+
 # 2.4.0 - Minimal mode!
 * Added a truly minimal layout mode!
 * Removed some of the transitions to make it feel more snappy

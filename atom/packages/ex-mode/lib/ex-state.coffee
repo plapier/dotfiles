@@ -34,6 +34,9 @@ class ExState
   onDidFailToExecute: (fn) ->
     @emitter.on('failed-to-execute', fn)
 
+  onDidProcessOpStack: (fn) ->
+    @emitter.on('processed-op-stack', fn)
+
   pushOperations: (operations) ->
     @opStack.push operations
 
@@ -55,5 +58,15 @@ class ExState
         else
           throw e
     @clearOpStack()
+    @emitter.emit('processed-op-stack')
+
+  # Returns all non-empty selections
+  getSelections: ->
+    filtered = {}
+    for id, selection of @editor.getSelections()
+      unless selection.isEmpty()
+        filtered[id] = selection
+
+    return filtered
 
 module.exports = ExState

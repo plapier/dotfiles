@@ -30,7 +30,23 @@ module.exports = ExMode =
 
   provideEx: ->
     registerCommand: Ex.registerCommand.bind(Ex)
+    registerAlias: Ex.registerAlias.bind(Ex)
 
   consumeVim: (vim) ->
     @vim = vim
     @globalExState.setVim(vim)
+
+  consumeVimModePlus: (vim) ->
+    this.consumeVim(vim)
+
+  config:
+    splitbelow:
+      title: 'Split below'
+      description: 'when splitting, split from below'
+      type: 'boolean'
+      default: 'false'
+    splitright:
+      title: 'Split right'
+      description: 'when splitting, split from right'
+      type: 'boolean'
+      default: 'false'

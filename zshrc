@@ -2,7 +2,7 @@
 export ZSH=$HOME/.oh-my-zsh
 
 # For Lion, Rubies should be built using gcc rather than llvm-gcc.
-export CC=gcc-4.2
+# export CC=gcc-4.2
 
 #load oh-my-zsh plugins
 plugins=(git github osx)
@@ -12,8 +12,7 @@ plugins=(git github osx)
 
 #load oh-my-zsh config file
 source "$ZSH/oh-my-zsh.sh"
-
-source "$HOME/.rbenv/completions/rbenv.zsh"
+# source "$HOME/.rbenv/completions/rbenv.zsh"
 
 # completion
 autoload -U compinit
@@ -23,7 +22,7 @@ compinit
 setopt auto_cd
 
 # use vim as an editor
-export EDITOR=vim
+export EDITOR=atom
 
 # aliases
 if [ -e "$HOME/.aliases" ]; then
@@ -91,7 +90,13 @@ setopt EXTENDED_GLOB
 [[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
 
 #This loads nvm from homebrew
-export NVM_DIR=~/.nvm
-source $(brew --prefix nvm)/nvm.sh
+# export NVM_DIR=~/.nvm
+# source $(brew --prefix nvm)/nvm.sh
+export NVM_DIR="$HOME/.nvm"
+. "/usr/local/opt/nvm/nvm.sh"
 
 alias rsync_vm="find metaserver/metaserver -name *.coffee -exec touch {} \;"
+
+#Load rbenv from homebrew
+eval "$(rbenv init -)"
+export PATH="/usr/local/opt/sqlite/bin:$PATH"

@@ -1,0 +1,66 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117113-51645-10exv2x/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117113-51645-10exv2x/package.tgz",
+        "spec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117113-51645-10exv2x/package.tgz",
+        "type": "local"
+      },
+      "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/apm-install-dir-117113-51645-84xav9"
+    ]
+  ],
+  "_from": "../d-117113-51645-10exv2x/package.tgz",
+  "_id": "sketchapp-scripter@0.1.0",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/sketchapp-scripter",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117113-51645-10exv2x/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117113-51645-10exv2x/package.tgz",
+    "spec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117113-51645-10exv2x/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-117113-51645-10exv2x/package.tgz",
+  "_shasum": "65de1fc806539504678eea0dbb627a139d8aca27",
+  "_shrinkwrap": null,
+  "_spec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117113-51645-10exv2x/package.tgz",
+  "_where": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/apm-install-dir-117113-51645-84xav9",
+  "activationCommands": {
+    "atom-workspace": "sketchapp-scripter:runScript"
+  },
+  "bugs": {
+    "url": "https://github.com/timuric/sketchapp-scripter/issues"
+  },
+  "dependencies": {
+    "coscript": "^1.0.0"
+  },
+  "description": "Run scketch scripts from Atom",
+  "devDependencies": {},
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "homepage": "https://github.com/timuric/sketchapp-scripter#readme",
+  "keywords": [],
+  "license": "MIT",
+  "main": "./lib/sketchapp-scripter",
+  "name": "sketchapp-scripter",
+  "optionalDependencies": {},
+  "readme": "# Sketchapp scripter\n\nAtom package for running sketch app scripts from the atom editor\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timuric/sketchapp-scripter.git"
+  },
+  "version": "0.1.0"
+}

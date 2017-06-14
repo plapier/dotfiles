@@ -1,65 +1,35 @@
-# 1.1.0
+## 2.1.4
 
-* Add support for collapsible messages
-* Add tab `Line` to show only errors of the current line.
-* Add config options to hide individual tabs (`Line`, `File`, `Project`).
+* Hotfix release for a regression introduced in last version (sorry everyone)
 
-# 1.0.9
+## 2.1.3
 
-* Add some default keybindings (Fixes #597)
-* Fix a bug where changing project paths won't trigger Linters (Fixes #622)
-* UI is rendered when Messages are changed programatically (Fixes #639)
-* Make the position of bottom status icon configurable
-* Fix a bug where disabling underline would also disable gutter indicator
+* Add `disabledProviders` config that tracks the list of disabled linter providers
+* Enhance linter provider error message to include opening instructions for dev tools
 
-# 1.0.8
+## 2.1.2
 
-* Fix a critical error in self service provider
+* Hotfix release for a regression introduced in last version
 
-# 1.0.7
+## 2.1.1
 
-* Rename the status line summary (from `Errors` to `Issues`)
-* Rename the `Current File` tab to just `File`
-* Move the `No Issues` badge to the right side of the bottom bar
-* Fix a bug where a message containing HTMLElement would do weird things
-* Allow Issue underlining to be configured from settings
+* Unset no longer available v1 configs
+* Make `linter.name` optional for v1 again
+* Do not show Linter v2 for greeter for new installations
+* Fix a bug where disabling and reenabling `linter-ui-default` would not add previously existent issues to the UI
 
-# 1.0.6
+## 2.1.0
 
-* Hide Status Bar buttons when Active Pane is not an editor
+* Add support for Legacy Indie Providers v1
+* Move docs to GitHub pages, docs can now be found at [`steelbrain.me/linter`](http://steelbrain.me/linter)
 
-# 1.0.5
+## 2.0.0
 
-* Fix message render for non TextEditor panes (Fixes #610)
-* Make the bubble follow cursor
-* Show a nicer error if linter binary doesn't exist (Fixes #612)
-* Add set-bubble-transparent command to set the bubble transparent until the key is released (Fixes #608)
-* Deselect bottom tab when error panel is hidden
-* Add linter:lint command (Fixes #624)
+* Rewrite entire package
+* Add support for Linter Messages v2
+* Add support for Indie Providers v2
+* Drop support for Indie Providers v1
 
-# 1.0.4
+## Pre v2.0
 
-* Fix a critical bug introduced by 1.0.3
-
-# 1.0.3
-
-* Treat legacy messages as text instead of html
-* Fix a bug causing linter messages to briefly disappear and reappear
-* Fix memory leak (Markers weren't getting cleaned up)
-* Use the same filename as the source when generating a temporary file (Fixes #585)
-
-# 1.0.2
-
-* Lint requests are now ignored until the file is saved
-* Allow the user to hide bottom panel from settings or by clicking active tab
-* Add linter:next-error command to jump to next error in code
-* Allow jump to next error by clicking the bottom status icon
-* Add linter:toggle command to disable linting for current text editor temporarily
-
-# 1.0.1
-
-* Fix a compatibility issue: linters were only linting what was on disk.
-
-# 1.0.0
-
-* Complete rewrite
+See the CHANGELOG for Pre v2.0 at [v1 CHANGELOG](https://github.com/steelbrain/linter/blob/v1/CHANGELOG.md)

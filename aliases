@@ -2,27 +2,14 @@
 alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
 alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
 
-alias start_redis='redis-server /usr/local/etc/redis.conf'
-alias start_memcached='memcached -vv'
-alias memcached='/usr/local/bin/memcached -d' # start memcached daemon
-alias b="bundle"
-alias be="bundle exec"
-# alias bw='sass --watch --sourcemap stylesheets/sass:stylesheets'
 alias bw='sass --watch stylesheets/sass:stylesheets'
 alias bwc='sass --watch --style compressed stylesheets/sass:stylesheets'
 alias cw='coffee --watch -c'
 alias cb='coffeebar -m -w'
-alias cuc="bundle exec cucumber"
 alias js="jekyll serve -w"
-alias migrate="rake db:migrate db:test:prepare"
-alias remigrate="rake db:migrate && rake db:migrate:redo && rake db:schema:dump db:test:prepare"
-alias remongrate="rake mongoid:migrate && rake mongoid:migrate:redo"
-alias s="bundle exec rspec"
 alias gi="gem install"
 alias giv="gem install -v"
 alias tlf="tail -f"
-
-alias clearlog='cat /dev/null > log/cucumber.log > log/development.log'
 
 # Git shortcuts
 alias g='git'
@@ -59,14 +46,9 @@ alias -g M='| less'
 alias -g L='| wc -l'
 alias -g ONE="| awk '{ print \$1}'"
 
-alias bower='noglob bower'
 # Quick look at a file from the shell
 alias ql='qlmanage -p'
 
 alias logs='nocorrect logs'
 alias nvm='nocorrect nvm'
 alias touchall='find static -name "*.coffee" -exec touch {} \;'
-
-# Show hidden files in finder
-alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
-alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'

@@ -2,6 +2,21 @@
 
 https://github.com/thomaslindstrom/color-picker
 
+## v2.2.0, v2.2.1, v2.2.2
+- Remove opening animation due to glitches in the UI and the `tool-bar` package
+
+### v2.2.3
+- Improve stylus variable lookup
+
+### v2.2.4
+- Fix deprecation warnings
+
+## v2.1.0
+- Expose opening the `color-picker` as a service
+
+### v2.1.1
+- [Probably fix](https://github.com/thomaslindstrom/color-picker/commit/a0a3c43afac9407ccbc95733113014b695d1387a) [the one bug report that has been occurring over and over again](https://github.com/thomaslindstrom/color-picker/issues/114) for the past half year or so
+
 ## v2.0.0
 - Completely rewritten source code
 - Easily convert between color formats in the Color Picker UI
@@ -36,7 +51,30 @@ https://github.com/thomaslindstrom/color-picker
 - Set or replace color on key press `enter`
 
 ### v2.0.6
+- Opacity values equaling `1.0` would in some cases not be read
+- Fix issue where disabling the Shadow DOM would trigger a ton of bugs
+
+### v2.0.7
 - Fix issues with placement when using `Split View`
+
+### v2.0.8
+- Minor enhancements
+
+### v2.0.9
+- Fix Atom version dependency
+
+### v2.0.10
+- Avoid multiple of the same rendering in elements: Results in a snappier experience
+
+### v2.0.11
+- Fix issue where the Color Picker, in some cases, wouldn't open
+
+### v2.0.12
+- Fix issue where CSS 3D layering had broken “return” element in a recent Atom update
+
+### v2.0.13
+- Update Atom version dependency
+- Replace deprecated functions
 
 ## v1.7.0
 - Fix deprecations

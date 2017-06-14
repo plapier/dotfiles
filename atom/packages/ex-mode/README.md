@@ -4,7 +4,9 @@ ex-mode for Atom's vim-mode
 
 ## Use
 
-Install both [vim-mode](https://github.com/atom/vim-mode) and ex-mode. Type `:` in command mode. Enter `w` or `write`.
+Install both [vim-mode-plus](https://github.com/t9md/atom-vim-mode-plus) (or
+the deprecated `vim-mode`) and ex-mode. Type `:` in command mode. Enter `w` or
+`write`.
 
 ## Extend
 
@@ -16,6 +18,16 @@ atom.packages.onDidActivatePackage (pack) ->
   if pack.name == 'ex-mode'
     Ex = pack.mainModule.provideEx()
     Ex.registerCommand 'z', -> console.log("Zzzzzz...")
+```
+
+You can also add aliases:
+
+```coffee
+atom.packages.onDidActivatePackage (pack) ->
+  if pack.name == 'ex-mode'
+    Ex = pack.mainModule.provideEx()
+    Ex.registerAlias 'WQ', 'wq'
+    Ex.registerAlias 'Wq', 'wq'
 ```
 
 See `lib/ex.coffee` for some examples commands. Contributions are very welcome!

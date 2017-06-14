@@ -5,33 +5,43 @@ CommandError = require './command-error'
 
 class Command
   constructor: (@editor, @exState) ->
-    @viewModel = new ExViewModel(@)
+    @selections = @exState.getSelections()
+    @viewModel = new ExViewModel(@, Object.keys(@selections).length > 0)
 
-  parseAddr: (str, curPos) ->
+  parseAddr: (str, cursor) ->
+    row = cursor.getBufferRow()
     if str is '.'
-      addr = curPos.row
+      addr = row
     else if str is '$'
       # Lines are 0-indexed in Atom, but 1-indexed in vim.
       addr = @editor.getBuffer().lines.length - 1
     else if str[0] in ["+", "-"]
-      addr = curPos.row + @parseOffset(str)
+      addr = row + @parseOffset(str)
     else if not isNaN(str)
       addr = parseInt(str) - 1
     else if str[0] is "'" # Parse Mark...
       unless @vimState?
         throw new CommandError("Couldn't get access to vim-mode.")
-      mark = @vimState.marks[str[1]]
+      mark = @vimState.mark.marks[str[1]]
       unless mark?
         throw new CommandError("Mark #{str} not set.")
-      addr = mark.bufferMarker.range.end.row
+      addr = mark.getEndBufferPosition().row
     else if str[0] is "/"
-      addr = Find.findNextInBuffer(@editor.buffer, curPos, str[1...-1])
+      str = str[1...]
+      if str[str.length-1] is "/"
+        str = str[...-1]
+      addr = Find.scanEditor(str, @editor, cursor.getCurrentLineBufferRange().end)[0]
       unless addr?
-        throw new CommandError("Pattern not found: #{str[1...-1]}")
+        throw new CommandError("Pattern not found: #{str}")
+      addr = addr.start.row
     else if str[0] is "?"
-      addr = Find.findPreviousInBuffer(@editor.buffer, curPos, str[1...-1])
+      str = str[1...]
+      if str[str.length-1] is "?"
+        str = str[...-1]
+      addr = Find.scanEditor(str, @editor, cursor.getCurrentLineBufferRange().start, true)[0]
       unless addr?
         throw new CommandError("Pattern not found: #{str[1...-1]}")
+      addr = addr.start.row
 
     return addr
 
@@ -75,8 +85,8 @@ class Command
         \$|                               # Last line
         \d+|                              # n-th line
         '[\[\]<>'`"^.(){}a-zA-Z]|         # Marks
-        /.*?[^\\]/|                       # Regex
-        \?.*?[^\\]\?|                     # Backwards search
+        /.*?(?:[^\\]/|$)|                 # Regex
+        \?.*?(?:[^\\]\?|$)|               # Backwards search
         [+-]\d*                           # Current line +/- a number of lines
         )((?:\s*[+-]\d*)*)                # Line offset
         )?
@@ -95,34 +105,45 @@ class Command
 
       [match, addr1, off1, addr2, off2] = cl.match(addrPattern)
 
-      curPos = @editor.getCursorBufferPosition()
+      cursor = @editor.getLastCursor()
 
-      if addr1?
-        address1 = @parseAddr(addr1, curPos)
+      # Special case: run command on selection. This can't be handled by simply
+      # parsing the mark since vim-mode doesn't set it (and it would be fairly
+      # useless with multiple selections)
+      if addr1 is "'<" and addr2 is "'>"
+        runOverSelections = true
       else
-        # If no addr1 is given (,+3), assume it is '.'
-        address1 = curPos.row
-      if off1?
-        address1 += @parseOffset(off1)
+        runOverSelections = false
+        if addr1?
+          address1 = @parseAddr(addr1, cursor)
+        else
+          # If no addr1 is given (,+3), assume it is '.'
+          address1 = cursor.getBufferRow()
+        if off1?
+          address1 += @parseOffset(off1)
 
-      address1 = 0 if address1 is -1
+        address1 = 0 if address1 is -1
+        address1 = lastLine if address1 > lastLine
 
-      if address1 < 0 or address1 > lastLine
-        throw new CommandError('Invalid range')
+        if address1 < 0
+          throw new CommandError('Invalid range')
 
-      if addr2?
-        address2 = @parseAddr(addr2, curPos)
-      if off2?
-        address2 += @parseOffset(off2)
+        if addr2?
+          address2 = @parseAddr(addr2, cursor)
+        if off2?
+          address2 += @parseOffset(off2)
 
-      if address2 < 0 or address2 > lastLine
-        throw new CommandError('Invalid range')
+        address2 = 0 if address2 is -1
+        address2 = lastLine if address2 > lastLine
 
-      if address2 < address1
-        throw new CommandError('Backwards range given')
+        if address2 < 0
+          throw new CommandError('Invalid range')
+
+        if address2 < address1
+          throw new CommandError('Backwards range given')
 
       range = [address1, if address2? then address2 else address1]
-      cl = cl[match?.length..]
+    cl = cl[match?.length..]
 
     # Step 5: Leading blanks are ignored
     cl = cl.trimLeft()
@@ -149,9 +170,7 @@ class Command
       [m, command, args] = cl.match(/^(\w+)(.*)/)
 
     # If the command matches an existing one exactly, execute that one
-    if (func = Ex.singleton()[command])?
-      func(range, args)
-    else
+    unless (func = Ex.singleton()[command])?
       # Step 8: Match command against existing commands
       matching = (name for name, val of Ex.singleton() when \
         name.indexOf(command) is 0)
@@ -161,9 +180,16 @@ class Command
       command = matching[0]
 
       func = Ex.singleton()[command]
-      if func?
-        func(range, args)
+
+    if func?
+      if runOverSelections
+        for id, selection of @selections
+          bufferRange = selection.getBufferRange()
+          range = [bufferRange.start.row, bufferRange.end.row]
+          func({ range, args, @vimState, @exState, @editor })
       else
-        throw new CommandError("Not an editor command: #{input.characters}")
+        func({ range, args, @vimState, @exState, @editor })
+    else
+      throw new CommandError("Not an editor command: #{input.characters}")
 
 module.exports = Command

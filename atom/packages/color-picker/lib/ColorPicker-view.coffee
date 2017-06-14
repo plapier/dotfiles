@@ -85,22 +85,22 @@
 
                 _isPickerEvent = @element.hasChild e.target
                 @emitMouseDown e, _isPickerEvent
-                return @close() unless @element.hasChild e.target]
-            window.addEventListener 'mousedown', onMouseDown
+                return @close() unless _isPickerEvent]
+            window.addEventListener 'mousedown', onMouseDown, true
 
             @listeners.push ['mousemove', onMouseMove = (e) =>
                 return unless @element.isOpen()
 
                 _isPickerEvent = @element.hasChild e.target
                 @emitMouseMove e, _isPickerEvent]
-            window.addEventListener 'mousemove', onMouseMove
+            window.addEventListener 'mousemove', onMouseMove, true
 
             @listeners.push ['mouseup', onMouseUp = (e) =>
                 return unless @element.isOpen()
 
                 _isPickerEvent = @element.hasChild e.target
                 @emitMouseUp e, _isPickerEvent]
-            window.addEventListener 'mouseup', onMouseUp
+            window.addEventListener 'mouseup', onMouseUp, true
 
             @listeners.push ['mousewheel', onMouseWheel = (e) =>
                 return unless @element.isOpen()
@@ -118,8 +118,9 @@
 
             # Close it on scroll also
             atom.workspace.observeTextEditors (editor) =>
-                _subscriptionTop = editor.onDidChangeScrollTop => @close()
-                _subscriptionLeft = editor.onDidChangeScrollLeft => @close()
+                _editorView = atom.views.getView editor
+                _subscriptionTop = _editorView.onDidChangeScrollTop => @close()
+                _subscriptionLeft = _editorView.onDidChangeScrollLeft => @close()
 
                 editor.onDidDestroy ->
                     _subscriptionTop.dispose()
@@ -140,6 +141,7 @@
         #  Place the Color Picker element
         # ---------------------------
             @close()
+            @canOpen = yes
 
             # TODO: Is this really the best way to do this? Hint: Probably not
             (@Parent = (atom.views.getView atom.workspace).querySelector '.vertical')
@@ -154,7 +156,9 @@
 
             for [_event, _listener] in @listeners
                 window.removeEventListener _event, _listener
+
             @element.remove()
+            @canOpen = no
 
     # -------------------------------------
     #  Load Color Picker extensions // more like dependencies
@@ -249,27 +253,29 @@
     # -------------------------------------
     #  Open the Color Picker
     # -------------------------------------
-        open: ->
+        open: (Editor=null, Cursor=null) ->
             return unless @canOpen
             @emitBeforeOpen()
 
-            Editor = atom.workspace.getActiveTextEditor()
+            Editor = atom.workspace.getActiveTextEditor() unless Editor
             EditorView = atom.views.getView Editor
+            EditorElement = Editor.getElement()
 
             return unless EditorView
-            EditorRoot = EditorView.shadowRoot or EditorView
 
             # Reset selection
             @selection = null
 
         #  Find the current cursor
         # ---------------------------
-            Cursor = Editor.getLastCursor()
+            Cursor = Editor.getLastCursor() unless Cursor
 
             # Fail if the cursor isn't visible
-            _visibleRowRange = Editor.getVisibleRowRange()
-            _cursorRow = Cursor.getBufferRow()
-            return if (_cursorRow < _visibleRowRange[0] - 1) or (_cursorRow > _visibleRowRange[1])
+            _visibleRowRange = EditorView.getVisibleRowRange()
+            _cursorScreenRow = Cursor.getScreenRow()
+            _cursorBufferRow = Cursor.getBufferRow()
+
+            return if (_cursorScreenRow < _visibleRowRange[0]) or (_cursorScreenRow > _visibleRowRange[1])
 
             # Try matching the contents of the current line to color regexes
             _lineContent = Cursor.getCurrentBufferLine()
@@ -279,7 +285,9 @@
             _matches = _colorMatches.concat _variableMatches
 
             # Figure out which of the matches is the one the user wants
+            _cursorPosition = EditorElement.pixelPositionForScreenPosition Cursor.getScreenPosition()
             _cursorColumn = Cursor.getBufferColumn()
+
             _match = do -> for _match in _matches
                 return _match if _match.start <= _cursorColumn and _match.end >= _cursorColumn
 
@@ -288,13 +296,12 @@
                 Editor.clearSelections()
 
                 _selection = Editor.addSelectionForBufferRange [
-                    [_cursorRow, _match.start]
-                    [_cursorRow, _match.end]]
-                @selection = match: _match, row: _cursorRow
+                    [_cursorBufferRow, _match.start]
+                    [_cursorBufferRow, _match.end]]
+                @selection = match: _match, row: _cursorBufferRow
             # But if we don't have a match, center the Color Picker on last cursor
             else
-                _cursorPosition = Cursor.getPixelRect()
-                @selection = column: Cursor.getBufferColumn(), row: _cursorRow
+                @selection = column: _cursorColumn, row: _cursorBufferRow
 
         #  Emit
         # ---------------------------
@@ -345,23 +352,22 @@
             _paneOffsetLeft = PaneView.offsetLeft
 
             _editorOffsetTop = EditorView.parentNode.offsetTop
-            _editorOffsetLeft = EditorRoot.querySelector('.scroll-view').offsetLeft
-            _editorScrollTop = Editor.getScrollTop()
+            _editorOffsetLeft = EditorView.querySelector('.scroll-view').offsetLeft
+            _editorScrollTop = EditorView.getScrollTop()
 
             _lineHeight = Editor.getLineHeightInPixels()
-            _lineOffsetLeft = EditorRoot.querySelector('.line').offsetLeft
+            _lineOffsetLeft = EditorView.querySelector('.line').offsetLeft
 
-            # Tinker with the `Cursor.getPixelRect` object to center it on
-            # the middle of the selection range
+            # Center it on the middle of the selection range
             # TODO: There can be lines over more than one row
             if _match
-                _selectionPosition = _selection.marker.getPixelRange()
-                _cursorPosition = Cursor.getPixelRect()
-                _cursorPosition.left = _selectionPosition.end.left - ((_selectionPosition.end.left - _selectionPosition.start.left) / 2)
+                _rect = EditorElement.pixelRectForScreenRange(_selection.getScreenRange())
+                _right = _rect.left + _rect.width
+                _cursorPosition.left = _right - (_rect.width / 2)
 
         #  Figure out where to place the Color Picker
         # ---------------------------
-            _totalOffsetTop = _paneOffsetTop + _cursorPosition.height - _editorScrollTop + _editorOffsetTop
+            _totalOffsetTop = _paneOffsetTop + _lineHeight - _editorScrollTop + _editorOffsetTop
             _totalOffsetLeft = _paneOffsetLeft + _editorOffsetLeft + _lineOffsetLeft
 
             _position =
@@ -402,7 +408,7 @@
             requestAnimationFrame => # wait for class delay
                 @element.open()
                 @emitOpen()
-            return
+            return true
 
     # -------------------------------------
     #  Replace selected color

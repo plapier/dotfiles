@@ -1,0 +1,71 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117126-60936-1pyre2o/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117126-60936-1pyre2o/package.tgz",
+        "spec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117126-60936-1pyre2o/package.tgz",
+        "type": "local"
+      },
+      "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/apm-install-dir-117126-60936-1lgb37l"
+    ]
+  ],
+  "_from": "../d-117126-60936-1pyre2o/package.tgz",
+  "_id": "language-applescript@0.3.0",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/language-applescript",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117126-60936-1pyre2o/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117126-60936-1pyre2o/package.tgz",
+    "spec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117126-60936-1pyre2o/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-117126-60936-1pyre2o/package.tgz",
+  "_shasum": "7fe0dd0ab99738f4a12dc90a262778db97517cd2",
+  "_shrinkwrap": null,
+  "_spec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117126-60936-1pyre2o/package.tgz",
+  "_where": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/apm-install-dir-117126-60936-1lgb37l",
+  "activationHooks": [
+    "language-applescript:grammar-used"
+  ],
+  "bugs": {
+    "url": "https://github.com/franzheidl/atom-applescript/issues"
+  },
+  "configSchema": {
+    "autoCompile": {
+      "type": "boolean",
+      "default": true,
+      "title": "Auto-compile",
+      "description": "Automatically decompile (and recompile) `.scpt` files using native `osacompile`/`osadecompile` utilities."
+    }
+  },
+  "dependencies": {},
+  "description": "AppleScript language support for Atom. Converted from https://github.com/textmate/applescript.tmbundle.",
+  "devDependencies": {},
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "homepage": "https://github.com/franzheidl/atom-applescript#readme",
+  "license": "MIT",
+  "name": "language-applescript",
+  "optionalDependencies": {},
+  "private": true,
+  "readme": "# language-applescript package\n\nAppleScript language support for Atom. Converted from [https://github.com/textmate/applescript.tmbundle](https://github.com/textmate/applescript.tmbundle).\n\n## Changelog\n\n* `0.2.2` Set correct comment style\n\n* `0.2.1` Mimic the behaviour of Apple's [Script Editor](http://help.apple.com/applescript/mac/10.9/#apscrpt1067) by automatically de/recompiling .scpt files using the native `osacompile`/`osadecompile` utilities<sup id=\"R1\">[*](#F1)</sup>\n\n* `0.2.0` Add .scpt support, store package settings in `settings/`\n\n* `0.1.0` Initial release\n\n---\n\n<a id=\"F1\">[*](#R1)</a> See [language-javascript-jxa](https://atom.io/packages/language-javascript-jxa) for JavaScript .scpt files.\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/franzheidl/atom-applescript.git"
+  },
+  "version": "0.3.0"
+}

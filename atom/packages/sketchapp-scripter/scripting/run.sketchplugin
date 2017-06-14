@@ -1,0 +1,18 @@
+//-------------------------------------------------------------------------------------------------------------
+// Menu Items
+//-------------------------------------------------------------------------------------------------------------
+
+function exportArtboard(context, target) {
+	var doc = context.document;
+	var selection = context.selection;
+	if (selection.length > 0) {
+		NSApp.displayDialog("Export Artboard " + selection.length);
+		var l = selection.nativeLayers;
+		print("foobar");
+
+		return;
+	} else {
+		NSApp.displayDialog("Nothing Selected");
+		return;
+	}
+}

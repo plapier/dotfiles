@@ -1,15 +1,13 @@
 # Csscomb package
-CSScomb is a coding style formatter for CSS.
-
-![Css Comb](https://raw.githubusercontent.com/jchouse/csscomb-atom/master/i/combed.png)
+CSScomb is a coding style formatter for CSS (LESS|SASS|SCSS).
 
 Based on [csscombjs 3.0](https://github.com/csscomb/csscomb.js)
 
-## Configure
-Can use [ready-made presets](https://github.com/csscomb/csscomb.js/tree/master/config), [customize](http://csscomb.com/config) your own common or project config.
-To open setting menu use `Packages`->`Css Comb`->`Settings`
+![Css Comb](https://raw.githubusercontent.com/jchouse/csscomb-atom/master/i/csscomb.gif)
 
-![settings](https://raw.githubusercontent.com/jchouse/csscomb-atom/master/i/settings.png)
+## Configure
+Create you [own config](http://csscomb.com/config).
+Read about prep [configs](https://github.com/csscomb/csscomb.js/tree/master/config)
 
 ## How to use
 Open any file and press `ctrl+alt+c`, or use context menu.

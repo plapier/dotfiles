@@ -1,174 +1,63 @@
 {
-  "name": "blackspace",
-  "main": "./lib/blackspace",
-  "version": "1.1.0",
-  "description": "Strips auto indentation whitespace",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/iconara/blackspace"
+  "_args": [
+    [
+      {
+        "raw": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-11707-8874-1l1ad31/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-11707-8874-1l1ad31/package.tgz",
+        "spec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-11707-8874-1l1ad31/package.tgz",
+        "type": "local"
+      },
+      "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/apm-install-dir-11707-8874-yxzfx6"
+    ]
+  ],
+  "_from": "../d-11707-8874-1l1ad31/package.tgz",
+  "_id": "blackspace@1.1.1",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/blackspace",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-11707-8874-1l1ad31/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-11707-8874-1l1ad31/package.tgz",
+    "spec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-11707-8874-1l1ad31/package.tgz",
+    "type": "local"
   },
-  "license": "BSD-3-Clause",
-  "engines": {
-    "atom": ">=0.125.0"
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-11707-8874-1l1ad31/package.tgz",
+  "_shasum": "6df16154ffa40c3e2b8eba2b36f199ed179d98c7",
+  "_shrinkwrap": null,
+  "_spec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-11707-8874-1l1ad31/package.tgz",
+  "_where": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/apm-install-dir-11707-8874-yxzfx6",
+  "bugs": {
+    "url": "https://github.com/iconara/blackspace/issues"
   },
   "dependencies": {
     "fs-plus": "2.x",
     "temp": "~0.6.0"
   },
+  "description": "Strips auto indentation whitespace",
+  "devDependencies": {},
+  "engines": {
+    "atom": ">=0.125.0"
+  },
+  "homepage": "https://github.com/iconara/blackspace#readme",
+  "license": "BSD-3-Clause",
+  "main": "./lib/blackspace",
+  "name": "blackspace",
+  "optionalDependencies": {},
   "readme": "# Blackspace\n\nAtom's default whitespace handling leaves a lot of whitespace around where it shouldn't be. This package fixes one of the more problematic areas.\n\n## Example\n\nConsider this scenario (`·` is a space, `¬` is a newline and `|` is the insertion point):\n\n```\ndef foobar\n··|\n```\n\nWhat would you want to happen if you pressed return? This is what you get by default in Atom:\n\n```\ndef foobar\n··¬\n··|\n```\n\nYou get a line with only whitespace. Most tools that care about whitespace, like `git`, `diff`, and most editors that shows trailing whitespace will complain about this.\n\nWhat this package does is that it makes sure that you instead end up with this:\n\n```\ndef foobar\n¬\n··|\n```\n\nI.e. a blank line without whitespace. If you press return again a few times you will get this:\n\n```\ndef foobar\n¬\n¬\n¬\n··|\n```\n\n## But doesn't Atom's built-in whitespace package already solve this?\n\nNo. It strips whitespace in the whole file, regardless of whether you touched the code or not. If you edit a single line, save and try to commit the change you might have caused lots of unrelated changes because the file had trailing whitespace. When you collaborate with other people it is extremely frustrating when everyone's editors automatically strip whitespace, adds newlines to the end of times, removes newlines from the end of files, automatically reformats code, etc. The commit history gets very, very messy.\n\n## Copyright\n\n2014 Theo Hultberg / Iconara\n\nLicensed under the BSD license, see `LICENSE.md`.",
   "readmeFilename": "README.md",
-  "bugs": {
-    "url": "https://github.com/iconara/blackspace/issues"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iconara/blackspace.git"
   },
-  "homepage": "https://github.com/iconara/blackspace",
-  "_id": "blackspace@1.1.0",
-  "_shasum": "f324131f91edde9b947a913dac57f4b6922eb1d6",
-  "_resolved": "file:../d-115530-53152-1hra30/package.tgz",
-  "_from": "../d-115530-53152-1hra30/package.tgz",
-  "_atomModuleCache": {
-    "version": 1,
-    "dependencies": [
-      {
-        "name": "fs-plus",
-        "version": "2.8.1",
-        "path": "node_modules/fs-plus/lib/fs-plus.js"
-      },
-      {
-        "name": "async",
-        "version": "0.2.10",
-        "path": "node_modules/fs-plus/node_modules/async/lib/async.js"
-      },
-      {
-        "name": "mkdirp",
-        "version": "0.3.5",
-        "path": "node_modules/fs-plus/node_modules/mkdirp/index.js"
-      },
-      {
-        "name": "rimraf",
-        "version": "2.2.8",
-        "path": "node_modules/fs-plus/node_modules/rimraf/rimraf.js"
-      },
-      {
-        "name": "underscore-plus",
-        "version": "1.6.6",
-        "path": "node_modules/fs-plus/node_modules/underscore-plus/lib/underscore-plus.js"
-      },
-      {
-        "name": "underscore",
-        "version": "1.6.0",
-        "path": "node_modules/fs-plus/node_modules/underscore-plus/node_modules/underscore/underscore.js"
-      },
-      {
-        "name": "temp",
-        "version": "0.6.0",
-        "path": "node_modules/temp/lib/temp.js"
-      },
-      {
-        "name": "osenv",
-        "version": "0.0.3",
-        "path": "node_modules/temp/node_modules/osenv/osenv.js"
-      },
-      {
-        "name": "rimraf",
-        "version": "2.1.4",
-        "path": "node_modules/temp/node_modules/rimraf/rimraf.js"
-      },
-      {
-        "name": "graceful-fs",
-        "version": "1.2.3",
-        "path": "node_modules/temp/node_modules/rimraf/node_modules/graceful-fs/graceful-fs.js"
-      }
-    ],
-    "extensions": {
-      ".coffee": [
-        "lib/blackspace.coffee"
-      ],
-      ".js": [
-        "node_modules/fs-plus/lib/fs-plus.js",
-        "node_modules/fs-plus/node_modules/async/lib/async.js",
-        "node_modules/fs-plus/node_modules/mkdirp/examples/pow.js",
-        "node_modules/fs-plus/node_modules/mkdirp/index.js",
-        "node_modules/fs-plus/node_modules/rimraf/bin.js",
-        "node_modules/fs-plus/node_modules/rimraf/rimraf.js",
-        "node_modules/fs-plus/node_modules/underscore-plus/lib/underscore-plus.js",
-        "node_modules/fs-plus/node_modules/underscore-plus/node_modules/underscore/underscore-min.js",
-        "node_modules/fs-plus/node_modules/underscore-plus/node_modules/underscore/underscore.js",
-        "node_modules/temp/examples/grepcount.js",
-        "node_modules/temp/examples/pdfcreator.js",
-        "node_modules/temp/lib/temp.js",
-        "node_modules/temp/node_modules/osenv/osenv.js",
-        "node_modules/temp/node_modules/rimraf/node_modules/graceful-fs/graceful-fs.js",
-        "node_modules/temp/node_modules/rimraf/rimraf.js"
-      ],
-      ".json": [
-        "node_modules/fs-plus/node_modules/async/component.json",
-        "node_modules/fs-plus/node_modules/async/package.json",
-        "node_modules/fs-plus/node_modules/mkdirp/package.json",
-        "node_modules/fs-plus/node_modules/rimraf/package.json",
-        "node_modules/fs-plus/node_modules/underscore-plus/node_modules/underscore/package.json",
-        "node_modules/fs-plus/node_modules/underscore-plus/package.json",
-        "node_modules/fs-plus/package.json",
-        "node_modules/temp/node_modules/osenv/package.json",
-        "node_modules/temp/node_modules/rimraf/node_modules/graceful-fs/package.json",
-        "node_modules/temp/node_modules/rimraf/package.json",
-        "node_modules/temp/package.json",
-        "package.json"
-      ]
-    },
-    "folders": [
-      {
-        "paths": [
-          "lib",
-          "",
-          "spec"
-        ],
-        "dependencies": {
-          "fs-plus": "2.x",
-          "temp": "~0.6.0"
-        }
-      },
-      {
-        "paths": [
-          "node_modules/fs-plus/lib",
-          "node_modules/fs-plus"
-        ],
-        "dependencies": {
-          "underscore-plus": "1.x",
-          "mkdirp": "~0.3.5",
-          "rimraf": "~2.2.2",
-          "async": "~0.2.9"
-        }
-      },
-      {
-        "paths": [
-          "node_modules/fs-plus/node_modules/underscore-plus/lib",
-          "node_modules/fs-plus/node_modules/underscore-plus"
-        ],
-        "dependencies": {
-          "underscore": "~1.6.0"
-        }
-      },
-      {
-        "paths": [
-          "node_modules/temp/examples",
-          "node_modules/temp/lib",
-          "node_modules/temp",
-          "node_modules/temp/test"
-        ],
-        "dependencies": {
-          "rimraf": "~2.1.4",
-          "osenv": "0.0.3"
-        }
-      },
-      {
-        "paths": [
-          "node_modules/temp/node_modules/rimraf",
-          "node_modules/temp/node_modules/rimraf/test"
-        ],
-        "dependencies": {
-          "graceful-fs": "~1"
-        }
-      }
-    ]
-  }
+  "version": "1.1.1"
 }
