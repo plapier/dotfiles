@@ -1,0 +1,1 @@
+{"context-menu":{"atom-text-editor":[{"label":"Toggle sort-css","command":"sort-css:toggle"}]},"menu":[{"label":"Packages","submenu":[{"label":"sort-css","submenu":[{"label":"Toggle","command":"sort-css:toggle"}]}]}]}

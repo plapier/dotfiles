@@ -2,40 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117427-15437-2pokm7.2vyvz33di/package.tgz",
+        "raw": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117522-60785-gpd07k.sfnaozjjor/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117427-15437-2pokm7.2vyvz33di/package.tgz",
-        "spec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117427-15437-2pokm7.2vyvz33di/package.tgz",
+        "rawSpec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117522-60785-gpd07k.sfnaozjjor/package.tgz",
+        "spec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117522-60785-gpd07k.sfnaozjjor/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/apm-install-dir-117427-15437-1vrerae.7pidn7y14i"
+      "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/apm-install-dir-117522-60785-wloz5l.tr9eoy9zfr"
     ]
   ],
-  "_from": "../d-117427-15437-2pokm7.2vyvz33di/package.tgz",
-  "_id": "linter-ui-default@1.6.0",
+  "_from": "../d-117522-60785-gpd07k.sfnaozjjor/package.tgz",
+  "_id": "linter-ui-default@1.6.2",
   "_inCache": true,
-  "_installable": true,
   "_location": "/linter-ui-default",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117427-15437-2pokm7.2vyvz33di/package.tgz",
+    "raw": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117522-60785-gpd07k.sfnaozjjor/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117427-15437-2pokm7.2vyvz33di/package.tgz",
-    "spec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117427-15437-2pokm7.2vyvz33di/package.tgz",
+    "rawSpec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117522-60785-gpd07k.sfnaozjjor/package.tgz",
+    "spec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117522-60785-gpd07k.sfnaozjjor/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-117427-15437-2pokm7.2vyvz33di/package.tgz",
-  "_shasum": "4a3d1a571b9edc8ce6ee5fb454dd61b6d5c18bc6",
+  "_resolved": "file:../d-117522-60785-gpd07k.sfnaozjjor/package.tgz",
+  "_shasum": "2cd669df4bd1740382364347ea8f429401e9dcd0",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117427-15437-2pokm7.2vyvz33di/package.tgz",
-  "_where": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/apm-install-dir-117427-15437-1vrerae.7pidn7y14i",
+  "_spec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117522-60785-gpd07k.sfnaozjjor/package.tgz",
+  "_where": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/apm-install-dir-117522-60785-wloz5l.tr9eoy9zfr",
   "bugs": {
     "url": "https://github.com/steelbrain/linter-ui-default/issues"
   },
@@ -229,7 +228,7 @@
   "scripts": {
     "test": "(apm test) && (flow check) && (eslint . )"
   },
-  "version": "1.6.0",
+  "version": "1.6.2",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -250,13 +249,18 @@
       },
       {
         "name": "consistent-env",
-        "version": "1.3.0",
+        "version": "1.3.1",
         "path": "node_modules/consistent-env/lib/index.js"
       },
       {
         "name": "core-js",
         "version": "1.2.7",
         "path": "node_modules/core-js/index.js"
+      },
+      {
+        "name": "create-react-class",
+        "version": "15.6.0",
+        "path": "node_modules/create-react-class/index.js"
       },
       {
         "name": "disposable-event",
@@ -275,7 +279,7 @@
       },
       {
         "name": "iconv-lite",
-        "version": "0.4.17",
+        "version": "0.4.18",
         "path": "node_modules/iconv-lite/lib/index.js"
       },
       {
@@ -315,7 +319,7 @@
       },
       {
         "name": "node-fetch",
-        "version": "1.7.0",
+        "version": "1.7.1",
         "path": "node_modules/node-fetch/index.js"
       },
       {
@@ -325,7 +329,7 @@
       },
       {
         "name": "promise",
-        "version": "7.1.1",
+        "version": "7.3.1",
         "path": "node_modules/promise/index.js"
       },
       {
@@ -335,12 +339,12 @@
       },
       {
         "name": "react",
-        "version": "15.5.4",
+        "version": "15.6.1",
         "path": "node_modules/react/react.js"
       },
       {
         "name": "react-dom",
-        "version": "15.5.4",
+        "version": "15.6.1",
         "path": "node_modules/react-dom/index.js"
       },
       {
@@ -405,7 +409,7 @@
       },
       {
         "name": "ua-parser-js",
-        "version": "0.7.12",
+        "version": "0.7.13",
         "path": "node_modules/ua-parser-js/src/ua-parser.js"
       },
       {
@@ -425,6 +429,7 @@
         "node_modules/consistent-env/package.json",
         "node_modules/core-js/bower.json",
         "node_modules/core-js/package.json",
+        "node_modules/create-react-class/package.json",
         "node_modules/disposable-event/.eslintrc.json",
         "node_modules/disposable-event/package.json",
         "node_modules/encoding/package.json",
@@ -510,7 +515,6 @@
         "node_modules/atom-package-deps/lib/types.js",
         "node_modules/atom-package-deps/lib/view.js",
         "node_modules/atom-package-path/lib/index.js",
-        "node_modules/consistent-env/decls/jasmine.js",
         "node_modules/consistent-env/lib/helpers.js",
         "node_modules/consistent-env/lib/index.js",
         "node_modules/core-js/Gruntfile.js",
@@ -1366,6 +1370,10 @@
         "node_modules/core-js/web/immediate.js",
         "node_modules/core-js/web/index.js",
         "node_modules/core-js/web/timers.js",
+        "node_modules/create-react-class/create-react-class.js",
+        "node_modules/create-react-class/create-react-class.min.js",
+        "node_modules/create-react-class/factory.js",
+        "node_modules/create-react-class/index.js",
         "node_modules/disposable-event/decls/jasmine.js",
         "node_modules/disposable-event/lib/index.js",
         "node_modules/encoding/lib/encoding.js",
@@ -1568,11 +1576,10 @@
         "node_modules/react/lib/React.js",
         "node_modules/react/lib/ReactAddonsDOMDependencies.js",
         "node_modules/react/lib/ReactAddonsDOMDependenciesUMDShim.js",
+        "node_modules/react/lib/ReactBaseClasses.js",
         "node_modules/react/lib/ReactCSSTransitionGroup.js",
         "node_modules/react/lib/ReactCSSTransitionGroupChild.js",
         "node_modules/react/lib/ReactChildren.js",
-        "node_modules/react/lib/ReactClass.js",
-        "node_modules/react/lib/ReactComponent.js",
         "node_modules/react/lib/ReactComponentTreeDevtool.js",
         "node_modules/react/lib/ReactComponentTreeHook.js",
         "node_modules/react/lib/ReactComponentTreeHookUMDShim.js",
@@ -1591,7 +1598,6 @@
         "node_modules/react/lib/ReactPropTypeLocations.js",
         "node_modules/react/lib/ReactPropTypes.js",
         "node_modules/react/lib/ReactPropTypesSecret.js",
-        "node_modules/react/lib/ReactPureComponent.js",
         "node_modules/react/lib/ReactStateSetters.js",
         "node_modules/react/lib/ReactTransitionChildMapping.js",
         "node_modules/react/lib/ReactTransitionEvents.js",
@@ -1603,11 +1609,13 @@
         "node_modules/react/lib/ReactWithAddonsUMDEntry.js",
         "node_modules/react/lib/canDefineProperty.js",
         "node_modules/react/lib/checkReactTypeSpec.js",
+        "node_modules/react/lib/createClass.js",
         "node_modules/react/lib/deprecated.js",
         "node_modules/react/lib/flattenChildren.js",
         "node_modules/react/lib/getIteratorFn.js",
         "node_modules/react/lib/getNextDebugID.js",
         "node_modules/react/lib/getNextDebugIDUMDShim.js",
+        "node_modules/react/lib/lowPriorityWarning.js",
         "node_modules/react/lib/onlyChild.js",
         "node_modules/react/lib/reactProdInvariant.js",
         "node_modules/react/lib/shallowCompare.js",
@@ -1775,9 +1783,11 @@
         "node_modules/react-dom/lib/getTestDocument.js",
         "node_modules/react-dom/lib/getTextContentAccessor.js",
         "node_modules/react-dom/lib/getVendorPrefixedEventName.js",
+        "node_modules/react-dom/lib/inputValueTracking.js",
         "node_modules/react-dom/lib/instantiateReactComponent.js",
         "node_modules/react-dom/lib/isEventSupported.js",
         "node_modules/react-dom/lib/isTextInputElement.js",
+        "node_modules/react-dom/lib/lowPriorityWarning.js",
         "node_modules/react-dom/lib/quoteAttributeValueForBrowser.js",
         "node_modules/react-dom/lib/reactComponentExpect.js",
         "node_modules/react-dom/lib/reactProdInvariant.js",
@@ -1867,11 +1877,20 @@
       {
         "paths": [
           "node_modules/consistent-env",
-          "node_modules/consistent-env/decls",
           "node_modules/consistent-env/lib"
         ],
         "dependencies": {
           "lodash.uniq": "^4.5.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/create-react-class"
+        ],
+        "dependencies": {
+          "fbjs": "^0.8.9",
+          "loose-envify": "^1.3.1",
+          "object-assign": "^4.1.1"
         }
       },
       {
@@ -1969,10 +1988,11 @@
           "node_modules/react"
         ],
         "dependencies": {
+          "create-react-class": "^15.6.0",
           "fbjs": "^0.8.9",
           "loose-envify": "^1.1.0",
           "object-assign": "^4.1.0",
-          "prop-types": "^15.5.7"
+          "prop-types": "^15.5.10"
         }
       },
       {
@@ -1985,7 +2005,7 @@
           "fbjs": "^0.8.9",
           "loose-envify": "^1.1.0",
           "object-assign": "^4.1.0",
-          "prop-types": "~15.5.7"
+          "prop-types": "^15.5.10"
         }
       },
       {

@@ -2,40 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117427-15095-1m7zxkg.j2e3bfyldi/package.tgz",
+        "raw": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117522-60777-cai0m2.clwvhx5hfr/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117427-15095-1m7zxkg.j2e3bfyldi/package.tgz",
-        "spec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117427-15095-1m7zxkg.j2e3bfyldi/package.tgz",
+        "rawSpec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117522-60777-cai0m2.clwvhx5hfr/package.tgz",
+        "spec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117522-60777-cai0m2.clwvhx5hfr/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/apm-install-dir-117427-15095-pz8tis.hm0d5f80k9"
+      "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/apm-install-dir-117522-60777-xcyqnm.qrc852ke29"
     ]
   ],
-  "_from": "../d-117427-15095-1m7zxkg.j2e3bfyldi/package.tgz",
-  "_id": "isotope-ui@2.8.4",
+  "_from": "../d-117522-60777-cai0m2.clwvhx5hfr/package.tgz",
+  "_id": "isotope-ui@2.8.5",
   "_inCache": true,
-  "_installable": true,
   "_location": "/isotope-ui",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117427-15095-1m7zxkg.j2e3bfyldi/package.tgz",
+    "raw": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117522-60777-cai0m2.clwvhx5hfr/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117427-15095-1m7zxkg.j2e3bfyldi/package.tgz",
-    "spec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117427-15095-1m7zxkg.j2e3bfyldi/package.tgz",
+    "rawSpec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117522-60777-cai0m2.clwvhx5hfr/package.tgz",
+    "spec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117522-60777-cai0m2.clwvhx5hfr/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-117427-15095-1m7zxkg.j2e3bfyldi/package.tgz",
-  "_shasum": "bc9eb02a4936c529f9852cf2c759487332c746d5",
+  "_resolved": "file:../d-117522-60777-cai0m2.clwvhx5hfr/package.tgz",
+  "_shasum": "64580fe9fd25a5305729faf4f3fd298dea647dd8",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117427-15095-1m7zxkg.j2e3bfyldi/package.tgz",
-  "_where": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/apm-install-dir-117427-15095-pz8tis.hm0d5f80k9",
+  "_spec": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/d-117522-60777-cai0m2.clwvhx5hfr/package.tgz",
+  "_where": "/private/var/folders/wh/5gg2_53d7lb_v1f13xhh1j8dk0nxw9/T/apm-install-dir-117522-60777-xcyqnm.qrc852ke29",
   "bugs": {
     "url": "https://github.com/braver/isotope-ui/issues"
   },
@@ -64,7 +63,7 @@
     "url": "git+https://github.com/braver/isotope-ui.git"
   },
   "theme": "ui",
-  "version": "2.8.4",
+  "version": "2.8.5",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [],

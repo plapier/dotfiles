@@ -1,0 +1,1 @@
+{"context-menu":{"atom-text-editor":[{"label":"Toggle foobar","command":"foobar:toggle"}]},"menu":[{"label":"Packages","submenu":[{"label":"foobar","submenu":[{"label":"Toggle","command":"foobar:toggle"}]}]}]}

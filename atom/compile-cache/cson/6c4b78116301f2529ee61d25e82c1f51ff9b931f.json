@@ -1,0 +1,1 @@
+{"name":"JavaScript for Automation (JXA)","fileTypes":["scpt","jxa","jxainc","applescript"],"firstLineMatch":"^JsOsa|^#!\\s*/.*\\bosascript -l JavaScript|^(Application|Library)[\\(.]|^ObjC|=","scopeName":"source.js.jxa","patterns":[{"include":"source.js"}]}

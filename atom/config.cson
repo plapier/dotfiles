@@ -21,6 +21,8 @@
       "welcome"
       "css-comb"
       "language-sketchplugin"
+      "build"
+      "build-osa"
     ]
   "css-comb":
     config: "common"
@@ -37,6 +39,8 @@
   "fuzzy-finder": {}
   "isotope-ui": {}
   linter: {}
+  "linter-ui-default":
+    panelHeight: 69
   "merge-conflicts": {}
   "one-dark-ui": {}
   welcome:
