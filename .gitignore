@@ -2,3 +2,4 @@ vim/sessions
 .netrwhist
 oh-my-zsh/
 vim/bundle/
+atom/blob-store/
