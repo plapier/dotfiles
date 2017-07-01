@@ -1,17 +1,17 @@
 [core]
 	excludesfile = /Users/lapier/.gitignore
 	; editor = mvim -f
-  editor = vim
+	editor = atom --wait
 [user]
 	name = Phil LaPier
-	email = lapier@dropbox.com
+	email = phil.lapier@gmail.com
 [push]
 	default = simple
 [credential]
 	helper = osxkeychain
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true

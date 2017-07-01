@@ -21,8 +21,8 @@ compinit
 # automatically enter directories without cd
 setopt auto_cd
 
-# use vim as an editor
-export EDITOR=atom
+# use atom as an editor
+export EDITOR="atom -nw"
 
 # aliases
 if [ -e "$HOME/.aliases" ]; then
