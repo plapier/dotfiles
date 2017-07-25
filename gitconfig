@@ -1,10 +1,9 @@
 [core]
 	excludesfile = /Users/lapier/.gitignore
-	; editor = mvim -f
 	editor = atom --wait
 [user]
 	name = Phil LaPier
-	email = phil.lapier@gmail.com
+	email = phillapier@gmail.com
 [push]
 	default = simple
 [credential]

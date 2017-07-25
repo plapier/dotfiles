@@ -86,14 +86,10 @@ setopt CORRECT CORRECT_ALL
 # Enable extended globbing
 setopt EXTENDED_GLOB
 
-# NVM Completion
-[[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
-
-#This loads nvm from homebrew
-# export NVM_DIR=~/.nvm
-# source $(brew --prefix nvm)/nvm.sh
+# Load NVM
 export NVM_DIR="$HOME/.nvm"
-. "/usr/local/opt/nvm/nvm.sh"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 alias rsync_vm="find metaserver/metaserver -name *.coffee -exec touch {} \;"
 
